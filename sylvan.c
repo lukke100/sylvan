@@ -28,3 +28,22 @@ int sy_add(int x, int y, enum sy_error *err)
 
 	return max + min;
 }
+
+int sy_sub(int x, int y, enum sy_error *err)
+{
+	if (y > 0 && INT_MIN + y > x) {
+		if (err != NULL)
+			*err = SY_ERROR_UNDERFLOW;
+
+		return INT_MIN;
+	}
+
+	if (y < 0 && INT_MAX + y < x) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+
+	return x - y;
+}
