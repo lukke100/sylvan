@@ -1,0 +1,39 @@
+#!/bin/sh -eu
+cd "$(dirname -- "$0")"
+
+"${CC-c99}" ${CFLAGS-} -c sylvan.c
+"${AR-ar}" ${ARFLAGS--r} libsylvan.a sylvan.o
+
+echo 1.."$(printf '%.0s\n' tests/t*.c | wc -l)"
+
+failures=0
+index=0
+
+for test in tests/t*.c
+do
+	tmpout=$(mktemp)
+	tmperr=$(mktemp)
+
+	if ! "${CC-c99}" ${CFLAGS-} -I . -UNDEBUG ${LDFLAGS-} -L . \
+		-o "${test%.c}" "$test" -lsylvan >"$tmpout" 2>"$tmperr"
+	then
+		echo not ok $((index += 1)) - "$test"
+		: $((failures += 1))
+
+		sed -e 's/^/# [STDOUT] /' -- "$tmpout"
+		sed -e 's/^/# [STDERR] /' -- "$tmperr"
+	elif ! "${test%.c}" </dev/null >>"$tmpout" 2>>"$tmperr"
+	then
+		echo not ok $((index += 1)) - "$test"
+		: $((failures += 1))
+
+		sed -e 's/^/# [STDOUT] /' -- "$tmpout"
+		sed -e 's/^/# [STDERR] /' -- "$tmperr"
+	else
+		echo ok $((index += 1)) - "$test"
+	fi
+
+	rm -- "$tmpout" "$tmperr"
+done
+
+exit "$failures"

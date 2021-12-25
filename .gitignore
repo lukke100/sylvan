@@ -1,0 +1,4 @@
+libsylvan.a
+sylvan.o
+tests/*
+!tests/*.c
