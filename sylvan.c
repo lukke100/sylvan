@@ -56,43 +56,40 @@ int sy_mul(int x, int y, enum sy_error *err)
 	max = MAX(x, y);
 	min = MIN(x, y);
 
-	if (max == 0 || min == 0)
-		return 0;
+	if (min > 0 && INT_MAX / max < min) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
 
-	if (min > 0) {
-		if (INT_MAX / max < min) {
+		return INT_MAX;
+	}
+
+#if INT_MAX + INT_MIN < 0
+	if (max < 0 && div(INT_MAX, min).quot > max) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+#else
+	if (max < 0) {
+		max *= -1;
+		min *= -1;
+
+		if (INT_MAX / min < max) {
 			if (err != NULL)
 				*err = SY_ERROR_OVERFLOW;
 
 			return INT_MAX;
 		}
-	} else if (max < 0) {
-		if (INT_MAX + INT_MIN < 0) {
-			if (div(INT_MAX, min).quot > max) {
-				if (err != NULL)
-					*err = SY_ERROR_OVERFLOW;
+	}
+#endif
 
-				return INT_MAX;
-			}
-		} else {
-			max *= -1;
-			min *= -1;
+	if (max > 0 && min < 0 && div(INT_MIN, max).quot > min) {
+		if (err != NULL)
+			*err = SY_ERROR_UNDERFLOW;
 
-			if (INT_MAX / min < max) {
-				if (err != NULL)
-					*err = SY_ERROR_OVERFLOW;
-
-				return INT_MAX;
-			}
-		}
-	} else {
-		if (div(INT_MIN, max).quot > min) {
-			if (err != NULL)
-				*err = SY_ERROR_UNDERFLOW;
-
-			return INT_MIN;
-		}
+		return INT_MIN;
 	}
 
-	return x * y;
+	return max * min;
 }
