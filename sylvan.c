@@ -60,15 +60,24 @@ int sy_mul(int x, int y, enum sy_error *err)
 		return 0;
 
 	if (min > 0) {
-		if (INT_MAX / min < max) {
+		if (INT_MAX / max < min) {
 			if (err != NULL)
 				*err = SY_ERROR_OVERFLOW;
 
 			return INT_MAX;
 		}
 	} else if (max < 0) {
-		/* figure out how to handle this */
-		abort();
+		if (INT_MAX + INT_MIN < 0) {
+			if (div(INT_MAX, min).quot > max) {
+				if (err != NULL)
+					*err = SY_ERROR_OVERFLOW;
+
+				return INT_MAX;
+			}
+		} else {
+			/* TODO: handle strange machines */
+			abort();
+		}
 	} else {
 		if (div(INT_MIN, max).quot > min) {
 			if (err != NULL)

@@ -17,11 +17,11 @@ int main(void)
 	assert(sy_mul(INT_MIN, INT_MIN, NULL) == INT_MAX);
 
 	err = SY_ERROR_NONE;
-	assert(sy_mul(INT_MAX, 2, NULL) == INT_MAX);
+	assert(sy_mul(INT_MAX, 2, &err) == INT_MAX);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	err = SY_ERROR_NONE;
-	assert(sy_mul(INT_MIN, 2, NULL) == INT_MIN);
+	assert(sy_mul(INT_MIN, 2, &err) == INT_MIN);
 	assert(err == SY_ERROR_UNDERFLOW);
 
 	return 0;
