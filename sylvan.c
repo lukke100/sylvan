@@ -75,8 +75,15 @@ int sy_mul(int x, int y, enum sy_error *err)
 				return INT_MAX;
 			}
 		} else {
-			/* TODO: handle strange machines */
-			abort();
+			max *= -1;
+			min *= -1;
+
+			if (INT_MAX / min < max) {
+				if (err != NULL)
+					*err = SY_ERROR_OVERFLOW;
+
+				return INT_MAX;
+			}
 		}
 	} else {
 		if (div(INT_MIN, max).quot > min) {
