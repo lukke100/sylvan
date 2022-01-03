@@ -14,6 +14,7 @@ int main(void)
 	assert(sy_mul(INT_MAX, INT_MAX, NULL) == INT_MAX);
 	assert(sy_mul(INT_MAX, INT_MIN, NULL) == INT_MIN);
 	assert(sy_mul(INT_MIN, INT_MAX, NULL) == INT_MIN);
+	/* not strictly true according to the standard */
 	assert(sy_mul(INT_MIN, INT_MIN, NULL) == INT_MAX);
 
 	err = SY_ERROR_NONE;
@@ -23,6 +24,11 @@ int main(void)
 	err = SY_ERROR_NONE;
 	assert(sy_mul(INT_MIN, 2, &err) == INT_MIN);
 	assert(err == SY_ERROR_UNDERFLOW);
+
+	err = SY_ERROR_NONE;
+	/* not strictly true according to the standard */
+	assert(sy_mul(INT_MIN, INT_MIN, &err) == INT_MAX);
+	assert(err == SY_ERROR_OVERFLOW);
 
 	return 0;
 }
