@@ -4,7 +4,8 @@
 enum sy_error {
 	SY_ERROR_NONE,
 	SY_ERROR_OVERFLOW,
-	SY_ERROR_UNDERFLOW
+	SY_ERROR_UNDERFLOW,
+	SY_ERROR_DIVIDE_BY_ZERO
 };
 
 int sy_add(int x, int y, enum sy_error *err);

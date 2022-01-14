@@ -93,3 +93,38 @@ int sy_mul(int x, int y, enum sy_error *err)
 
 	return max * min;
 }
+
+int sy_div(int x, int y, enum sy_error *err)
+{
+	if (y == 0) {
+		if (err != NULL)
+			*err = SY_ERROR_DIVIDE_BY_ZERO;
+
+		if (x > 0)
+			return INT_MAX;
+		else if (x < 0)
+			return INT_MIN;
+		else
+			return 0;
+	}
+
+#if INT_MAX + INT_MIN < 0
+	if (x > 0 || y > 0)
+		return div(x, y).quot;
+
+	if (y < div(INT_MIN, INT_MAX).quot)
+		return div(x, y).quot;
+
+	if (x < y * INT_MAX) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+#elif INT_MAX + INT_MIN > 0
+
+#error "TODO: handle weird systems"
+
+#endif
+	return div(x, y).quot;
+}
