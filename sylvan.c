@@ -6,62 +6,62 @@
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 
-int sy_add(int x, int y, enum sy_error *err)
+long sy_ladd(long x, long y, enum sy_error *err)
 {
-	int max, min;
+	long max, min;
 
 	max = MAX(x, y);
 	min = MIN(x, y);
 
-	if (min > 0 && INT_MAX - min < max) {
+	if (min > 0 && LONG_MAX - min < max) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERFLOW;
 
-		return INT_MAX;
+		return LONG_MAX;
 	}
 
-	if (max < 0 && INT_MIN - max > min) {
+	if (max < 0 && LONG_MIN - max > min) {
 		if (err != NULL)
 			*err = SY_ERROR_UNDERFLOW;
 
-		return INT_MIN;
+		return LONG_MIN;
 	}
 
 	return max + min;
 }
 
-int sy_sub(int x, int y, enum sy_error *err)
+long sy_lsub(long x, long y, enum sy_error *err)
 {
-	if (y > 0 && INT_MIN + y > x) {
+	if (y > 0 && LONG_MIN + y > x) {
 		if (err != NULL)
 			*err = SY_ERROR_UNDERFLOW;
 
-		return INT_MIN;
+		return LONG_MIN;
 	}
 
-	if (y < 0 && INT_MAX + y < x) {
+	if (y < 0 && LONG_MAX + y < x) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERFLOW;
 
-		return INT_MAX;
+		return LONG_MAX;
 	}
 
 	return x - y;
 }
 
-int sy_mul(int x, int y, enum sy_error *err)
+long sy_lmul(long x, long y, enum sy_error *err)
 {
-	int max, min;
+	long max, min;
 
 	max = MAX(x, y);
 	min = MIN(x, y);
 
-#if INT_MAX + INT_MIN < 0
-	if (max < 0 && div(INT_MAX, min).quot > max) {
+#if LONG_MAX + LONG_MIN < 0
+	if (max < 0 && ldiv(LONG_MAX, min).quot > max) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERFLOW;
 
-		return INT_MAX;
+		return LONG_MAX;
 	}
 #else
 	if (max < 0) {
@@ -70,58 +70,58 @@ int sy_mul(int x, int y, enum sy_error *err)
 	}
 #endif
 
-	if (min > 0 && INT_MAX / max < min) {
+	if (min > 0 && LONG_MAX / max < min) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERFLOW;
 
-		return INT_MAX;
+		return LONG_MAX;
 	}
 
-	if (max > 0 && min < 0 && div(INT_MIN, max).quot > min) {
+	if (max > 0 && min < 0 && ldiv(LONG_MIN, max).quot > min) {
 		if (err != NULL)
 			*err = SY_ERROR_UNDERFLOW;
 
-		return INT_MIN;
+		return LONG_MIN;
 	}
 
 	return max * min;
 }
 
-int sy_div(int x, int y, enum sy_error *err)
+long sy_ldiv(long x, long y, enum sy_error *err)
 {
 	if (y == 0) {
 		if (err != NULL)
 			*err = SY_ERROR_DIVIDE_BY_ZERO;
 
 		if (x > 0)
-			return INT_MAX;
+			return LONG_MAX;
 		else if (x < 0)
-			return INT_MIN;
+			return LONG_MIN;
 		else
 			return 0;
 	}
 
-#if INT_MAX + INT_MIN < 0
-	if (y > 0 || y < div(INT_MIN, INT_MAX).quot)
-		return div(x, y).quot;
+#if LONG_MAX + LONG_MIN < 0
+	if (y > 0 || y < ldiv(LONG_MIN, LONG_MAX).quot)
+		return ldiv(x, y).quot;
 
-	if (x < y * INT_MAX) {
+	if (x < y * LONG_MAX) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERFLOW;
 
-		return INT_MAX;
+		return LONG_MAX;
 	}
-#elif INT_MAX + INT_MIN > 0
-	if (y > 0 || y < div(INT_MAX, INT_MIN).quot)
-		return div(x, y).quot;
+#elif LONG_MAX + LONG_MIN > 0
+	if (y > 0 || y < ldiv(LONG_MAX, LONG_MIN).quot)
+		return ldiv(x, y).quot;
 
-	if (x > y * INT_MIN) {
+	if (x > y * LONG_MIN) {
 		if (err != NULL)
 			*err = SY_ERROR_UNDERFLOW;
 
-		return INT_MIN;
+		return LONG_MIN;
 	}
 #endif
 
-	return div(x, y).quot;
+	return ldiv(x, y).quot;
 }
