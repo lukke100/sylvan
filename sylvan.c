@@ -125,3 +125,117 @@ long sy_ldiv(long x, long y, enum sy_error *err)
 
 	return ldiv(x, y).quot;
 }
+
+int sy_add(int x, int y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	long result;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_ladd(x, y, &tmperr);
+
+	if (result > INT_MAX || tmperr == SY_ERROR_OVERFLOW) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+
+	if (result < INT_MIN || tmperr == SY_ERROR_UNDERFLOW) {
+		if (err != NULL)
+			*err = SY_ERROR_UNDERFLOW;
+
+		return INT_MIN;
+	}
+
+	return result;
+}
+
+int sy_sub(int x, int y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	long result;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_lsub(x, y, &tmperr);
+
+	if (result > INT_MAX || tmperr == SY_ERROR_OVERFLOW) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+
+	if (result < INT_MIN || tmperr == SY_ERROR_UNDERFLOW) {
+		if (err != NULL)
+			*err = SY_ERROR_UNDERFLOW;
+
+		return INT_MIN;
+	}
+
+	return result;
+}
+
+int sy_mul(int x, int y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	long result;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_lmul(x, y, &tmperr);
+
+	if (result > INT_MAX || tmperr == SY_ERROR_OVERFLOW) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+
+	if (result < INT_MIN || tmperr == SY_ERROR_UNDERFLOW) {
+		if (err != NULL)
+			*err = SY_ERROR_UNDERFLOW;
+
+		return INT_MIN;
+	}
+
+	return result;
+}
+
+int sy_div(int x, int y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	long result;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_ldiv(x, y, &tmperr);
+
+	if (tmperr == SY_ERROR_DIVIDE_BY_ZERO) {
+		if (err != NULL)
+			*err = SY_ERROR_DIVIDE_BY_ZERO;
+
+		if (result > 0)
+			return INT_MAX;
+		else if (result < 0)
+			return INT_MIN;
+		else
+			return 0;
+	}
+
+#if INT_MAX + INT_MIN > 0
+	if (result < INT_MIN || tmperr == SY_ERROR_UNDERFLOW) {
+		if (err != NULL)
+			*err = SY_ERROR_UNDERFLOW;
+
+		return INT_MIN;
+	}
+#elif INT_MAX + INT_MIN < 0
+	if (result > INT_MAX || tmperr == SY_ERROR_OVERFLOW) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+#endif
+
+	return result;
+}
