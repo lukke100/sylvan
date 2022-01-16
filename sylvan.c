@@ -101,17 +101,7 @@ long sy_ldiv(long x, long y, enum sy_error *err)
 			return 0;
 	}
 
-#if LONG_MAX + LONG_MIN < 0
-	if (y > 0 || y < ldiv(LONG_MIN, LONG_MAX).quot)
-		return ldiv(x, y).quot;
-
-	if (x < y * LONG_MAX) {
-		if (err != NULL)
-			*err = SY_ERROR_OVERFLOW;
-
-		return LONG_MAX;
-	}
-#elif LONG_MAX + LONG_MIN > 0
+#if LONG_MAX + LONG_MIN > 0
 	if (y > 0 || y < ldiv(LONG_MAX, LONG_MIN).quot)
 		return ldiv(x, y).quot;
 
@@ -120,6 +110,16 @@ long sy_ldiv(long x, long y, enum sy_error *err)
 			*err = SY_ERROR_UNDERFLOW;
 
 		return LONG_MIN;
+	}
+#elif LONG_MAX + LONG_MIN < 0
+	if (y > 0 || y < ldiv(LONG_MIN, LONG_MAX).quot)
+		return ldiv(x, y).quot;
+
+	if (x < y * LONG_MAX) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return LONG_MAX;
 	}
 #endif
 
