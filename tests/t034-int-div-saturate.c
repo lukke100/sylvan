@@ -5,5 +5,32 @@
 
 int main(void)
 {
-	/* TODO: determine how this even works */
+	assert(sy_div_saturate(INT_MAX,  2, 0) == INT_MAX);
+	assert(sy_div_saturate(INT_MAX, -2, 0) == INT_MIN);
+	assert(sy_div_saturate(INT_MIN,  2, 0) == INT_MIN);
+	assert(sy_div_saturate(INT_MIN, -2, 0) == INT_MAX);
+
+	assert(sy_div_saturate(INT_MAX, INT_MAX, INT_MAX) == INT_MAX);
+	assert(sy_div_saturate(INT_MAX, INT_MAX,  1) ==  1);
+	assert(sy_div_saturate(INT_MAX, INT_MAX,  0) ==  0);
+	assert(sy_div_saturate(INT_MAX, INT_MAX, -1) == -1);
+	assert(sy_div_saturate(INT_MAX, INT_MAX, INT_MIN) == INT_MIN);
+
+	assert(sy_div_saturate(INT_MAX, INT_MIN, INT_MAX) == INT_MIN);
+	assert(sy_div_saturate(INT_MAX, INT_MIN,  1) == -1);
+	assert(sy_div_saturate(INT_MAX, INT_MIN,  0) ==  0);
+	assert(sy_div_saturate(INT_MAX, INT_MIN, -1) ==  1);
+	assert(sy_div_saturate(INT_MAX, INT_MIN, INT_MIN) == INT_MAX);
+
+	assert(sy_div_saturate(INT_MIN, INT_MAX, INT_MAX) == INT_MIN);
+	assert(sy_div_saturate(INT_MIN, INT_MAX,  1) == -1);
+	assert(sy_div_saturate(INT_MIN, INT_MAX,  0) ==  0);
+	assert(sy_div_saturate(INT_MIN, INT_MAX, -1) ==  1);
+	assert(sy_div_saturate(INT_MIN, INT_MAX, INT_MIN) == INT_MAX);
+
+	assert(sy_div_saturate(INT_MIN, INT_MIN, INT_MAX) == INT_MAX);
+	assert(sy_div_saturate(INT_MIN, INT_MIN,  1) ==  1);
+	assert(sy_div_saturate(INT_MIN, INT_MIN,  0) ==  0);
+	assert(sy_div_saturate(INT_MIN, INT_MIN, -1) == -1);
+	assert(sy_div_saturate(INT_MIN, INT_MIN, INT_MIN) == INT_MIN);
 }
