@@ -239,3 +239,43 @@ int sy_div(int x, int y, enum sy_error *err)
 
 	return result;
 }
+
+long sy_ladd_saturate(long x, long y, long bias)
+{
+	return 0;
+}
+
+long sy_lsub_saturate(long x, long y, long bias)
+{
+	return 0;
+}
+
+long sy_lmul_saturate(long x, long y)
+{
+	return 0;
+}
+
+long sy_ldiv_saturate(long x, long y, long bias)
+{
+	return 0;
+}
+
+int sy_add_saturate(int x, int y, int bias)
+{
+	return 0;
+}
+
+int sy_sub_saturate(int x, int y, int bias)
+{
+	return 0;
+}
+
+int sy_mul_saturate(int x, int y)
+{
+	return 0;
+}
+
+int sy_div_saturate(int x, int y, int bias)
+{
+	return 0;
+}
