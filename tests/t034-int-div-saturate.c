@@ -33,4 +33,10 @@ int main(void)
 	assert(sy_div_saturate(INT_MIN, INT_MIN,  0) ==  0);
 	assert(sy_div_saturate(INT_MIN, INT_MIN, -1) == -1);
 	assert(sy_div_saturate(INT_MIN, INT_MIN, INT_MIN) == INT_MIN);
+
+	assert(sy_div_saturate(0, 0, INT_MAX) == INT_MAX);
+	assert(sy_div_saturate(0, 0,  1) ==  1);
+	assert(sy_div_saturate(0, 0,  0) ==  0);
+	assert(sy_div_saturate(0, 0, -1) == -1);
+	assert(sy_div_saturate(0, 0, INT_MIN) == INT_MIN);
 }
