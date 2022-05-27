@@ -39,4 +39,10 @@ int main(void)
 	assert(sy_ldiv_saturate(0, 0,  0) ==  0);
 	assert(sy_ldiv_saturate(0, 0, -1) == -1);
 	assert(sy_ldiv_saturate(0, 0, LONG_MIN) == LONG_MIN);
+
+#if LONG_MAX + LONG_MIN > 0
+	assert(sy_ldiv_saturate(LONG_MAX - 1, LONG_MIN, 0) == 0);
+#elif LONG_MAX + LONG_MIN < 0
+	assert(sy_ldiv_saturate(LONG_MIN + 1, LONG_MAX, 0) == 0);
+#endif
 }
