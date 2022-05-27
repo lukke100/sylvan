@@ -291,7 +291,46 @@ long sy_lmul_saturate(long x, long y)
 
 long sy_ldiv_saturate(long x, long y, long bias)
 {
-	return 0;
+	if (y == 0) {
+		if (x > 0)
+			return LONG_MAX;
+		else if (x < 0)
+			return LONG_MIN;
+		else
+			return bias;
+	}
+
+	if (x == LONG_MAX) {
+		if (y == LONG_MAX)
+			return bias;
+		else if (y == LONG_MIN)
+			return sy_lmul_saturate(bias, -1);
+		else if (y > 0)
+			return LONG_MAX;
+		else if (y < 0)
+			return LONG_MIN;
+	}
+
+	if (x == LONG_MIN) {
+		if (y == LONG_MAX)
+			return sy_lmul_saturate(bias, -1);
+		else if (y == LONG_MIN)
+			return bias;
+		else if (y > 0)
+			return LONG_MIN;
+		else if (y < 0)
+			return LONG_MAX;
+	}
+
+#if LONG_MAX + LONG_MIN > 0
+	if (y == LONG_MIN)
+		return 0;
+#elif LONG_MAX + LONG_MIN  < 0
+	if (y == LONG_MAX)
+		return 0;
+#endif
+
+	return sy_ldiv(x, y, NULL);
 }
 
 int sy_add_saturate(int x, int y, int bias)
@@ -345,5 +384,44 @@ int sy_mul_saturate(int x, int y)
 
 int sy_div_saturate(int x, int y, int bias)
 {
-	return 0;
+	if (y == 0) {
+		if (x > 0)
+			return INT_MAX;
+		else if (x < 0)
+			return INT_MIN;
+		else
+			return bias;
+	}
+
+	if (x == INT_MAX) {
+		if (y == INT_MAX)
+			return bias;
+		else if (y == INT_MIN)
+			return sy_mul_saturate(bias, -1);
+		else if (y > 0)
+			return INT_MAX;
+		else if (y < 0)
+			return INT_MIN;
+	}
+
+	if (x == INT_MIN) {
+		if (y == INT_MAX)
+			return sy_mul_saturate(bias, -1);
+		else if (y == INT_MIN)
+			return bias;
+		else if (y > 0)
+			return INT_MIN;
+		else if (y < 0)
+			return INT_MAX;
+	}
+
+#if INT_MAX + INT_MIN > 0
+	if (y == INT_MIN)
+		return 0;
+#elif INT_MAX + INT_MIN  < 0
+	if (y == INT_MAX)
+		return 0;
+#endif
+
+	return sy_div(x, y, NULL);
 }
