@@ -1,10 +1,19 @@
 #include <limits.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 #include "sylvan.h"
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
+
+struct sy_pool {
+	int todo;
+};
+
+struct sy_pool_config {
+	int todo;
+};
 
 long sy_ladd(long x, long y, enum sy_error *err)
 {
@@ -424,4 +433,30 @@ int sy_div_saturate(int x, int y, int bias)
 #endif
 
 	return sy_div(x, y, NULL);
+}
+
+void sy_pool_init(struct sy_pool *pool, size_t pool_size,
+                  void configure(struct sy_pool_config *config,
+                                 void *user_data),
+                  void *user_data, enum sy_error *err)
+{
+	struct sy_pool_config config;
+
+	if (pool == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_POOL_TODO;
+
+		return;
+	}
+
+	/* TODO: dynamically determine the required pool size */
+	if (pool_size < 8) {
+		if (err != NULL)
+			*err = SY_ERROR_POOL_TODO;
+
+		return;
+	}
+
+	if (configure != NULL)
+		configure(&config, user_data);
 }
