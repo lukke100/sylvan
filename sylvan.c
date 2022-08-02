@@ -460,3 +460,8 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
 	if (configure != NULL)
 		configure(&config, user_data);
 }
+
+void sy_pool_add_column(struct sy_pool_config *config, int id,
+                        enum sy_type type, enum sy_error *err)
+{
+}

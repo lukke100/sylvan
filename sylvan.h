@@ -11,6 +11,12 @@ enum sy_error {
 	SY_ERROR_POOL_TODO
 };
 
+enum sy_type {
+	SY_TYPE_INT,
+	SY_TYPE_LONG,
+	SY_TYPE_CHARS
+};
+
 struct sy_pool;
 struct sy_pool_config;
 
@@ -38,5 +44,8 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
                   void configure(struct sy_pool_config *config,
                                  void *user_data),
                   void *user_data, enum sy_error *err);
+
+void sy_pool_add_column(struct sy_pool_config *config, int id,
+                        enum sy_type type, enum sy_error *err);
 
 #endif
