@@ -17,6 +17,10 @@ enum sy_type {
 	SY_TYPE_CHARS
 };
 
+enum {
+	SY_POOL_MAX_COLUMNS = 12
+};
+
 struct sy_pool;
 struct sy_pool_config;
 

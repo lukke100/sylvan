@@ -41,7 +41,7 @@ void configure_test_3(struct sy_pool_config *config, void *user_data)
 	enum sy_error err;
 	int column;
 
-	for (column = 1; column <= 12; ++column) {
+	for (column = 1; column <= SY_POOL_MAX_COLUMNS; ++column) {
 		err = SY_ERROR_NONE;
 		sy_pool_add_column(config, column, SY_TYPE_INT, &err);
 		assert(err == SY_ERROR_NONE);
