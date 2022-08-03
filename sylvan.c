@@ -10,10 +10,14 @@ struct sy_pool {
 	int todo;
 };
 
+struct column_decl {
+	int id;
+	enum sy_type type;
+};
+
 struct sy_pool_config {
-	int ids[12];
-	enum sy_type types[12];
-	size_t columns;
+	struct column_decl columns[12];
+	size_t num_columns;
 	enum sy_error poison;
 };
 
@@ -498,19 +502,19 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 		return;
 	}
 
-	if (config->columns + 1 > SY_POOL_MAX_COLUMNS) {
+	if (config->num_columns + 1 > SY_POOL_MAX_COLUMNS) {
 		*err = config->poison = SY_ERROR_POOL_TODO;
 		return;
 	}
 
-	for (idx = 0; idx < config->columns; ++idx) {
-		if (config->ids[idx] == id) {
+	for (idx = 0; idx < config->num_columns; ++idx) {
+		if (config->columns[idx].id == id) {
 			*err = config->poison = SY_ERROR_POOL_TODO;
 			return;
 		}
 	}
 
-	config->ids[config->columns]   = id;
-	config->types[config->columns] = type;
-	++(config->columns);
+	config->columns[idx].id   = id;
+	config->columns[idx].type = type;
+	++(config->num_columns);
 }
