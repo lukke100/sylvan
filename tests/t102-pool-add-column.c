@@ -39,6 +39,15 @@ void configure_test_2(struct sy_pool_config *config, void *user_data)
 void configure_test_3(struct sy_pool_config *config, void *user_data)
 {
 	enum sy_error err;
+
+	err = SY_ERROR_NONE;
+	sy_pool_add_column(NULL, 1, SY_TYPE_INT, &err);
+	assert(err == SY_ERROR_POOL_TODO);
+}
+
+void configure_test_4(struct sy_pool_config *config, void *user_data)
+{
+	enum sy_error err;
 	int column;
 
 	for (column = 1; column <= SY_POOL_MAX_COLUMNS; ++column) {
@@ -49,15 +58,6 @@ void configure_test_3(struct sy_pool_config *config, void *user_data)
 
 	err = SY_ERROR_NONE;
 	sy_pool_add_column(config, column, SY_TYPE_INT, &err);
-	assert(err == SY_ERROR_POOL_TODO);
-}
-
-void configure_test_4(struct sy_pool_config *config, void *user_data)
-{
-	enum sy_error err;
-
-	err = SY_ERROR_NONE;
-	sy_pool_add_column(NULL, 1, SY_TYPE_INT, &err);
 	assert(err == SY_ERROR_POOL_TODO);
 }
 
@@ -134,7 +134,7 @@ int main(void)
 
 	err = SY_ERROR_NONE;
 	sy_pool_init(pool, pool_size, configure_test_3, NULL, &err);
-	assert(err == SY_ERROR_POOL_TODO);
+	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
 	sy_pool_init(pool, pool_size, configure_test_4, NULL, &err);

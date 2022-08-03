@@ -11,7 +11,10 @@ struct sy_pool {
 };
 
 struct sy_pool_config {
-	int todo;
+	int ids[12];
+	enum sy_type types[12];
+	size_t columns;
+	enum sy_error poison;
 };
 
 long sy_ladd(long x, long y, enum sy_error *err)
@@ -439,7 +442,7 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
                                  void *user_data),
                   void *user_data, enum sy_error *err)
 {
-	struct sy_pool_config config;
+	struct sy_pool_config config = { 0 };
 
 	if (pool == NULL) {
 		if (err != NULL)
@@ -458,9 +461,56 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
 
 	if (configure != NULL)
 		configure(&config, user_data);
+
+	if (config.poison) {
+		*err = config.poison;
+		return;
+	}
 }
 
 void sy_pool_add_column(struct sy_pool_config *config, int id,
                         enum sy_type type, enum sy_error *err)
 {
+	size_t idx;
+
+	if (config == NULL) {
+		*err = SY_ERROR_POOL_TODO;
+		return;
+	}
+
+	if (config->poison) {
+		*err = config->poison;
+		return;
+	}
+
+	if (id < 1) {
+		*err = config->poison = SY_ERROR_POOL_TODO;
+		return;
+	}
+
+	switch (type) {
+	case SY_TYPE_INT:
+	case SY_TYPE_LONG:
+	case SY_TYPE_CHARS:
+		break;
+	default:
+		*err = config->poison = SY_ERROR_POOL_TODO;
+		return;
+	}
+
+	if (config->columns + 1 > SY_POOL_MAX_COLUMNS) {
+		*err = config->poison = SY_ERROR_POOL_TODO;
+		return;
+	}
+
+	for (idx = 0; idx < config->columns; ++idx) {
+		if (config->ids[idx] == id) {
+			*err = config->poison = SY_ERROR_POOL_TODO;
+			return;
+		}
+	}
+
+	config->ids[config->columns]   = id;
+	config->types[config->columns] = type;
+	++(config->columns);
 }
