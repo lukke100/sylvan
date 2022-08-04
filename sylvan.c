@@ -18,7 +18,7 @@ struct column_decl {
 struct sy_pool_config {
 	struct column_decl columns[12];
 	size_t num_columns;
-	enum sy_error poison;
+	enum sy_error last_error;
 };
 
 long sy_ladd(long x, long y, enum sy_error *err)
@@ -466,8 +466,8 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
 	if (configure != NULL)
 		configure(&config, user_data);
 
-	if (config.poison) {
-		*err = config.poison;
+	if (config.last_error != SY_ERROR_NONE) {
+		*err = config.last_error;
 		return;
 	}
 
@@ -486,15 +486,8 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 		return;
 	}
 
-	if (config->poison) {
-		if (err != NULL)
-			*err = config->poison;
-
-		return;
-	}
-
 	if (id < 1) {
-		config->poison = SY_ERROR_POOL_TODO;
+		config->last_error = SY_ERROR_POOL_TODO;
 
 		if (err != NULL)
 			*err = SY_ERROR_POOL_TODO;
@@ -508,7 +501,7 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 	case SY_TYPE_CHARS:
 		break;
 	default:
-		config->poison = SY_ERROR_POOL_TODO;
+		config->last_error = SY_ERROR_POOL_TODO;
 
 		if (err != NULL)
 			*err = SY_ERROR_POOL_TODO;
@@ -517,7 +510,7 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 	}
 
 	if (config->num_columns + 1 > SY_POOL_MAX_COLUMNS) {
-		config->poison = SY_ERROR_POOL_TODO;
+		config->last_error = SY_ERROR_POOL_TODO;
 
 		if (err != NULL)
 			*err = SY_ERROR_POOL_TODO;
@@ -527,7 +520,7 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 
 	for (idx = 0; idx < config->num_columns; ++idx) {
 		if (config->columns[idx].id == id) {
-			config->poison = SY_ERROR_POOL_TODO;
+			config->last_error = SY_ERROR_POOL_TODO;
 
 			if (err != NULL)
 				*err = SY_ERROR_POOL_TODO;

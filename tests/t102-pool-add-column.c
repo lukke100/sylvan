@@ -101,19 +101,6 @@ void configure_test_8(struct sy_pool_config *config, void *user_data)
 	assert(err == SY_ERROR_POOL_TODO);
 }
 
-void configure_test_9(struct sy_pool_config *config, void *user_data)
-{
-	enum sy_error err;
-
-	err = SY_ERROR_NONE;
-	sy_pool_add_column(config, 0, SY_TYPE_INT, &err);
-	assert(err == SY_ERROR_POOL_TODO);
-
-	err = SY_ERROR_NONE;
-	sy_pool_add_column(config, 1, SY_TYPE_INT, &err);
-	assert(err == SY_ERROR_POOL_TODO);
-}
-
 int main(void)
 {
 	struct sy_pool *pool;
@@ -154,10 +141,6 @@ int main(void)
 
 	err = SY_ERROR_NONE;
 	sy_pool_init(pool, pool_size, configure_test_8, NULL, &err);
-	assert(err == SY_ERROR_POOL_TODO);
-
-	err = SY_ERROR_NONE;
-	sy_pool_init(pool, pool_size, configure_test_9, NULL, &err);
 	assert(err == SY_ERROR_POOL_TODO);
 
 	free(pool);
