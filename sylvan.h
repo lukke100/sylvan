@@ -52,4 +52,6 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
 void sy_pool_add_column(struct sy_pool_config *config, int id,
                         enum sy_type type, enum sy_error *err);
 
+int sy_pool_make_row(struct sy_pool *pool, enum sy_error *err);
+
 #endif

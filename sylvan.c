@@ -7,7 +7,7 @@
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 
 struct sy_pool {
-	int todo;
+	int last_id;
 };
 
 struct column_decl {
@@ -456,7 +456,7 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
 	}
 
 	/* TODO: dynamically determine the required pool size */
-	if (pool_size < 8) {
+	if (pool_size < sizeof(struct sy_pool)) {
 		if (err != NULL)
 			*err = SY_ERROR_POOL_TODO;
 
@@ -470,6 +470,8 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
 		*err = config.poison;
 		return;
 	}
+
+	pool->last_id = 0;
 }
 
 void sy_pool_add_column(struct sy_pool_config *config, int id,
@@ -537,4 +539,18 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 	config->columns[idx].id   = id;
 	config->columns[idx].type = type;
 	++(config->num_columns);
+}
+
+int sy_pool_make_row(struct sy_pool *pool, enum sy_error *err)
+{
+	if (pool == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_POOL_TODO;
+
+		return 0;
+	}
+
+	/* TODO: handle when last_id == INT_MAX. it's not a testable case */
+
+	return ++(pool->last_id);
 }
