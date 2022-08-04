@@ -478,17 +478,25 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 	size_t idx;
 
 	if (config == NULL) {
-		*err = SY_ERROR_POOL_TODO;
+		if (err != NULL)
+			*err = SY_ERROR_POOL_TODO;
+
 		return;
 	}
 
 	if (config->poison) {
-		*err = config->poison;
+		if (err != NULL)
+			*err = config->poison;
+
 		return;
 	}
 
 	if (id < 1) {
-		*err = config->poison = SY_ERROR_POOL_TODO;
+		config->poison = SY_ERROR_POOL_TODO;
+
+		if (err != NULL)
+			*err = SY_ERROR_POOL_TODO;
+
 		return;
 	}
 
@@ -498,18 +506,30 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 	case SY_TYPE_CHARS:
 		break;
 	default:
-		*err = config->poison = SY_ERROR_POOL_TODO;
+		config->poison = SY_ERROR_POOL_TODO;
+
+		if (err != NULL)
+			*err = SY_ERROR_POOL_TODO;
+
 		return;
 	}
 
 	if (config->num_columns + 1 > SY_POOL_MAX_COLUMNS) {
-		*err = config->poison = SY_ERROR_POOL_TODO;
+		config->poison = SY_ERROR_POOL_TODO;
+
+		if (err != NULL)
+			*err = SY_ERROR_POOL_TODO;
+
 		return;
 	}
 
 	for (idx = 0; idx < config->num_columns; ++idx) {
 		if (config->columns[idx].id == id) {
-			*err = config->poison = SY_ERROR_POOL_TODO;
+			config->poison = SY_ERROR_POOL_TODO;
+
+			if (err != NULL)
+				*err = SY_ERROR_POOL_TODO;
+
 			return;
 		}
 	}
