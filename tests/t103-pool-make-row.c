@@ -11,7 +11,7 @@ int main(void)
 	int rows[NUM_ROWS], row;
 	struct sy_pool *pool;
 	enum sy_error err;
-	size_t pool_size, idx;;
+	size_t pool_size, idx;
 
 	pool_size = 256;
 	pool = malloc(pool_size);
