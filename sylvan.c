@@ -141,6 +141,46 @@ long sy_ldiv(long x, long y, enum sy_error *err)
 	return ldiv(x, y).quot;
 }
 
+long sy_lgcd(long x, long y)
+{
+	unsigned long j, k, result;
+
+	if (x < 0)
+		j = ~(unsigned long)x + 1;
+	else
+		j = x;
+
+	if (y < 0)
+		k = ~(unsigned long)y + 1;
+	else
+		k = y;
+
+	for (;;) {
+		if (j == 0) {
+			result = k;
+			break;
+		}
+
+		k %= j;
+
+		if (k == 0) {
+			result = j;
+			break;
+		}
+
+		j %= k;
+	}
+
+#if LONG_MAX + LONG_MIN < 0
+	if (result > LONG_MAX) {
+		result -= LONG_MAX;
+		return -LONG_MAX - (long)result;
+	}
+#endif
+
+	return result;
+}
+
 int sy_add(int x, int y, enum sy_error *err)
 {
 	enum sy_error tmperr;
