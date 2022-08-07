@@ -36,6 +36,8 @@ int sy_sub(int x, int y, enum sy_error *err);
 int sy_mul(int x, int y, enum sy_error *err);
 int sy_div(int x, int y, enum sy_error *err);
 
+int sy_gcd(int x, int y);
+
 long sy_ladd_saturate(long x, long y, long bias);
 long sy_lsub_saturate(long x, long y, long bias);
 long sy_lmul_saturate(long x, long y);

@@ -295,6 +295,46 @@ int sy_div(int x, int y, enum sy_error *err)
 	return result;
 }
 
+int sy_gcd(int x, int y)
+{
+	unsigned j, k, result;
+
+	if (x < 0)
+		j = ~(unsigned)x + 1;
+	else
+		j = x;
+
+	if (y < 0)
+		k = ~(unsigned)y + 1;
+	else
+		k = y;
+
+	for (;;) {
+		if (j == 0) {
+			result = k;
+			break;
+		}
+
+		k %= j;
+
+		if (k == 0) {
+			result = j;
+			break;
+		}
+
+		j %= k;
+	}
+
+#if INT_MAX + INT_MIN < 0
+	if (result > INT_MAX) {
+		result -= INT_MAX;
+		return -INT_MAX - (int)result;
+	}
+#endif
+
+	return result;
+}
+
 long sy_ladd_saturate(long x, long y, long bias)
 {
 	long max, min;
