@@ -6,7 +6,7 @@ int main(void)
 {
 	assert(sy_gcd( 24681,  13566) ==   57);
 	assert(sy_gcd(-31816,  22116) ==  388);
-	assert(sy_gcd(-10082, -23643) ==   71);
+	assert(sy_gcd( 10082, -23643) ==   71);
 	assert(sy_gcd(-28367, -25381) == 1493);
 
 	assert(sy_gcd( 21133, 0) == 21133);
