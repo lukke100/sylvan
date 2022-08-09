@@ -141,46 +141,6 @@ long sy_ldiv(long x, long y, enum sy_error *err)
 	return ldiv(x, y).quot;
 }
 
-long sy_lgcd(long x, long y)
-{
-	unsigned long j, k, result;
-
-	if (x < 0)
-		j = ~(unsigned long)x + 1;
-	else
-		j = x;
-
-	if (y < 0)
-		k = ~(unsigned long)y + 1;
-	else
-		k = y;
-
-	for (;;) {
-		if (j == 0) {
-			result = k;
-			break;
-		}
-
-		k %= j;
-
-		if (k == 0) {
-			result = j;
-			break;
-		}
-
-		j %= k;
-	}
-
-#if LONG_MAX + LONG_MIN < 0
-	if (result > LONG_MAX) {
-		result -= LONG_MAX;
-		return -LONG_MAX - (long)result;
-	}
-#endif
-
-	return result;
-}
-
 int sy_add(int x, int y, enum sy_error *err)
 {
 	enum sy_error tmperr;
@@ -289,46 +249,6 @@ int sy_div(int x, int y, enum sy_error *err)
 			*err = SY_ERROR_OVERFLOW;
 
 		return INT_MAX;
-	}
-#endif
-
-	return result;
-}
-
-int sy_gcd(int x, int y)
-{
-	unsigned j, k, result;
-
-	if (x < 0)
-		j = ~(unsigned)x + 1;
-	else
-		j = x;
-
-	if (y < 0)
-		k = ~(unsigned)y + 1;
-	else
-		k = y;
-
-	for (;;) {
-		if (j == 0) {
-			result = k;
-			break;
-		}
-
-		k %= j;
-
-		if (k == 0) {
-			result = j;
-			break;
-		}
-
-		j %= k;
-	}
-
-#if INT_MAX + INT_MIN < 0
-	if (result > INT_MAX) {
-		result -= INT_MAX;
-		return -INT_MAX - (int)result;
 	}
 #endif
 
