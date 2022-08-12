@@ -44,6 +44,18 @@ int sy_sub_saturate(int x, int y, int bias);
 int sy_mul_saturate(int x, int y);
 int sy_div_saturate(int x, int y, int bias);
 
+size_t sy_zadd(size_t x, size_t y, enum sy_error *err);
+size_t sy_zsub(size_t x, size_t y, enum sy_error *err);
+size_t sy_zmul(size_t x, size_t y, enum sy_error *err);
+size_t sy_zdiv(size_t x, size_t y, enum sy_error *err);
+
+size_t sy_zgcd(size_t x, size_t y);
+size_t sy_zlcm(size_t x, size_t y, enum sy_error *err);
+
+size_t sy_zadd_saturate(size_t x, size_t y);
+size_t sy_zmul_saturate(size_t x, size_t y);
+size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias);
+
 void sy_pool_init(struct sy_pool *pool, size_t pool_size,
                   void configure(struct sy_pool_config *config,
                                  void *user_data),
