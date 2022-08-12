@@ -66,7 +66,7 @@ void configure_test_5(struct sy_pool_config *config, void *user_data)
 	enum sy_error err;
 
 	err = SY_ERROR_NONE;
-	sy_pool_add_column(config, 1, -1, &err);
+	sy_pool_add_column(config, 1, 0, &err);
 	assert(err == SY_ERROR_POOL_TODO);
 }
 

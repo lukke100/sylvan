@@ -12,7 +12,7 @@ enum sy_error {
 };
 
 enum sy_type {
-	SY_TYPE_INT,
+	SY_TYPE_INT = 1,
 	SY_TYPE_LONG,
 	SY_TYPE_CHARS
 };
