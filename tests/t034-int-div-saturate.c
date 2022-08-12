@@ -45,4 +45,6 @@ int main(void)
 #elif INT_MAX + INT_MIN < 0
 	assert(sy_div_saturate(INT_MIN + 1, INT_MAX, 0) == 0);
 #endif
+
+	return 0;
 }

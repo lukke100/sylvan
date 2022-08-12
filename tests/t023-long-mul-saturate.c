@@ -13,4 +13,6 @@ int main(void)
 	assert(sy_lmul_saturate(LONG_MAX, LONG_MAX) == LONG_MAX);
 	assert(sy_lmul_saturate(LONG_MAX, LONG_MIN) == LONG_MIN);
 	assert(sy_lmul_saturate(LONG_MIN, LONG_MIN) == LONG_MAX);
+
+	return 0;
 }

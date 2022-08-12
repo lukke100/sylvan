@@ -45,4 +45,6 @@ int main(void)
 #elif LONG_MAX + LONG_MIN < 0
 	assert(sy_ldiv_saturate(LONG_MIN + 1, LONG_MAX, 0) == 0);
 #endif
+
+	return 0;
 }

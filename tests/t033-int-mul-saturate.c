@@ -13,4 +13,6 @@ int main(void)
 	assert(sy_mul_saturate(INT_MAX, INT_MAX) == INT_MAX);
 	assert(sy_mul_saturate(INT_MAX, INT_MIN) == INT_MIN);
 	assert(sy_mul_saturate(INT_MIN, INT_MIN) == INT_MAX);
+
+	return 0;
 }
