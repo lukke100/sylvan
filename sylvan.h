@@ -2,6 +2,10 @@
 #define SYLVAN_H
 #include <stddef.h>
 
+enum {
+	SY_POOL_MAX_COLUMNS = 12
+};
+
 enum sy_error {
 	SY_ERROR_NONE,
 	SY_ERROR_OVERFLOW,
@@ -15,10 +19,6 @@ enum sy_type {
 	SY_TYPE_INT = 1,
 	SY_TYPE_LONG,
 	SY_TYPE_CHARS
-};
-
-enum {
-	SY_POOL_MAX_COLUMNS = 12
 };
 
 struct sy_pool;

@@ -6,19 +6,28 @@
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 
-struct sy_pool {
-	int last_id;
-};
-
-struct column_decl {
+struct colcfg {
 	int id;
 	enum sy_type type;
 };
 
+struct col {
+	struct colcfg cfg;
+	size_t offset;
+};
+
+struct sy_pool {
+	struct col *cols;
+	size_t *blks;
+	size_t numcols;
+	size_t numblks;
+	int lastid;
+};
+
 struct sy_pool_config {
-	struct column_decl columns[12];
-	size_t num_columns;
-	enum sy_error last_error;
+	struct colcfg cols[SY_POOL_MAX_COLUMNS];
+	size_t numcols;
+	enum sy_error lasterr;
 };
 
 long sy_ladd(long x, long y, enum sy_error *err)
@@ -446,7 +455,7 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
                                  void *user_data),
                   void *user_data, enum sy_error *err)
 {
-	struct sy_pool_config config = { 0 };
+	struct sy_pool_config cfg = { 0 };
 
 	if (pool == NULL) {
 		if (err != NULL)
@@ -455,8 +464,7 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
 		return;
 	}
 
-	/* TODO: dynamically determine the required pool size */
-	if (pool_size < sizeof(struct sy_pool)) {
+	if (pool_size < sizeof(*pool)) {
 		if (err != NULL)
 			*err = SY_ERROR_POOL_TODO;
 
@@ -464,14 +472,16 @@ void sy_pool_init(struct sy_pool *pool, size_t pool_size,
 	}
 
 	if (configure != NULL)
-		configure(&config, user_data);
+		configure(&cfg, user_data);
 
-	if (config.last_error != SY_ERROR_NONE) {
-		*err = config.last_error;
+	if (cfg.lasterr != SY_ERROR_NONE) {
+		if (err != NULL)
+			*err = cfg.lasterr;
+
 		return;
 	}
 
-	pool->last_id = 0;
+	pool->lastid = 0;
 }
 
 void sy_pool_add_column(struct sy_pool_config *config, int id,
@@ -487,7 +497,7 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 	}
 
 	if (id < 1) {
-		config->last_error = SY_ERROR_POOL_TODO;
+		config->lasterr = SY_ERROR_POOL_TODO;
 
 		if (err != NULL)
 			*err = SY_ERROR_POOL_TODO;
@@ -501,7 +511,7 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 	case SY_TYPE_CHARS:
 		break;
 	default:
-		config->last_error = SY_ERROR_POOL_TODO;
+		config->lasterr = SY_ERROR_POOL_TODO;
 
 		if (err != NULL)
 			*err = SY_ERROR_POOL_TODO;
@@ -509,8 +519,8 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 		return;
 	}
 
-	if (config->num_columns + 1 > SY_POOL_MAX_COLUMNS) {
-		config->last_error = SY_ERROR_POOL_TODO;
+	if (config->numcols + 1 > SY_POOL_MAX_COLUMNS) {
+		config->lasterr = SY_ERROR_POOL_TODO;
 
 		if (err != NULL)
 			*err = SY_ERROR_POOL_TODO;
@@ -518,9 +528,9 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 		return;
 	}
 
-	for (idx = 0; idx < config->num_columns; ++idx) {
-		if (config->columns[idx].id == id) {
-			config->last_error = SY_ERROR_POOL_TODO;
+	for (idx = 0; idx < config->numcols; ++idx) {
+		if (config->cols[idx].id == id) {
+			config->lasterr = SY_ERROR_POOL_TODO;
 
 			if (err != NULL)
 				*err = SY_ERROR_POOL_TODO;
@@ -529,9 +539,9 @@ void sy_pool_add_column(struct sy_pool_config *config, int id,
 		}
 	}
 
-	config->columns[idx].id   = id;
-	config->columns[idx].type = type;
-	++(config->num_columns);
+	config->cols[idx].id   = id;
+	config->cols[idx].type = type;
+	++(config->numcols);
 }
 
 int sy_pool_make_row(struct sy_pool *pool, enum sy_error *err)
@@ -543,7 +553,7 @@ int sy_pool_make_row(struct sy_pool *pool, enum sy_error *err)
 		return 0;
 	}
 
-	/* TODO: handle when last_id == INT_MAX. it's not a testable case */
+	/* TODO: handle when lastid == INT_MAX. it's not a testable case */
 
-	return ++(pool->last_id);
+	return ++(pool->lastid);
 }
