@@ -17,10 +17,8 @@ struct col {
 };
 
 struct sy_pool {
-	struct col *cols;
-	size_t *blks;
+	size_t size;
 	size_t numcols;
-	size_t numblks;
 	int lastid;
 };
 
