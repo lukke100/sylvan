@@ -11,7 +11,7 @@ int main(void)
 	assert(sy_zlcm(2, 0, NULL) == 0);
 	assert(sy_zlcm(0, 0, NULL) == 0);
 
-	assert(sy_zlcm(ZMAX, ZMAX - 1u, NULL) == ZMAX);
+	assert(sy_zlcm(ZMAX, ZMAX - 1, NULL) == ZMAX);
 
 	err = SY_ERROR_NONE;
 	sy_zlcm(2, 0, &err);
