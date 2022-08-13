@@ -448,6 +448,140 @@ int sy_div_saturate(int x, int y, int bias)
 	return sy_div(x, y, NULL);
 }
 
+size_t sy_zadd(size_t x, size_t y, enum sy_error *err)
+{
+	if (~(size_t)0 - x < y) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return ~(size_t)0;
+	}
+
+	return x + y;
+}
+
+size_t sy_zsub(size_t x, size_t y, enum sy_error *err)
+{
+	if (y > x) {
+		if (err != NULL)
+			*err = SY_ERROR_UNDERFLOW;
+
+		return 0;
+	}
+
+	return x - y;
+}
+
+size_t sy_zmul(size_t x, size_t y, enum sy_error *err)
+{
+	if (x == 0)
+		return 0;
+
+	if (~(size_t)0 / x < y) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return ~(size_t)0;
+	}
+
+	return x * y;
+}
+
+size_t sy_zdiv(size_t x, size_t y, enum sy_error *err)
+{
+	if (y == 0) {
+		if (err != NULL)
+			*err = SY_ERROR_DIVIDE_BY_ZERO;
+
+		if (x > 0)
+			return ~(size_t)0;
+		else
+			return 0;
+	}
+
+	return x / y;
+}
+
+size_t sy_zgcd(size_t x, size_t y)
+{
+	for (;;) {
+		if (x == 0)
+			return y;
+
+		y %= x;
+
+		if (y == 0)
+			return x;
+
+		x %= y;
+	}
+}
+
+size_t sy_zlcm(size_t x, size_t y, enum sy_error *err)
+{
+	size_t gcd, result;
+	enum sy_error tmperr;
+
+	gcd = sy_zgcd(x, y);
+
+	if (gcd == 0)
+		return 0;
+
+	x /= gcd;
+	y /= gcd;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_zmul(x, y, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return ~(size_t)0;
+	}
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_zmul(result, gcd, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return ~(size_t)0;
+	}
+
+	return result;
+}
+
+size_t sy_zadd_saturate(size_t x, size_t y)
+{
+	return sy_zadd(x, y, NULL);
+}
+
+size_t sy_zmul_saturate(size_t x, size_t y)
+{
+	return sy_zmul(x, y, NULL);
+}
+
+size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias)
+{
+	if (y == 0) {
+		if (x == 0)
+			return bias;
+		else
+			return ~(size_t)0;
+	}
+
+	if (x == ~(size_t)0) {
+		if (y == ~(size_t)0)
+			return bias;
+		else
+			return ~(size_t)0;
+	}
+
+	return x / y;
+}
+
 void sy_pool_init(struct sy_pool *pool, size_t pool_size,
                   void configure(struct sy_pool_config *config,
                                  void *user_data),
