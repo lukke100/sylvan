@@ -493,10 +493,10 @@ size_t sy_zdiv(size_t x, size_t y, enum sy_error *err)
 		if (err != NULL)
 			*err = SY_ERROR_DIVIDE_BY_ZERO;
 
-		if (x > 0)
-			return ~(size_t)0;
-		else
+		if (x == 0)
 			return 0;
+		else
+			return ~(size_t)0;
 	}
 
 	return x / y;
