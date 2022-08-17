@@ -14,10 +14,16 @@ long sy_lsub(long x, long y, enum sy_error *err);
 long sy_lmul(long x, long y, enum sy_error *err);
 long sy_ldiv(long x, long y, enum sy_error *err);
 
+long sy_lgcd(long x, long y, enum sy_error *err);
+long sy_llcm(long x, long y, enum sy_error *err);
+
 int sy_add(int x, int y, enum sy_error *err);
 int sy_sub(int x, int y, enum sy_error *err);
 int sy_mul(int x, int y, enum sy_error *err);
 int sy_div(int x, int y, enum sy_error *err);
+
+int sy_gcd(int x, int y, enum sy_error *err);
+int sy_lcm(int x, int y, enum sy_error *err);
 
 long sy_ladd_saturate(long x, long y, long bias);
 long sy_lsub_saturate(long x, long y, long bias);

@@ -125,6 +125,16 @@ long sy_ldiv(long x, long y, enum sy_error *err)
 	return ldiv(x, y).quot;
 }
 
+long sy_lgcd(long x, long y, enum sy_error *err)
+{
+	/* TODO */
+}
+
+long sy_llcm(long x, long y, enum sy_error *err)
+{
+	/* TODO */
+}
+
 int sy_add(int x, int y, enum sy_error *err)
 {
 	enum sy_error tmperr;
@@ -237,6 +247,16 @@ int sy_div(int x, int y, enum sy_error *err)
 #endif
 
 	return result;
+}
+
+int sy_gcd(int x, int y, enum sy_error *err)
+{
+	/* TODO */
+}
+
+int sy_lcm(int x, int y, enum sy_error *err)
+{
+	/* TODO */
 }
 
 long sy_ladd_saturate(long x, long y, long bias)
