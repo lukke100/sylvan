@@ -1,32 +1,9 @@
 #include <limits.h>
 #include <stdlib.h>
-#include <string.h>
 #include "sylvan.h"
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
-
-struct colcfg {
-	int id;
-	enum sy_type type;
-};
-
-struct col {
-	struct colcfg cfg;
-	size_t offset;
-};
-
-struct sy_pool {
-	size_t size;
-	size_t numcols;
-	int lastid;
-};
-
-struct sy_pool_config {
-	struct colcfg cols[SY_POOL_MAX_COLUMNS];
-	size_t numcols;
-	enum sy_error lasterr;
-};
 
 long sy_ladd(long x, long y, enum sy_error *err)
 {
@@ -580,112 +557,4 @@ size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias)
 	}
 
 	return x / y;
-}
-
-void sy_pool_init(struct sy_pool *pool, size_t pool_size,
-                  void configure(struct sy_pool_config *config,
-                                 void *user_data),
-                  void *user_data, enum sy_error *err)
-{
-	struct sy_pool_config cfg = { 0 };
-
-	if (pool == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_POOL_TODO;
-
-		return;
-	}
-
-	if (pool_size < sizeof(*pool)) {
-		if (err != NULL)
-			*err = SY_ERROR_POOL_TODO;
-
-		return;
-	}
-
-	if (configure != NULL)
-		configure(&cfg, user_data);
-
-	if (cfg.lasterr != SY_ERROR_NONE) {
-		if (err != NULL)
-			*err = cfg.lasterr;
-
-		return;
-	}
-
-	pool->lastid = 0;
-}
-
-void sy_pool_add_column(struct sy_pool_config *config, int id,
-                        enum sy_type type, enum sy_error *err)
-{
-	size_t idx;
-
-	if (config == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_POOL_TODO;
-
-		return;
-	}
-
-	if (id < 1) {
-		config->lasterr = SY_ERROR_POOL_TODO;
-
-		if (err != NULL)
-			*err = SY_ERROR_POOL_TODO;
-
-		return;
-	}
-
-	switch (type) {
-	case SY_TYPE_INT:
-	case SY_TYPE_LONG:
-	case SY_TYPE_CHARS:
-		break;
-	default:
-		config->lasterr = SY_ERROR_POOL_TODO;
-
-		if (err != NULL)
-			*err = SY_ERROR_POOL_TODO;
-
-		return;
-	}
-
-	if (config->numcols + 1 > SY_POOL_MAX_COLUMNS) {
-		config->lasterr = SY_ERROR_POOL_TODO;
-
-		if (err != NULL)
-			*err = SY_ERROR_POOL_TODO;
-
-		return;
-	}
-
-	for (idx = 0; idx < config->numcols; ++idx) {
-		if (config->cols[idx].id == id) {
-			config->lasterr = SY_ERROR_POOL_TODO;
-
-			if (err != NULL)
-				*err = SY_ERROR_POOL_TODO;
-
-			return;
-		}
-	}
-
-	config->cols[idx].id   = id;
-	config->cols[idx].type = type;
-	++(config->numcols);
-}
-
-int sy_pool_make_row(struct sy_pool *pool, enum sy_error *err)
-{
-	if (pool == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_POOL_TODO;
-
-		return 0;
-	}
-
-	/* TODO: handle when lastid == INT_MAX. it's not a testable case */
-
-	return ++(pool->lastid);
 }
