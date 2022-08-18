@@ -127,12 +127,89 @@ long sy_ldiv(long x, long y, enum sy_error *err)
 
 long sy_lgcd(long x, long y, enum sy_error *err)
 {
-	/* TODO */
+#if LONG_MAX + LONG_MIN < 0
+	if (x < -LONG_MAX || y < -LONG_MAX) {
+		if (x == 0 || y == 0) {
+			if (err != NULL)
+				*err = SY_ERROR_OVERFLOW;
+
+			return LONG_MAX;
+		}
+
+		while (x < -LONG_MAX || y < -LONG_MAX) {
+			if (x == y) {
+				if (err != NULL)
+					*err = SY_ERROR_OVERFLOW;
+
+				return LONG_MAX;
+			}
+
+			if (x < y)
+				x -= y;
+			else
+				y -= x;
+		}
+	}
+#endif
+
+	x = labs(x);
+	y = labs(y);
+
+	for (;;) {
+		if (x == 0)
+			return y;
+
+		y %= x;
+
+		if (y == 0)
+			return x;
+
+		x %= y;
+	}
 }
 
 long sy_llcm(long x, long y, enum sy_error *err)
 {
-	/* TODO */
+	enum sy_error tmperr;
+	long gcd, result;
+
+	tmperr = SY_ERROR_NONE;
+	gcd = sy_lgcd(x, y, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return LONG_MAX;
+	}
+
+	if (gcd == 0)
+		return 0;
+
+	x /= gcd;
+	y /= gcd;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_lmul(x, y, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return LONG_MAX;
+	}
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_lmul(result, gcd, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return LONG_MAX;
+	}
+
+	return result;
 }
 
 int sy_add(int x, int y, enum sy_error *err)
@@ -251,12 +328,38 @@ int sy_div(int x, int y, enum sy_error *err)
 
 int sy_gcd(int x, int y, enum sy_error *err)
 {
-	/* TODO */
+	enum sy_error tmperr;
+	long result;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_lgcd(x, y, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE || result > INT_MAX) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+
+	return result;
 }
 
 int sy_lcm(int x, int y, enum sy_error *err)
 {
-	/* TODO */
+	enum sy_error tmperr;
+	long result;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_llcm(x, y, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE || result > INT_MAX) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+
+	return result;
 }
 
 long sy_ladd_saturate(long x, long y, long bias)
