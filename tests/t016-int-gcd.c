@@ -12,7 +12,7 @@ int main(void)
 	assert(sy_gcd( 0, 0, NULL) == 0);
 
 #if INT_MAX + INT_MIN < 0
-	assert(sy_gcd(INT_MIN, 0, NULL) == INT_MIN);
+	assert(sy_gcd(INT_MIN, 0, NULL) == INT_MAX);
 #endif
 
 	err = SY_ERROR_NONE;
