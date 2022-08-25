@@ -738,3 +738,31 @@ long sy_atol(const char **str, size_t count, enum sy_error *err)
 
 	return result;
 }
+
+int sy_atoi(const char **str, size_t count, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	long result;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_atol(str, count, &tmperr);
+
+	if (tmperr == SY_ERROR_OVERFLOW || result > INT_MAX) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+
+	if (tmperr == SY_ERROR_UNDERFLOW || result < INT_MIN) {
+		if (err != NULL)
+			*err = SY_ERROR_UNDERFLOW;
+
+		return INT_MIN;
+	}
+
+	if (tmperr != SY_ERROR_NONE && err != NULL)
+		*err = tmperr;
+
+	return result;
+}
