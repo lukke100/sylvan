@@ -681,3 +681,60 @@ size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias)
 
 	return x / y;
 }
+
+long sy_atol(const char **str, size_t count, enum sy_error *err)
+{
+	const char *tmp;
+	enum sy_error tmperr;
+	long sign, result;
+	size_t idx;
+
+	if (count == 0) {
+		if (err != NULL)
+			*err = SY_ERROR_PARSE;
+
+		return 0;
+	}
+
+	if (str == NULL || *str == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return 0;
+	}
+
+	tmp  = *str;
+	sign = 1;
+
+	if (tmp[0] == '-')
+		sign = -1;
+
+	if (tmp[0] == '+' || tmp[0] == '-')
+		--count, ++tmp;
+
+	tmperr = SY_ERROR_NONE;
+	result = 0;
+
+	for (idx = 0; idx < count; ++idx) {
+		long diff;
+
+		if (tmp[idx] < '0' || '9' < tmp[idx])
+			break;
+
+		diff = sign * (tmp[idx] - '0');
+
+		result = sy_lmul(result, 10, &tmperr);
+		result = sy_ladd(result, diff, &tmperr);
+	}
+
+	if (err != NULL) {
+		if (tmperr != SY_ERROR_NONE)
+			*err = tmperr;
+		else if (idx == 0)
+			*err = SY_ERROR_PARSE;
+	}
+
+	*str = tmp + idx;
+
+	return result;
+}
