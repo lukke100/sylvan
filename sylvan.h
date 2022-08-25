@@ -6,7 +6,9 @@ enum sy_error {
 	SY_ERROR_NONE,
 	SY_ERROR_OVERFLOW,
 	SY_ERROR_UNDERFLOW,
-	SY_ERROR_DIVIDE_BY_ZERO
+	SY_ERROR_DIVIDE_BY_ZERO,
+	SY_ERROR_NULL,
+	SY_ERROR_PARSE
 };
 
 long sy_ladd(long x, long y, enum sy_error *err);
@@ -46,5 +48,9 @@ size_t sy_zlcm(size_t x, size_t y, enum sy_error *err);
 size_t sy_zadd_saturate(size_t x, size_t y);
 size_t sy_zmul_saturate(size_t x, size_t y);
 size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias);
+
+long   sy_atol(const char **str, size_t count, enum sy_error *err);
+int    sy_atoi(const char **str, size_t count, enum sy_error *err);
+size_t sy_atoz(const char **str, size_t count, enum sy_error *err);
 
 #endif
