@@ -49,7 +49,7 @@ size_t sy_zadd_saturate(size_t x, size_t y);
 size_t sy_zmul_saturate(size_t x, size_t y);
 size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias);
 
-long sy_atol(const char **str, size_t count, enum sy_error *err);
-int  sy_atoi(const char **str, size_t count, enum sy_error *err);
+long sy_atol(const char **str, size_t *count, enum sy_error *err);
+int  sy_atoi(const char **str, size_t *count, enum sy_error *err);
 
 #endif

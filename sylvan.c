@@ -682,14 +682,21 @@ size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias)
 	return x / y;
 }
 
-long sy_atol(const char **str, size_t count, enum sy_error *err)
+long sy_atol(const char **str, size_t *count, enum sy_error *err)
 {
-	const char *tmp;
+	const char *tmpstr;
 	enum sy_error tmperr;
 	long sign, result;
-	size_t idx;
+	size_t idx, tmpcnt;
 
-	if (count == 0) {
+	if (count == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return 0;
+	}
+
+	if (*count == 0) {
 		if (err != NULL)
 			*err = SY_ERROR_PARSE;
 
@@ -703,25 +710,26 @@ long sy_atol(const char **str, size_t count, enum sy_error *err)
 		return 0;
 	}
 
-	tmp  = *str;
-	sign = 1;
+	tmpstr = *str;
+	tmpcnt = *count;
+	sign   = 1;
 
-	if (tmp[0] == '-')
+	if (tmpstr[0] == '-')
 		sign = -1;
 
-	if (tmp[0] == '+' || tmp[0] == '-')
-		--count, ++tmp;
+	if (tmpstr[0] == '+' || tmpstr[0] == '-')
+		++tmpstr, --tmpcnt;
 
 	tmperr = SY_ERROR_NONE;
 	result = 0;
 
-	for (idx = 0; idx < count; ++idx) {
+	for (idx = 0; idx < tmpcnt; ++idx) {
 		long diff;
 
-		if (tmp[idx] < '0' || '9' < tmp[idx])
+		if (tmpstr[idx] < '0' || '9' < tmpstr[idx])
 			break;
 
-		diff = sign * (tmp[idx] - '0');
+		diff = sign * (tmpstr[idx] - '0');
 
 		result = sy_lmul(result, 10, &tmperr);
 		result = sy_ladd(result, diff, &tmperr);
@@ -734,12 +742,13 @@ long sy_atol(const char **str, size_t count, enum sy_error *err)
 			*err = SY_ERROR_PARSE;
 	}
 
-	*str = tmp + idx;
+	*str   = tmpstr + idx;
+	*count = tmpcnt - idx;
 
 	return result;
 }
 
-int sy_atoi(const char **str, size_t count, enum sy_error *err)
+int sy_atoi(const char **str, size_t *count, enum sy_error *err)
 {
 	enum sy_error tmperr;
 	long result;
