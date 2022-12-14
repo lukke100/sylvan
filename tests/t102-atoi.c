@@ -6,152 +6,94 @@
 int main(void)
 {
 	char buf[sizeof(int) * CHAR_BIT];
-	const char *tmpstr1, *tmpstr2;
 	enum sy_error err;
-	size_t idx, tmpcnt1, tmpcnt2;
+	size_t idx, pos1, pos2;
 
-	assert(sy_atoi(NULL, NULL, NULL) == 0);
+	assert(sy_atoi(NULL, 0, NULL, NULL) == 0);
 
-	tmpcnt1 = tmpcnt2 = 0;
-	assert(sy_atoi(NULL, &tmpcnt1, NULL) == 0);
-	assert(tmpcnt1 == tmpcnt2);
+	pos2 = pos1 = 0;
+	assert(sy_atoi(NULL, 0, &pos1, NULL) == 0);
+	assert(pos1 == pos2);
 
-	tmpcnt1 = tmpcnt2 = 1;
-	assert(sy_atoi(NULL, &tmpcnt1, NULL) == 0);
-	assert(tmpcnt1 == tmpcnt2);
+	pos2 = pos1 = 0;
+	assert(sy_atoi(NULL, 1, &pos1, NULL) == 0);
+	assert(pos1 == pos2);
 
-	tmpstr1 = tmpstr2 = NULL;
-	tmpcnt1 = tmpcnt2 = 0;
-	assert(sy_atoi(&tmpstr1, &tmpcnt1, NULL) == 0);
-	assert(tmpstr1 == tmpstr2);
-	assert(tmpcnt1 == tmpcnt2);
+	pos2 = pos1 = 0;
+	assert(sy_atoi("", 1, &pos1, NULL) == 0);
+	assert(pos1 == pos2);
 
-	tmpstr1 = tmpstr2 = NULL;
-	tmpcnt1 = tmpcnt2 = 1;
-	assert(sy_atoi(&tmpstr1, &tmpcnt1, NULL) == 0);
-	assert(tmpstr1 == tmpstr2);
-	assert(tmpcnt1 == tmpcnt2);
+	pos2 = pos1 = 0;
+	assert(sy_atoi("x", 1, &pos1, NULL) == 0);
+	assert(pos1 == pos2);
 
-	tmpstr1 = tmpstr2 = "";
-	tmpcnt1 = tmpcnt2 = 0;
-	assert(sy_atoi(&tmpstr1, &tmpcnt1, NULL) == 0);
-	assert(tmpstr1 == tmpstr2);
-	assert(tmpcnt1 == tmpcnt2);
+	pos2 = pos1 = 0;
+	assert(sy_atoi(" 1", 2, &pos1, NULL) == 0);
+	assert(pos1 == pos2);
 
-	tmpstr1 = tmpstr2 = "";
-	tmpcnt1 = tmpcnt2 = 1;
-	assert(sy_atoi(&tmpstr1, &tmpcnt1, NULL) == 0);
-	assert(tmpstr1 == tmpstr2);
-	assert(tmpcnt1 == tmpcnt2);
-
-	tmpstr1 = tmpstr2 = "x";
-	tmpcnt1 = tmpcnt2 = 1;
-	assert(sy_atoi(&tmpstr1, &tmpcnt1, NULL) == 0);
-	assert(tmpstr1 == tmpstr2);
-	assert(tmpcnt1 == tmpcnt2);
-
-	tmpstr1 = tmpstr2 = " 1";
-	tmpcnt1 = tmpcnt2 = 2;
-	assert(sy_atoi(&tmpstr1, &tmpcnt1, NULL) == 0);
-	assert(tmpstr1 == tmpstr2);
-	assert(tmpcnt1 == tmpcnt2);
+	pos2 = pos1 = 3;
+	assert(sy_atoi("123", 3, &pos1, NULL) == 0);
+	assert(pos1 == pos2);
 
 	for (idx = 0; idx < sizeof(buf); ++idx)
 		buf[idx] = '9';
 
-	tmpstr1 = tmpstr2 = buf;
-	tmpcnt1 = tmpcnt2 = sizeof(buf);
-	assert(sy_atoi(&tmpstr1, &tmpcnt1, NULL) == INT_MAX);
-	assert(tmpstr1 == tmpstr2 + sizeof(buf));
-	assert(tmpcnt1 == tmpcnt2 - sizeof(buf));
-	assert(tmpcnt1 == 0);
+	pos2 = pos1 = 0;
+	assert(sy_atoi(buf, sizeof(buf), &pos1, NULL) == INT_MAX);
+	assert(pos1 == sizeof(buf));
 
 	buf[0] = '+';
-	tmpstr1 = tmpstr2 = buf;
-	tmpcnt1 = tmpcnt2 = sizeof(buf);
-	assert(sy_atoi(&tmpstr1, &tmpcnt1, NULL) == INT_MAX);
-	assert(tmpstr1 == tmpstr2 + sizeof(buf));
-	assert(tmpcnt1 == tmpcnt2 - sizeof(buf));
-	assert(tmpcnt1 == 0);
+	pos2 = pos1 = 0;
+	assert(sy_atoi(buf, sizeof(buf), &pos1, NULL) == INT_MAX);
+	assert(pos1 == sizeof(buf));
 
 	buf[0] = '-';
-	tmpstr1 = tmpstr2 = buf;
-	tmpcnt1 = tmpcnt2 = sizeof(buf);
-	assert(sy_atoi(&tmpstr1, &tmpcnt1, NULL) == INT_MIN);
-	assert(tmpstr1 == tmpstr2 + sizeof(buf));
-	assert(tmpcnt1 == tmpcnt2 - sizeof(buf));
-	assert(tmpcnt1 == 0);
+	pos2 = pos1 = 0;
+	assert(sy_atoi(buf, sizeof(buf), &pos1, NULL) == INT_MIN);
+	assert(pos1 == sizeof(buf));
 
 	err = SY_ERROR_NONE;
-	sy_atoi(NULL, NULL, &err);
+	sy_atoi(NULL, 0, NULL, &err);
 	assert(err == SY_ERROR_NULL);
 
-	tmpcnt1 = 0;
-	err = SY_ERROR_NONE;
-	sy_atoi(NULL, &tmpcnt1, &err);
+	pos1 = 0;
+	sy_atoi(NULL, 0, &pos1, &err);
 	assert(err == SY_ERROR_PARSE);
 
-	tmpcnt1 = 1;
-	err = SY_ERROR_NONE;
-	sy_atoi(NULL, &tmpcnt1, &err);
+	pos1 = 0;
+	sy_atoi(NULL, 1, &pos1, &err);
 	assert(err == SY_ERROR_NULL);
 
-	tmpstr1 = NULL;
-	tmpcnt1 = 0;
-	err = SY_ERROR_NONE;
-	sy_atoi(&tmpstr1, &tmpcnt1, &err);
+	pos1 = 0;
+	sy_atoi("", 1, &pos1, &err);
 	assert(err == SY_ERROR_PARSE);
 
-	tmpstr1 = NULL;
-	tmpcnt1 = 1;
-	err = SY_ERROR_NONE;
-	sy_atoi(&tmpstr1, &tmpcnt1, &err);
-	assert(err == SY_ERROR_NULL);
-
-	tmpstr1 = "";
-	tmpcnt1 = 0;
-	err = SY_ERROR_NONE;
-	sy_atoi(&tmpstr1, &tmpcnt1, &err);
+	pos1 = 0;
+	sy_atoi("x", 1, &pos1, &err);
 	assert(err == SY_ERROR_PARSE);
 
-	tmpstr1 = "";
-	tmpcnt1 = 1;
-	err = SY_ERROR_NONE;
-	sy_atoi(&tmpstr1, &tmpcnt1, &err);
+	pos1 = 0;
+	sy_atoi(" 1", 2, &pos1, &err);
 	assert(err == SY_ERROR_PARSE);
 
-	tmpstr1 = "x";
-	tmpcnt1 = 1;
-	err = SY_ERROR_NONE;
-	sy_atoi(&tmpstr1, &tmpcnt1, &err);
-	assert(err == SY_ERROR_PARSE);
-
-	tmpstr1 = " 1";
-	tmpcnt1 = 2;
-	err = SY_ERROR_NONE;
-	sy_atoi(&tmpstr1, &tmpcnt1, &err);
+	pos1 = 3;
+	sy_atoi("123", 3, &pos1, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	for (idx = 0; idx < sizeof(buf); ++idx)
 		buf[idx] = '9';
 
-	tmpstr1 = buf;
-	tmpcnt1 = sizeof(buf);
-	err = SY_ERROR_NONE;
-	sy_atoi(&tmpstr1, &tmpcnt1, &err);
+	pos1 = 0;
+	sy_atoi(buf, sizeof(buf), &pos1, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
-	buf[0]  = '+';
-	tmpstr1 = buf;
-	tmpcnt1 = sizeof(buf);
-	err = SY_ERROR_NONE;
-	sy_atoi(&tmpstr1, &tmpcnt1, &err);
+	buf[0] = '+';
+	pos1 = 0;
+	sy_atoi(buf, sizeof(buf), &pos1, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
-	buf[0]  = '-';
-	tmpstr1 = buf;
-	tmpcnt1 = sizeof(buf);
-	err = SY_ERROR_NONE;
-	sy_atoi(&tmpstr1, &tmpcnt1, &err);
+	buf[0] = '-';
+	pos2 = pos1 = 0;
+	sy_atoi(buf, sizeof(buf), &pos1, &err);
 	assert(err == SY_ERROR_UNDERFLOW);
 }

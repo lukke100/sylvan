@@ -682,79 +682,78 @@ size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias)
 	return x / y;
 }
 
-long sy_atol(const char **str, size_t *count, enum sy_error *err)
+long sy_atol(const char *str, size_t size, size_t *pos, enum sy_error *err)
 {
-	const char *tmpstr;
 	enum sy_error tmperr;
-	long sign, result;
-	size_t idx, tmpcnt;
+	long result, sign;
+	size_t pos1, pos2;
 
-	if (count == NULL) {
+	if (pos == NULL) {
 		if (err != NULL)
 			*err = SY_ERROR_NULL;
 
 		return 0;
 	}
 
-	if (*count == 0) {
+	if (*pos >= size) {
 		if (err != NULL)
 			*err = SY_ERROR_PARSE;
 
 		return 0;
 	}
 
-	if (str == NULL || *str == NULL) {
+	if (str == NULL) {
 		if (err != NULL)
 			*err = SY_ERROR_NULL;
 
 		return 0;
 	}
 
-	tmpstr = *str;
-	tmpcnt = *count;
-	sign   = 1;
+	pos1 = *pos;
+	sign = 1;
 
-	if (tmpstr[0] == '-')
+	if (str[pos1] == '-')
 		sign = -1;
 
-	if (tmpstr[0] == '+' || tmpstr[0] == '-')
-		++tmpstr, --tmpcnt;
+	if (str[pos1] == '+' || str[pos1] == '-')
+		++pos1;
 
 	tmperr = SY_ERROR_NONE;
 	result = 0;
 
-	for (idx = 0; idx < tmpcnt; ++idx) {
+	for (pos2 = pos1; pos2 < size; ++pos2) {
 		long diff;
 
-		if (tmpstr[idx] < '0' || '9' < tmpstr[idx])
+		if (str[pos2] < '0' || '9' < str[pos2])
 			break;
 
-		diff = sign * (tmpstr[idx] - '0');
+		diff = sign * (str[pos2] - '0');
 
 		result = sy_lmul(result, 10, &tmperr);
 		result = sy_ladd(result, diff, &tmperr);
 	}
 
-	if (err != NULL) {
-		if (tmperr != SY_ERROR_NONE)
-			*err = tmperr;
-		else if (idx == 0)
+	if (pos2 == pos1) {
+		if (err != NULL)
 			*err = SY_ERROR_PARSE;
+
+		return 0;
 	}
 
-	*str   = tmpstr + idx;
-	*count = tmpcnt - idx;
+	if (tmperr != SY_ERROR_NONE && err != NULL)
+		*err = tmperr;
 
+	*pos = pos2;
 	return result;
 }
 
-int sy_atoi(const char **str, size_t *count, enum sy_error *err)
+int sy_atoi(const char *str, size_t size, size_t *pos, enum sy_error *err)
 {
 	enum sy_error tmperr;
 	long result;
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_atol(str, count, &tmperr);
+	result = sy_atol(str, size, pos, &tmperr);
 
 	if (tmperr == SY_ERROR_OVERFLOW || result > INT_MAX) {
 		if (err != NULL)
