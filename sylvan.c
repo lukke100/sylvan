@@ -682,7 +682,7 @@ size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias)
 	return x / y;
 }
 
-long sy_atol(const char *str, size_t size, size_t *pos, enum sy_error *err)
+long sy_atol(const char str[], size_t size, size_t *pos, enum sy_error *err)
 {
 	enum sy_error tmperr;
 	long result, sign;
@@ -747,7 +747,7 @@ long sy_atol(const char *str, size_t size, size_t *pos, enum sy_error *err)
 	return result;
 }
 
-int sy_atoi(const char *str, size_t size, size_t *pos, enum sy_error *err)
+int sy_atoi(const char str[], size_t size, size_t *pos, enum sy_error *err)
 {
 	enum sy_error tmperr;
 	long result;
