@@ -9,7 +9,8 @@ enum sy_error {
 	SY_ERROR_UNDERFLOW,
 	SY_ERROR_DIVIDE_BY_ZERO,
 	SY_ERROR_NULL,
-	SY_ERROR_PARSE
+	SY_ERROR_PARSE,
+	SY_ERROR_OVERRUN
 };
 
 long sy_ladd(long x, long y, enum sy_error *err);
@@ -52,5 +53,13 @@ size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias);
 
 long sy_atol(size_t *pos, const char str[], size_t size, enum sy_error *err);
 int  sy_atoi(size_t *pos, const char str[], size_t size, enum sy_error *err);
+
+size_t sy_spn(char dest[], size_t destsz, size_t *pos,
+              const char src[], size_t srcsz, const char set[],
+              size_t setsz, enum sy_error *err);
+
+size_t sy_cspn(char dest[], size_t destsz, size_t *pos,
+               const char src[], size_t srcsz, const char set[],
+               size_t setsz, enum sy_error *err);
 
 #endif

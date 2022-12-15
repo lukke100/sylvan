@@ -1,5 +1,6 @@
 #include <limits.h>
 #include <stdlib.h>
+#include <string.h>
 #include "sylvan.h"
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
@@ -773,4 +774,95 @@ int sy_atoi(size_t *pos, const char str[], size_t size, enum sy_error *err)
 		*err = tmperr;
 
 	return result;
+}
+
+static size_t spn(char dest[], size_t destsz, size_t *pos,
+                  const char src[], size_t srcsz, const char set[],
+                  size_t setsz, int invert, enum sy_error *err)
+{
+	size_t idx1, idx2, len;
+
+	if (pos == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return 0;
+	}
+
+	if (*pos >= srcsz) {
+		if (err != NULL)
+			*err = SY_ERROR_PARSE;
+
+		return 0;
+	}
+
+	if (src == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return 0;
+	}
+
+	if (set == NULL && setsz > 0) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return 0;
+	}
+
+	for (idx1 = *pos; idx1 < srcsz; ++idx1) {
+		for (idx2 = 0; idx2 < setsz; ++idx2) {
+			if (invert) {
+				if (src[idx1] != set[idx2])
+					break;
+			} else {
+				if (src[idx1] == set[idx2])
+					break;
+			}
+		}
+
+		if (idx2 >= setsz)
+			break;
+	}
+
+	if (idx1 <= *pos) {
+		if (err != NULL)
+			*err = SY_ERROR_PARSE;
+
+		return 0;
+	}
+
+	len = idx1 - *pos;
+
+	if (len > destsz) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERRUN;
+
+		return 0;
+	}
+
+	if (dest == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return 0;
+	}
+
+	memmove(dest, src + *pos, len);
+	*pos = idx1;
+	return len;
+}
+
+size_t sy_spn(char dest[], size_t destsz, size_t *pos,
+              const char src[], size_t srcsz, const char set[],
+              size_t setsz, enum sy_error *err)
+{
+	return spn(dest, destsz, pos, src, srcsz, set, setsz, 0, err);
+}
+
+size_t sy_cspn(char dest[], size_t destsz, size_t *pos,
+               const char src[], size_t srcsz, const char set[],
+               size_t setsz, enum sy_error *err)
+{
+	return spn(dest, destsz, pos, src, srcsz, set, setsz, 1, err);
 }
