@@ -7,92 +7,93 @@ int main(void)
 {
 	char buf[sizeof(long) * CHAR_BIT];
 	enum sy_error err;
-	size_t idx, pos1, pos2;
+	size_t idx, pos;
 
 	assert(sy_atol(NULL, NULL, 0, NULL) == 0);
 
-	pos2 = pos1 = 0;
-	assert(sy_atol(&pos1, NULL, 0, NULL) == 0);
-	assert(pos1 == pos2);
+	pos = 0;
+	assert(sy_atol(&pos, NULL, 0, NULL) == 0);
+	assert(pos == 0);
 
-	pos2 = pos1 = 0;
-	assert(sy_atol(&pos1, NULL, 1, NULL) == 0);
+	pos = 0;
+	assert(sy_atol(&pos, NULL, 1, NULL) == 0);
+	assert(pos == 0);
 
-	pos2 = pos1 = 0;
-	assert(sy_atol(&pos1, "", 1, NULL) == 0);
-	assert(pos1 == pos2);
+	pos = 0;
+	assert(sy_atol(&pos, "", 1, NULL) == 0);
+	assert(pos == 0);
 
-	pos2 = pos1 = 0;
-	assert(sy_atol(&pos1, "x", 1, NULL) == 0);
-	assert(pos1 == pos2);
+	pos = 0;
+	assert(sy_atol(&pos, "x", 1, NULL) == 0);
+	assert(pos == 0);
 
-	pos2 = pos1 = 0;
-	assert(sy_atol(&pos1, " 1", 2, NULL) == 0);
-	assert(pos1 == pos2);
+	pos = 0;
+	assert(sy_atol(&pos, " 1", 2, NULL) == 0);
+	assert(pos == 0);
 
-	pos2 = pos1 = 3;
-	assert(sy_atol(&pos1, "123", 3, NULL) == 0);
-	assert(pos1 == pos2);
+	pos = 3;
+	assert(sy_atol(&pos, "123", 3, NULL) == 0);
+	assert(pos == 3);
 
 	for (idx = 0; idx < sizeof(buf); ++idx)
 		buf[idx] = '9';
 
-	pos2 = pos1 = 0;
-	assert(sy_atol(&pos1, buf, sizeof(buf), NULL) == LONG_MAX);
-	assert(pos1 == sizeof(buf));
+	pos = 0;
+	assert(sy_atol(&pos, buf, sizeof(buf), NULL) == LONG_MAX);
+	assert(pos == sizeof(buf));
 
 	buf[0] = '+';
-	pos2 = pos1 = 0;
-	assert(sy_atol(&pos1, buf, sizeof(buf), NULL) == LONG_MAX);
-	assert(pos1 == sizeof(buf));
+	pos = 0;
+	assert(sy_atol(&pos, buf, sizeof(buf), NULL) == LONG_MAX);
+	assert(pos == sizeof(buf));
 
 	buf[0] = '-';
-	pos2 = pos1 = 0;
-	assert(sy_atol(&pos1, buf, sizeof(buf), NULL) == LONG_MIN);
-	assert(pos1 == sizeof(buf));
+	pos = 0;
+	assert(sy_atol(&pos, buf, sizeof(buf), NULL) == LONG_MIN);
+	assert(pos == sizeof(buf));
 
 	err = SY_ERROR_NONE;
 	sy_atol(NULL, NULL, 0, &err);
 	assert(err == SY_ERROR_NULL);
 
-	pos1 = 0;
-	sy_atol(&pos1, NULL, 0, &err);
+	pos = 0;
+	sy_atol(&pos, NULL, 0, &err);
 	assert(err == SY_ERROR_PARSE);
 
-	pos1 = 0;
-	sy_atol(&pos1, NULL, 1, &err);
+	pos = 0;
+	sy_atol(&pos, NULL, 1, &err);
 	assert(err == SY_ERROR_NULL);
 
-	pos1 = 0;
-	sy_atol(&pos1, "", 1, &err);
+	pos = 0;
+	sy_atol(&pos, "", 1, &err);
 	assert(err == SY_ERROR_PARSE);
 
-	pos1 = 0;
-	sy_atol(&pos1, "x", 1, &err);
+	pos = 0;
+	sy_atol(&pos, "x", 1, &err);
 	assert(err == SY_ERROR_PARSE);
 
-	pos1 = 0;
-	sy_atol(&pos1, " 1", 2, &err);
+	pos = 0;
+	sy_atol(&pos, " 1", 2, &err);
 	assert(err == SY_ERROR_PARSE);
 
-	pos1 = 3;
-	sy_atol(&pos1, "123", 3, &err);
+	pos = 3;
+	sy_atol(&pos, "123", 3, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	for (idx = 0; idx < sizeof(buf); ++idx)
 		buf[idx] = '9';
 
-	pos1 = 0;
-	sy_atol(&pos1, buf, sizeof(buf), &err);
+	pos = 0;
+	sy_atol(&pos, buf, sizeof(buf), &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	buf[0] = '+';
-	pos1 = 0;
-	sy_atol(&pos1, buf, sizeof(buf), &err);
+	pos = 0;
+	sy_atol(&pos, buf, sizeof(buf), &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	buf[0] = '-';
-	pos2 = pos1 = 0;
-	sy_atol(&pos1, buf, sizeof(buf), &err);
+	pos = 0;
+	sy_atol(&pos, buf, sizeof(buf), &err);
 	assert(err == SY_ERROR_UNDERFLOW);
 }
