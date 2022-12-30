@@ -5,6 +5,7 @@
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
+#define XOR(x, y) (!(x) ^ !(y))
 
 long sy_ladd(long x, long y, enum sy_error *err)
 {
@@ -812,13 +813,8 @@ static size_t spn(char dest[], size_t destsz, size_t *pos,
 
 	for (idx1 = *pos; idx1 < srcsz; ++idx1) {
 		for (idx2 = 0; idx2 < setsz; ++idx2) {
-			if (invert) {
-				if (src[idx1] != set[idx2])
-					break;
-			} else {
-				if (src[idx1] == set[idx2])
-					break;
-			}
+			if (XOR(src[idx1] == set[idx2], invert))
+				break;
 		}
 
 		if (idx2 >= setsz)
