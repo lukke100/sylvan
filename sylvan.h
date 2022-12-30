@@ -1,7 +1,6 @@
 #ifndef SYLVAN_H
 #define SYLVAN_H
 #include <stddef.h>
-#include <stdio.h>
 
 enum sy_error {
 	SY_ERROR_NONE,
