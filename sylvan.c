@@ -862,3 +862,66 @@ size_t sy_cspn(char dest[], size_t destsz, size_t *pos,
 {
 	return spn(dest, destsz, pos, src, srcsz, set, setsz, 1, err);
 }
+
+size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
+                 size_t req, FILE *stream, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	size_t oldpos, oldlen, newlen;
+
+	if (pos == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return 0;
+	}
+
+	oldpos = *pos;
+	tmperr = SY_ERROR_NONE;
+	oldlen = sy_zsub(bufsz, oldpos, &tmperr);
+
+	if (req <= oldlen && tmperr != SY_ERROR_UNDERFLOW)
+		return oldlen;
+
+	if (oldlen > 0 && buf == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return oldlen;
+	}
+
+	if (MAX(bufsz, req) > 0 && stream == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return oldlen;
+	}
+
+	if (bufsz > 0 && buf == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return oldlen;
+	}
+
+	if (req > bufsz) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERRUN;
+
+		return oldlen;
+	}
+
+	*pos = 0;
+
+	if (bufsz == 0)
+		return 0;
+
+	if (oldlen > 0)
+		memmove(buf, buf + oldpos, oldlen);
+
+	if (oldpos > bufsz)
+		oldpos = bufsz;
+
+	newlen = fread(buf + oldlen, sizeof(char), oldpos, stream);
+	return oldlen + newlen;
+}

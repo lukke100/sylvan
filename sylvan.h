@@ -1,6 +1,7 @@
 #ifndef SYLVAN_H
 #define SYLVAN_H
 #include <stddef.h>
+#include <stdio.h>
 
 enum sy_error {
 	SY_ERROR_NONE,
@@ -61,4 +62,6 @@ size_t sy_cspn(char dest[], size_t destsz, size_t *pos,
                const char src[], size_t srcsz, const char set[],
                size_t setsz, enum sy_error *err);
 
+size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
+                 size_t req, FILE *stream, enum sy_error *err);
 #endif
