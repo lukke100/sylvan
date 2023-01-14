@@ -54,6 +54,9 @@ size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias);
 long sy_atol(size_t *pos, const char str[], size_t size, enum sy_error *err);
 int  sy_atoi(size_t *pos, const char str[], size_t size, enum sy_error *err);
 
+size_t sy_quote(char dest[], size_t destsz, const char src[],
+                size_t srcsz, enum sy_error *err);
+
 size_t sy_spn(char dest[], size_t destsz, size_t *pos,
               const char src[], size_t srcsz, const char set[],
               size_t setsz, enum sy_error *err);

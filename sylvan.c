@@ -777,6 +777,233 @@ int sy_atoi(size_t *pos, const char str[], size_t size, enum sy_error *err)
 	return result;
 }
 
+static char escltr(char ch)
+{
+	switch (ch) {
+	case '\a':
+		return 'a';
+	case '\b':
+		return 'b';
+	case '\f':
+		return 'f';
+	case '\n':
+		return 'n';
+	case '\r':
+		return 'r';
+	case '\t':
+		return 't';
+	case '\v':
+		return 'v';
+	default:
+		return ch;
+	}
+}
+
+#if UCHAR_MAX > 511
+static size_t eschex(char dest[], char ch)
+{
+	const char digits[] = "0123456789ABCDEF";
+	char reverse[(CHAR_BIT + 3) / 4];
+	size_t revidx;
+	unsigned char uch;
+
+	uch = ch;
+
+	for (revidx = 0; uch > 0; ++revidx) {
+		reverse[revidx] = digits[uch % 16];
+		uch /= 16;
+	}
+
+	if (revidx == 0) {
+		reverse[0] = '0';
+		revidx = 1;
+	}
+
+	if (dest != NULL) {
+		size_t destidx;
+
+		dest[0] = '\\';
+		dest[1] = 'x';
+
+		for (destidx = 0; destidx < revidx; ++destidx)
+			dest[destidx + 2] = reverse[revidx - destidx - 1];
+	}
+
+	return revidx + 2;
+}
+#endif /* UCHAR_MAX > 511 */
+
+static size_t escoct(char dest[], char ch, char nx)
+{
+	char reverse[3];
+	size_t revidx;
+	unsigned char uch;
+
+	uch = ch;
+
+#if UCHAR_MAX > 511
+	if (uch > 511)
+		return ~(size_t)0;
+#endif
+
+	for (revidx = 0; uch > 0; ++revidx) {
+		reverse[revidx] = '0' + uch % 8;
+		uch /= 8;
+	}
+
+	if (revidx == 0) {
+		reverse[0] = '0';
+		revidx = 1;
+	}
+
+	switch (nx) {
+	case '0': case '1': case '2': case '3':
+	case '4': case '5': case '6': case '7':
+		for (; revidx < sizeof(reverse); ++revidx)
+			reverse[revidx] = '0';
+	}
+
+	if (dest != NULL) {
+		size_t destidx;
+
+		dest[0] = '\\';
+
+		for (destidx = 0; destidx < revidx; ++destidx)
+			dest[destidx + 1] = reverse[revidx - destidx - 1];
+	}
+
+	return revidx + 1;
+}
+
+static size_t escch(char dest[], char ch, char nx, int *prevhex)
+{
+	size_t result;
+
+	switch (ch) {
+	case 'G': case 'H': case 'I': case 'J': case 'K': case 'L': case 'M':
+	case 'N': case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T':
+	case 'U': case 'V': case 'W': case 'X': case 'Y': case 'Z':
+	case 'g': case 'h': case 'i': case 'j': case 'k': case 'l': case 'm':
+	case 'n': case 'o': case 'p': case 'q': case 'r': case 's': case 't':
+	case 'u': case 'v': case 'w': case 'x': case 'y': case 'z':
+	case '!': case '#': case '%': case '&': case '(': case ')': case '*':
+	case '+': case ',': case '-': case '.': case '/': case ':': case ';':
+	case '<': case '=': case '>': case '?': case '[': case ']': case '^':
+	case '_': case '{': case '}': case '~': case '\'':
+		if (dest != NULL)
+			dest[0] = ch;
+
+		*prevhex = 0;
+		return 1;
+	case '\a': case '\b': case '\f': case '\n': case '\r': case '\t':
+	case '\v': case '\\': case '"':
+		if (dest != NULL) {
+			dest[0] = '\\';
+			dest[1] = escltr(ch);
+		}
+
+		*prevhex = 0;
+		return 2;
+	case '0': case '1': case '2': case '3': case '4': case '5': case '6':
+	case '7': case '8': case '9':
+	case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+	case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+		if (!*prevhex) {
+			if (dest != NULL)
+				dest[0] = ch;
+
+			return 1;
+		}
+
+#if UCHAR_MAX > 511
+		if ((unsigned char)ch > 511) {
+			result   = eschex(dest, ch);
+			*prevhex = 1;
+			return result;
+		}
+#endif
+
+		/* fall through */
+	default:
+		result   = escoct(dest, ch, nx);
+		*prevhex = 0;
+		return result;
+	}
+}
+
+static size_t quote(char dest[], const char src[], size_t srcsz)
+{
+	size_t result, srcidx;
+	int prevhex;
+
+	result  = 0;
+	prevhex = 0;
+
+	for (srcidx = 0; srcidx < srcsz; ++srcidx) {
+		size_t tmpsz;
+		char ch, nx;
+
+		ch = src[srcidx];
+		nx = '\0';
+
+		if (srcidx < srcsz - 1)
+			nx = src[srcidx + 1];
+
+		tmpsz  = escch(dest + result, ch, nx, &prevhex);
+		result = sy_zadd_saturate(result, tmpsz);
+	}
+
+	return result;
+}
+
+size_t sy_quote(char dest[], size_t destsz, const char src[],
+                size_t srcsz, enum sy_error *err)
+{
+	size_t result;
+
+	if (destsz == 0)
+		goto overrun;
+
+	if (dest == NULL)
+		goto nullerr;
+
+	result = 2;
+
+	if (srcsz > 0) {
+		enum sy_error tmperr;
+		size_t tmpsz;
+
+		if (src == NULL)
+			goto nullerr;
+
+		tmpsz  = quote(NULL, src, srcsz);
+		tmperr = SY_ERROR_NONE;
+		result = sy_zadd(result, tmpsz, &tmperr);
+
+		if (tmperr == SY_ERROR_OVERFLOW)
+			goto overrun;
+	}
+
+	if (result > destsz)
+		goto overrun;
+
+	dest[0] = '"';
+	quote(dest, src, srcsz);
+	dest[result - 1] = '"';
+	return result;
+
+overrun:
+	if (err != NULL)
+		*err = SY_ERROR_OVERRUN;
+
+	return 0;
+nullerr:
+	if (err != NULL)
+		*err = SY_ERROR_NULL;
+
+	return 0;
+}
+
 static size_t spn(char dest[], size_t destsz, size_t *pos,
                   const char src[], size_t srcsz, const char set[],
                   size_t setsz, int invert, enum sy_error *err)
