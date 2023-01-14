@@ -923,6 +923,7 @@ static size_t quote(char dest[], const char src[], size_t srcsz)
 	prevhex = 0;
 
 	for (srcidx = 0; srcidx < srcsz; ++srcidx) {
+		char *tmpdest;
 		size_t tmpsz;
 		char ch, nx;
 
@@ -932,8 +933,9 @@ static size_t quote(char dest[], const char src[], size_t srcsz)
 		if (srcidx < srcsz - 1)
 			nx = src[srcidx + 1];
 
-		tmpsz  = escch(dest + result, ch, nx, &prevhex);
-		result = sy_zadd_saturate(result, tmpsz);
+		tmpdest = dest == NULL ? NULL : dest + result;
+		tmpsz   = escch(tmpdest, ch, nx, &prevhex);
+		result  = sy_zadd_saturate(result, tmpsz);
 	}
 
 	return result;
@@ -971,7 +973,7 @@ size_t sy_quote(char dest[], size_t destsz, const char src[],
 		goto overrun;
 
 	dest[0] = '"';
-	quote(dest, src, srcsz);
+	quote(dest + 1, src, srcsz);
 	dest[result - 1] = '"';
 	return result;
 
