@@ -58,12 +58,8 @@ long sy_lmul(long x, long y, enum sy_error *err)
 	min = MIN(x, y);
 
 #if LONG_MAX + LONG_MIN < 0
-	if (max < 0 && ldiv(LONG_MAX, min).quot > max) {
-		if (err != NULL)
-			*err = SY_ERROR_OVERFLOW;
-
-		return LONG_MAX;
-	}
+	if (max < 0 && ldiv(LONG_MAX, min).quot > max)
+		goto overflow;
 #else
 	if (max < 0) {
 		max *= -1;
@@ -71,12 +67,8 @@ long sy_lmul(long x, long y, enum sy_error *err)
 	}
 #endif
 
-	if (min > 0 && LONG_MAX / max < min) {
-		if (err != NULL)
-			*err = SY_ERROR_OVERFLOW;
-
-		return LONG_MAX;
-	}
+	if (min > 0 && LONG_MAX / max < min)
+		goto overflow;
 
 	if (max > 0 && min < 0 && ldiv(LONG_MIN, max).quot > min) {
 		if (err != NULL)
@@ -86,6 +78,12 @@ long sy_lmul(long x, long y, enum sy_error *err)
 	}
 
 	return max * min;
+
+overflow:
+	if (err != NULL)
+		*err = SY_ERROR_OVERFLOW;
+
+	return LONG_MAX;
 }
 
 long sy_ldiv(long x, long y, enum sy_error *err)
@@ -131,26 +129,24 @@ long sy_lgcd(long x, long y, enum sy_error *err)
 {
 #if LONG_MAX + LONG_MIN < 0
 	if (x < -LONG_MAX || y < -LONG_MAX) {
-		if (x == 0 || y == 0) {
-			if (err != NULL)
-				*err = SY_ERROR_OVERFLOW;
-
-			return LONG_MAX;
-		}
+		if (x == 0 || y == 0)
+			goto overflow;
 
 		while (x < -LONG_MAX || y < -LONG_MAX) {
-			if (x == y) {
-				if (err != NULL)
-					*err = SY_ERROR_OVERFLOW;
-
-				return LONG_MAX;
-			}
+			if (x == y)
+				goto overflow;
 
 			if (x < y)
 				x -= y;
 			else
 				y -= x;
 		}
+
+	overflow:
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return LONG_MAX;
 	}
 #endif
 
@@ -178,12 +174,8 @@ long sy_llcm(long x, long y, enum sy_error *err)
 	tmperr = SY_ERROR_NONE;
 	gcd = sy_lgcd(x, y, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE) {
-		if (err != NULL)
-			*err = SY_ERROR_OVERFLOW;
-
-		return LONG_MAX;
-	}
+	if (tmperr == SY_ERROR_OVERFLOW)
+		goto overflow;
 
 	if (gcd == 0)
 		return 0;
@@ -194,24 +186,22 @@ long sy_llcm(long x, long y, enum sy_error *err)
 	tmperr = SY_ERROR_NONE;
 	result = sy_lmul(x, y, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE) {
-		if (err != NULL)
-			*err = SY_ERROR_OVERFLOW;
-
-		return LONG_MAX;
-	}
+	if (tmperr == SY_ERROR_OVERFLOW)
+		goto overflow;
 
 	tmperr = SY_ERROR_NONE;
 	result = sy_lmul(result, gcd, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE) {
-		if (err != NULL)
-			*err = SY_ERROR_OVERFLOW;
-
-		return LONG_MAX;
-	}
+	if (tmperr == SY_ERROR_OVERFLOW)
+		goto overflow;
 
 	return result;
+
+overflow:
+	if (err != NULL)
+		*err = SY_ERROR_OVERFLOW;
+
+	return LONG_MAX;
 }
 
 int sy_add(int x, int y, enum sy_error *err)
@@ -336,7 +326,7 @@ int sy_gcd(int x, int y, enum sy_error *err)
 	tmperr = SY_ERROR_NONE;
 	result = sy_lgcd(x, y, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE || result > INT_MAX) {
+	if (tmperr == SY_ERROR_OVERFLOW || result > INT_MAX) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERFLOW;
 
@@ -354,7 +344,7 @@ int sy_lcm(int x, int y, enum sy_error *err)
 	tmperr = SY_ERROR_NONE;
 	result = sy_llcm(x, y, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE || result > INT_MAX) {
+	if (tmperr == SY_ERROR_OVERFLOW || result > INT_MAX) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERFLOW;
 
@@ -635,24 +625,22 @@ size_t sy_zlcm(size_t x, size_t y, enum sy_error *err)
 	tmperr = SY_ERROR_NONE;
 	result = sy_zmul(x, y, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE) {
-		if (err != NULL)
-			*err = SY_ERROR_OVERFLOW;
-
-		return ~(size_t)0;
-	}
+	if (tmperr == SY_ERROR_OVERFLOW)
+		goto overflow;
 
 	tmperr = SY_ERROR_NONE;
 	result = sy_zmul(result, gcd, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE) {
-		if (err != NULL)
-			*err = SY_ERROR_OVERFLOW;
-
-		return ~(size_t)0;
-	}
+	if (tmperr == SY_ERROR_OVERFLOW)
+		goto overflow;
 
 	return result;
+
+overflow:
+	if (err != NULL)
+		*err = SY_ERROR_OVERFLOW;
+
+	return ~(size_t)0;
 }
 
 size_t sy_zadd_saturate(size_t x, size_t y)
@@ -690,26 +678,14 @@ long sy_atol(size_t *pos, const char str[], size_t size, enum sy_error *err)
 	long result, sign;
 	size_t pos1, pos2;
 
-	if (pos == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_NULL;
+	if (pos == NULL)
+		goto nullerr;
 
-		return 0;
-	}
+	if (*pos >= size)
+		goto parserr;
 
-	if (*pos >= size) {
-		if (err != NULL)
-			*err = SY_ERROR_PARSE;
-
-		return 0;
-	}
-
-	if (str == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_NULL;
-
-		return 0;
-	}
+	if (str == NULL)
+		goto nullerr;
 
 	pos1 = *pos;
 	sign = 1;
@@ -735,18 +711,25 @@ long sy_atol(size_t *pos, const char str[], size_t size, enum sy_error *err)
 		result = sy_ladd(result, diff, &tmperr);
 	}
 
-	if (pos2 == pos1) {
-		if (err != NULL)
-			*err = SY_ERROR_PARSE;
-
-		return 0;
-	}
+	if (pos2 == pos1)
+		goto parserr;
 
 	if (tmperr != SY_ERROR_NONE && err != NULL)
 		*err = tmperr;
 
 	*pos = pos2;
 	return result;
+
+nullerr:
+	if (err != NULL)
+		*err = SY_ERROR_NULL;
+
+	return 0;
+parserr:
+	if (err != NULL)
+		*err = SY_ERROR_PARSE;
+
+	return 0;
 }
 
 int sy_atoi(size_t *pos, const char str[], size_t size, enum sy_error *err)
@@ -1010,33 +993,17 @@ static size_t spn(char dest[], size_t destsz, size_t *pos,
 {
 	size_t idx1, idx2, len;
 
-	if (pos == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_NULL;
+	if (pos == NULL)
+		goto nullerr;
 
-		return 0;
-	}
+	if (*pos >= srcsz)
+		goto parserr;
 
-	if (*pos >= srcsz) {
-		if (err != NULL)
-			*err = SY_ERROR_PARSE;
+	if (src == NULL)
+		goto nullerr;
 
-		return 0;
-	}
-
-	if (src == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_NULL;
-
-		return 0;
-	}
-
-	if (set == NULL && setsz > 0) {
-		if (err != NULL)
-			*err = SY_ERROR_NULL;
-
-		return 0;
-	}
+	if (set == NULL && setsz > 0)
+		goto nullerr;
 
 	for (idx1 = *pos; idx1 < srcsz; ++idx1) {
 		for (idx2 = 0; idx2 < setsz; ++idx2) {
@@ -1048,12 +1015,8 @@ static size_t spn(char dest[], size_t destsz, size_t *pos,
 			break;
 	}
 
-	if (idx1 <= *pos) {
-		if (err != NULL)
-			*err = SY_ERROR_PARSE;
-
-		return 0;
-	}
+	if (idx1 <= *pos)
+		goto parserr;
 
 	len = idx1 - *pos;
 
@@ -1064,16 +1027,23 @@ static size_t spn(char dest[], size_t destsz, size_t *pos,
 		return 0;
 	}
 
-	if (dest == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_NULL;
-
-		return 0;
-	}
+	if (dest == NULL)
+		goto nullerr;
 
 	memmove(dest, src + *pos, len);
 	*pos = idx1;
 	return len;
+
+nullerr:
+	if (err != NULL)
+		*err = SY_ERROR_NULL;
+
+	return 0;
+parserr:
+	if (err != NULL)
+		*err = SY_ERROR_PARSE;
+
+	return 0;
 }
 
 size_t sy_spn(char dest[], size_t destsz, size_t *pos,
@@ -1096,12 +1066,10 @@ size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
 	enum sy_error tmperr;
 	size_t oldpos, oldlen, newlen;
 
-	if (pos == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_NULL;
+	oldlen = 0;
 
-		return 0;
-	}
+	if (pos == NULL)
+		goto nullerr;
 
 	oldpos = *pos;
 	tmperr = SY_ERROR_NONE;
@@ -1110,26 +1078,14 @@ size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
 	if (req <= oldlen && tmperr != SY_ERROR_UNDERFLOW)
 		return oldlen;
 
-	if (oldlen > 0 && buf == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_NULL;
+	if (oldlen > 0 && buf == NULL)
+		goto nullerr;
 
-		return oldlen;
-	}
+	if (MAX(bufsz, req) > 0 && stream == NULL)
+		goto nullerr;
 
-	if (MAX(bufsz, req) > 0 && stream == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_NULL;
-
-		return oldlen;
-	}
-
-	if (bufsz > 0 && buf == NULL) {
-		if (err != NULL)
-			*err = SY_ERROR_NULL;
-
-		return oldlen;
-	}
+	if (bufsz > 0 && buf == NULL)
+		goto nullerr;
 
 	if (req > bufsz) {
 		if (err != NULL)
@@ -1151,4 +1107,10 @@ size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
 
 	newlen = fread(buf + oldlen, sizeof(char), oldpos, stream);
 	return oldlen + newlen;
+
+nullerr:
+	if (err != NULL)
+		*err = SY_ERROR_NULL;
+
+	return oldlen;
 }
