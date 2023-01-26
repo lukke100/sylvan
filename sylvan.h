@@ -51,6 +51,18 @@ size_t sy_zadd_saturate(size_t x, size_t y);
 size_t sy_zmul_saturate(size_t x, size_t y);
 size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias);
 
+unsigned sy_uadd(unsigned x, unsigned y, enum sy_error *err);
+unsigned sy_usub(unsigned x, unsigned y, enum sy_error *err);
+unsigned sy_umul(unsigned x, unsigned y, enum sy_error *err);
+unsigned sy_udiv(unsigned x, unsigned y, enum sy_error *err);
+
+unsigned sy_ugcd(unsigned x, unsigned y);
+unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err);
+
+unsigned sy_uadd_saturate(unsigned x, unsigned y);
+unsigned sy_umul_saturate(unsigned x, unsigned y);
+unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias);
+
 long sy_atol(size_t *pos, const char str[], size_t size, enum sy_error *err);
 int  sy_atoi(size_t *pos, const char str[], size_t size, enum sy_error *err);
 

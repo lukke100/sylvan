@@ -672,6 +672,138 @@ size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias)
 	return x / y;
 }
 
+unsigned sy_uadd(unsigned x, unsigned y, enum sy_error *err)
+{
+	if (UINT_MAX - x < y) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return UINT_MAX;
+	}
+
+	return x + y;
+}
+
+unsigned sy_usub(unsigned x, unsigned y, enum sy_error *err)
+{
+	if (y > x) {
+		if (err != NULL)
+			*err = SY_ERROR_UNDERFLOW;
+
+		return 0;
+	}
+
+	return x - y;
+}
+
+unsigned sy_umul(unsigned x, unsigned y, enum sy_error *err)
+{
+	if (x == 0)
+		return 0;
+
+	if (UINT_MAX / x < y) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return UINT_MAX;
+	}
+
+	return x * y;
+}
+
+unsigned sy_udiv(unsigned x, unsigned y, enum sy_error *err)
+{
+	if (y == 0) {
+		if (err != NULL)
+			*err = SY_ERROR_DIVIDE_BY_ZERO;
+
+		if (x == 0)
+			return 0;
+		else
+			return UINT_MAX;
+	}
+
+	return x / y;
+}
+
+unsigned sy_ugcd(unsigned x, unsigned y)
+{
+	for (;;) {
+		if (x == 0)
+			return y;
+
+		y %= x;
+
+		if (y == 0)
+			return x;
+
+		x %= y;
+	}
+}
+
+unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err)
+{
+	unsigned gcd, result;
+	enum sy_error tmperr;
+
+	gcd = sy_ugcd(x, y);
+
+	if (gcd == 0)
+		return 0;
+
+	x /= gcd;
+	y /= gcd;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_umul(x, y, &tmperr);
+
+	if (tmperr == SY_ERROR_OVERFLOW)
+		goto overflow;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_umul(result, gcd, &tmperr);
+
+	if (tmperr == SY_ERROR_OVERFLOW)
+		goto overflow;
+
+	return result;
+
+overflow:
+	if (err != NULL)
+		*err = SY_ERROR_OVERFLOW;
+
+	return UINT_MAX;
+}
+
+unsigned sy_uadd_saturate(unsigned x, unsigned y)
+{
+	return sy_uadd(x, y, NULL);
+}
+
+unsigned sy_umul_saturate(unsigned x, unsigned y)
+{
+	return sy_umul(x, y, NULL);
+}
+
+unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias)
+{
+	if (y == 0) {
+		if (x == 0)
+			return bias;
+		else
+			return UINT_MAX;
+	}
+
+	if (x == UINT_MAX) {
+		if (y == UINT_MAX)
+			return bias;
+		else
+			return UINT_MAX;
+	}
+
+	return x / y;
+}
+
 long sy_atol(size_t *pos, const char str[], size_t size, enum sy_error *err)
 {
 	enum sy_error tmperr;
