@@ -439,7 +439,7 @@ long sy_ldiv_saturate(long x, long y, long bias)
 #if LONG_MAX + LONG_MIN > 0
 	if (y == LONG_MIN)
 		return 0;
-#elif LONG_MAX + LONG_MIN  < 0
+#elif LONG_MAX + LONG_MIN < 0
 	if (y == LONG_MAX)
 		return 0;
 #endif
@@ -532,7 +532,7 @@ int sy_div_saturate(int x, int y, int bias)
 #if INT_MAX + INT_MIN > 0
 	if (y == INT_MIN)
 		return 0;
-#elif INT_MAX + INT_MIN  < 0
+#elif INT_MAX + INT_MIN < 0
 	if (y == INT_MAX)
 		return 0;
 #endif
