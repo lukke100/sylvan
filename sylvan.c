@@ -909,9 +909,9 @@ static char escltr(char ch)
 		return 't';
 	case '\v':
 		return 'v';
-	default:
-		return ch;
 	}
+
+	return ch;
 }
 
 #if UCHAR_MAX > 511
