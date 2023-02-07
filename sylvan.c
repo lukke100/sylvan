@@ -326,7 +326,7 @@ int sy_gcd(int x, int y, enum sy_error *err)
 	tmperr = SY_ERROR_NONE;
 	result = sy_lgcd(x, y, &tmperr);
 
-	if (tmperr == SY_ERROR_OVERFLOW || result > INT_MAX) {
+	if (result > INT_MAX || tmperr == SY_ERROR_OVERFLOW) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERFLOW;
 
@@ -344,7 +344,7 @@ int sy_lcm(int x, int y, enum sy_error *err)
 	tmperr = SY_ERROR_NONE;
 	result = sy_llcm(x, y, &tmperr);
 
-	if (tmperr == SY_ERROR_OVERFLOW || result > INT_MAX) {
+	if (result > INT_MAX || tmperr == SY_ERROR_OVERFLOW) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERFLOW;
 
@@ -872,14 +872,14 @@ int sy_atoi(size_t *pos, const char str[], size_t size, enum sy_error *err)
 	tmperr = SY_ERROR_NONE;
 	result = sy_atol(pos, str, size, &tmperr);
 
-	if (tmperr == SY_ERROR_OVERFLOW || result > INT_MAX) {
+	if (result > INT_MAX || tmperr == SY_ERROR_OVERFLOW) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERFLOW;
 
 		return INT_MAX;
 	}
 
-	if (tmperr == SY_ERROR_UNDERFLOW || result < INT_MIN) {
+	if (result < INT_MIN || tmperr == SY_ERROR_OVERFLOW) {
 		if (err != NULL)
 			*err = SY_ERROR_UNDERFLOW;
 
