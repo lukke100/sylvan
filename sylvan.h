@@ -69,6 +69,9 @@ int  sy_atoi(size_t *pos, const char str[], size_t size, enum sy_error *err);
 size_t sy_quote(char dest[], size_t destsz, const char src[],
                 size_t srcsz, enum sy_error *err);
 
+size_t sy_unquote(char dest[], size_t destsz, size_t *pos,
+                  const char src[], size_t srcsz, enum sy_error *err);
+
 size_t sy_spn(char dest[], size_t destsz, size_t *pos,
               const char src[], size_t srcsz, const char set[],
               size_t setsz, enum sy_error *err);

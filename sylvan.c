@@ -1121,6 +1121,262 @@ nullerr:
 	return 0;
 }
 
+static char unescltr(char ltr)
+{
+	switch (ltr) {
+	case 'a':
+		return '\a';
+	case 'b':
+		return '\b';
+	case 'f':
+		return '\f';
+	case 'n':
+		return '\n';
+	case 'r':
+		return '\r';
+	case 't':
+		return '\t';
+	case 'v':
+		return '\v';
+	}
+
+	return ltr;
+}
+
+static char unescoct(size_t *pos, const char src[],
+                     size_t srcsz, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	size_t srcidx;
+	unsigned result1;
+	char result2;
+
+	srcidx = *pos;
+
+	if (srcsz - srcidx > 3)
+		srcsz = srcidx + 3;
+
+	tmperr  = SY_ERROR_NONE;
+	result1 = 0;
+
+	for (; srcidx < srcsz; ++srcidx) {
+		char ch = src[srcidx];
+
+		if ('0' <= ch && ch < '8') {
+			result1 = sy_umul(result1, 8, &tmperr);
+			result1 = sy_uadd(result1, ch - '0', &tmperr);
+			continue;
+		}
+
+		break;
+	}
+
+	if (result1 > UCHAR_MAX || tmperr == SY_ERROR_OVERFLOW) {
+		*err = SY_ERROR_OVERFLOW;
+		return CHAR_MAX;
+	}
+
+	tmperr  = SY_ERROR_NONE;
+	result2 = sy_uctoc(result1, &tmperr);
+
+	if (tmperr == SY_ERROR_UNDERFLOW) {
+		*err = SY_ERROR_UNDERFLOW;
+		return CHAR_MIN;
+	}
+
+	*pos = srcidx;
+	return result2;
+}
+
+static char uneschex(size_t *pos, const char src[],
+                     size_t srcsz, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	size_t srcidx;
+	unsigned result1;
+	char result2;
+
+	tmperr  = SY_ERROR_NONE;
+	result1 = 0;
+
+	for (srcidx = *pos; srcidx < srcsz; ++srcidx) {
+		const char uppers[] = "ABCDEF";
+		const char lowers[] = "abcdef";
+		char ch, *tmp;
+		unsigned val;
+
+		ch = src[srcidx];
+
+		if ('0' <= ch && ch <= '9')
+			val = ch - '0';
+		else if (tmp = strchr(uppers, ch), tmp != NULL)
+			val = 10 + (tmp - uppers);
+		else if (tmp = strchr(lowers, ch), tmp != NULL)
+			val = 10 + (tmp - lowers);
+		else
+			break;
+
+		result1 = sy_umul(result1, 16, &tmperr);
+		result1 = sy_uadd(result1, val, &tmperr);
+	}
+
+	if (srcidx == *pos) {
+		*err = SY_ERROR_PARSE;
+		return '\0';
+	}
+
+	if (result1 > UCHAR_MAX || tmperr == SY_ERROR_OVERFLOW) {
+		*err = SY_ERROR_OVERFLOW;
+		return CHAR_MAX;
+	}
+
+	tmperr  = SY_ERROR_NONE;
+	result2 = sy_uctoc(result1, &tmperr);
+
+	if (tmperr == SY_ERROR_UNDERFLOW) {
+		*err = SY_ERROR_UNDERFLOW;
+		return CHAR_MIN;
+	}
+
+	*pos = srcidx;
+	return result2;
+}
+
+static char unescch(size_t *pos, const char src[],
+                    size_t srcsz, enum sy_error *err)
+{
+	size_t srcidx = *pos;
+
+	switch (src[srcidx]) {
+	case '"': case '\n':
+		*err = SY_ERROR_PARSE;
+		return '\0';
+	case '\\':
+		break;
+	default:
+		*pos = srcidx + 1;
+		return src[srcidx];
+	}
+
+	if (++srcidx >= srcsz) {
+		*err = SY_ERROR_PARSE;
+		return '\0';
+	}
+
+	switch (src[srcidx]) {
+		enum sy_error tmperr;
+		char result;
+
+	case 'a': case 'b': case 'f': case 'n': case 'r': case 't': case 'v':
+	case '\'': case '\"': case '\?': case '\\':
+		*pos = srcidx + 1;
+		return unescltr(src[srcidx]);
+	case '0': case '1': case '2': case '3':
+	case '4': case '5': case '6': case '7':
+		tmperr = SY_ERROR_NONE;
+		result = unescoct(&srcidx, src, srcsz, &tmperr);
+
+		if (tmperr != SY_ERROR_NONE) {
+			*err = tmperr;
+			return '\0';
+		}
+
+		*pos = srcidx;
+		return result;
+	case 'x':
+		if (++srcidx >= srcsz) {
+			*err = SY_ERROR_PARSE;
+			return '\0';
+		}
+
+		tmperr = SY_ERROR_NONE;
+		result = uneschex(&srcidx, src, srcsz, &tmperr);
+
+		if (tmperr != SY_ERROR_NONE) {
+			*err = tmperr;
+			return '\0';
+		}
+
+		*pos = srcidx;
+		return result;
+	}
+
+	*err = SY_ERROR_PARSE;
+	return '\0';
+}
+
+size_t sy_unquote(char dest[], size_t destsz, size_t *pos,
+                  const char src[], size_t srcsz, enum sy_error *err)
+{
+	size_t srcidx1, srcidx2, result, destidx;
+
+	if (pos == NULL)
+		goto nullerr;
+
+	srcidx1 = *pos;
+
+	if (srcidx1 >= srcsz)
+		goto parserr;
+
+	if (src == NULL)
+		goto nullerr;
+
+	if (src[srcidx1++] != '"')
+		goto parserr;
+
+	srcidx2 = srcidx1;
+	result  = 0;
+
+	while (1) {
+		enum sy_error tmperr;
+
+		if (srcidx1 >= srcsz)
+			goto parserr;
+
+		if (src[srcidx1] == '"') {
+			++srcidx1;
+			break;
+		}
+
+		tmperr = SY_ERROR_NONE;
+		unescch(&srcidx1, src, srcsz, &tmperr);
+
+		if (tmperr != SY_ERROR_NONE) {
+			if (err != NULL)
+				*err = tmperr;
+
+			return 0;
+		}
+
+		if (++result > destsz) {
+			if (err != NULL)
+				*err = SY_ERROR_OVERRUN;
+
+			return 0;
+		}
+
+		if (dest == NULL)
+			goto nullerr;
+	}
+
+	for (destidx = 0; destidx < result; ++destidx)
+		dest[destidx] = unescch(&srcidx2, src, srcsz, NULL);
+
+	*pos = srcidx1;
+	return result;
+
+nullerr:
+	if (err != NULL)
+		*err = SY_ERROR_NULL;
+
+	return 0;
+parserr:
+	if (err != NULL)
+		*err = SY_ERROR_PARSE;
+
+	return 0;
+}
+
 static size_t spn(char dest[], size_t destsz, size_t *pos,
                   const char src[], size_t srcsz, const char set[],
                   size_t setsz, int invert, enum sy_error *err)
