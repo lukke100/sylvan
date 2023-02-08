@@ -5,7 +5,7 @@
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
-#define XOR(x, y) (!(x) ^ !(y))
+#define XOR(x, y) (!(x) != !(y))
 
 long sy_ladd(long x, long y, enum sy_error *err)
 {
