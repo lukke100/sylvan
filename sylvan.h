@@ -10,7 +10,8 @@ enum sy_error {
 	SY_ERROR_DIVIDE_BY_ZERO,
 	SY_ERROR_NULL,
 	SY_ERROR_PARSE,
-	SY_ERROR_OVERRUN
+	SY_ERROR_OVERRUN,
+	SY_ERROR_FILE
 };
 
 long sy_ladd(long x, long y, enum sy_error *err);

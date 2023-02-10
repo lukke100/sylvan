@@ -1524,6 +1524,10 @@ size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
 		oldpos = bufsz;
 
 	newlen = fread(buf + oldlen, sizeof(char), oldpos, stream);
+
+	if (newlen < oldpos && !feof(stream) && err != NULL)
+		*err = SY_ERROR_FILE;
+
 	return oldlen + newlen;
 
 nullerr:
