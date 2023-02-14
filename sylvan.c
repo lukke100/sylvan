@@ -1381,12 +1381,14 @@ static size_t spn(char dest[], size_t destsz, size_t *pos,
                   const char src[], size_t srcsz, const char set[],
                   size_t setsz, int invert, enum sy_error *err)
 {
-	size_t idx1, idx2, len;
+	size_t srcidx1, srcidx2, result;
 
 	if (pos == NULL)
 		goto nullerr;
 
-	if (*pos >= srcsz)
+	srcidx2 = srcidx1 = *pos;
+
+	if (srcidx1 >= srcsz)
 		goto parserr;
 
 	if (src == NULL)
@@ -1395,22 +1397,23 @@ static size_t spn(char dest[], size_t destsz, size_t *pos,
 	if (set == NULL && setsz > 0)
 		goto nullerr;
 
-	for (idx1 = *pos; idx1 < srcsz; ++idx1) {
-		for (idx2 = 0; idx2 < setsz; ++idx2) {
-			if (XOR(src[idx1] == set[idx2], invert))
-				break;
-		}
+	for (; srcidx1 < srcsz; ++srcidx1) {
+		size_t setidx;
 
-		if (idx2 >= setsz)
+		for (setidx = 0; setidx < setsz; ++setidx)
+			if (XOR(src[srcidx1] == set[setidx], invert))
+				break;
+
+		if (setidx >= setsz)
 			break;
 	}
 
-	if (idx1 <= *pos)
+	result = srcidx1 - srcidx2;
+
+	if (result == 0)
 		goto parserr;
 
-	len = idx1 - *pos;
-
-	if (len > destsz) {
+	if (result > destsz) {
 		if (err != NULL)
 			*err = SY_ERROR_OVERRUN;
 
@@ -1420,9 +1423,9 @@ static size_t spn(char dest[], size_t destsz, size_t *pos,
 	if (dest == NULL)
 		goto nullerr;
 
-	memmove(dest, src + *pos, len);
-	*pos = idx1;
-	return len;
+	memmove(dest, src + srcidx2, result);
+	*pos = srcidx1;
+	return result;
 
 nullerr:
 	if (err != NULL)
