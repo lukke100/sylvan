@@ -1450,6 +1450,48 @@ size_t sy_cspn(char dest[], size_t destsz, size_t *pos,
 	return spn(dest, destsz, pos, src, srcsz, set, setsz, 1, err);
 }
 
+size_t sy_exact(size_t *pos, const char src[], size_t srcsz,
+                const char str[], size_t strsz, enum sy_error *err)
+{
+	size_t srcidx, srclen, stridx;
+	enum sy_error tmperr;
+
+	if (pos == NULL)
+		goto nullerr;
+
+	srcidx = *pos;
+	tmperr = SY_ERROR_NONE;
+	srclen = sy_zsub(srcsz, srcidx, &tmperr);
+
+	if (tmperr == SY_ERROR_UNDERFLOW)
+		goto parserr;
+
+	if (srclen > 0 && strsz > 0)
+		if (src == NULL || str == NULL)
+			goto nullerr;
+
+	for (stridx = 0; srcidx < srcsz && stridx < strsz; ++srcidx, ++stridx)
+		if (src[srcidx] != str[stridx])
+			break;
+
+	if (stridx != strsz)
+		goto parserr;
+
+	*pos = srcidx;
+	return strsz;
+
+nullerr:
+	if (err != NULL)
+		*err = SY_ERROR_NULL;
+
+	return 0;
+parserr:
+	if (err != NULL)
+		*err = SY_ERROR_PARSE;
+
+	return 0;
+}
+
 char sy_uctoc(unsigned char x, enum sy_error *err)
 {
 	char result;
