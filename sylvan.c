@@ -1495,6 +1495,69 @@ parserr:
 	return 0;
 }
 
+static size_t skip(size_t *pos, const char src[], size_t srcsz,
+                   const char set[], size_t setsz,
+                   int invert, enum sy_error *err)
+{
+	size_t srcidx1, srcidx2, result;
+
+	if (pos == NULL)
+		goto nullerr;
+
+	srcidx2 = srcidx1 = *pos;
+
+	if (srcidx1 >= srcsz)
+		goto parserr;
+
+	if (src == NULL)
+		goto nullerr;
+
+	if (set == NULL && setsz > 0)
+		goto nullerr;
+
+	for (; srcidx1 < srcsz; ++srcidx1) {
+		size_t setidx;
+
+		for (setidx = 0; setidx < setsz; ++setidx)
+			if (src[srcidx1] == set[setidx])
+				break;
+
+		if (XOR(setidx >= setsz, invert))
+			break;
+	}
+
+	result = srcidx1 - srcidx2;
+
+	if (result == 0)
+		goto parserr;
+
+	*pos = srcidx1;
+	return result;
+
+nullerr:
+	if (err != NULL)
+		*err = SY_ERROR_NULL;
+
+	return 0;
+parserr:
+	if (err != NULL)
+		*err = SY_ERROR_PARSE;
+
+	return 0;
+}
+
+size_t sy_skip(size_t *pos, const char src[], size_t srcsz,
+               const char set[], size_t setsz, enum sy_error *err)
+{
+	return skip(pos, src, srcsz, set, setsz, 0, err);
+}
+
+size_t sy_cskip(size_t *pos, const char src[], size_t srcsz,
+                const char set[], size_t setsz, enum sy_error *err)
+{
+	return skip(pos, src, srcsz, set, setsz, 1, err);
+}
+
 char sy_uctoc(unsigned char x, enum sy_error *err)
 {
 	char result;
