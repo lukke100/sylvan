@@ -31,11 +31,11 @@ int main(void)
 	assert(pos == 0);
 
 	pos = 0;
-	assert(sy_spn(NULL, sizeof(buf), &pos, "aab", 3, "ac", 1, NULL) == 0);
+	assert(sy_spn(NULL, sizeof(buf), &pos, "aab", 3, "ac", 2, NULL) == 0);
 	assert(pos == 0);
 
 	pos = 0;
-	assert(sy_spn(buf, sizeof(buf), &pos, "aab", 3, "ac", 1, NULL) == 2);
+	assert(sy_spn(buf, sizeof(buf), &pos, "aab", 3, "ac", 2, NULL) == 2);
 	assert(strncmp(buf, "aa", 2) == 0);
 	assert(pos == 2);
 
@@ -70,12 +70,12 @@ int main(void)
 
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_spn(NULL, sizeof(buf), &pos, "aab", 3, "ac", 1, &err);
+	sy_spn(NULL, sizeof(buf), &pos, "aab", 3, "ac", 2, &err);
 	assert(err == SY_ERROR_NULL);
 
 	memset(buf, '\0', sizeof(buf));
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_spn(buf, sizeof(buf), &pos, "aab", 3, "ac", 1, &err);
+	sy_spn(buf, sizeof(buf), &pos, "aab", 3, "ac", 2, &err);
 	assert(err == SY_ERROR_NONE);
 }

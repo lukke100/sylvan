@@ -1401,10 +1401,10 @@ static size_t spn(char dest[], size_t destsz, size_t *pos,
 		size_t setidx;
 
 		for (setidx = 0; setidx < setsz; ++setidx)
-			if (XOR(src[srcidx1] == set[setidx], invert))
+			if (src[srcidx1] == set[setidx])
 				break;
 
-		if (setidx >= setsz)
+		if (XOR(setidx >= setsz, invert))
 			break;
 	}
 
