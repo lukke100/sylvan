@@ -52,6 +52,12 @@ int main(void)
 
 	pos = 0;
 	memset(buf, 'a', sizeof(buf));
+	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\", 2, NULL) == 0);
+	assert(pos == 0);
+	assert(buf[0] == 'a');
+
+	pos = 0;
+	memset(buf, 'a', sizeof(buf));
 	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\\"", 3, NULL) == 0);
 	assert(pos == 0);
 	assert(buf[0] == 'a');
@@ -94,6 +100,12 @@ int main(void)
 	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\0000\"", 7, NULL) == 2);
 	assert(pos == 7);
 	assert(strncmp(buf, "\0000a", 3) == 0);
+
+	pos = 0;
+	memset(buf, 'a', sizeof(buf));
+	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\x", 3, NULL) == 0);
+	assert(pos == 0);
+	assert(buf[0] == 'a');
 
 	pos = 0;
 	memset(buf, 'a', sizeof(buf));
@@ -188,6 +200,12 @@ int main(void)
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
+	sy_unquote(buf, sizeof(buf), &pos, "\"\\", 2, &err);
+	assert(err = SY_ERROR_PARSE);
+
+	pos = 0;
+	err = SY_ERROR_NONE;
+	memset(buf, 'a', sizeof(buf));
 	sy_unquote(buf, sizeof(buf), &pos, "\"\\\"", 3, &err);
 	assert(err == SY_ERROR_PARSE);
 
@@ -229,6 +247,12 @@ int main(void)
 	memset(buf, 'a', sizeof(buf));
 	sy_unquote(buf, sizeof(buf), &pos, "\"\\0000\"", 7, &err);
 	assert(err == SY_ERROR_NONE);
+
+	pos = 0;
+	err = SY_ERROR_NONE;
+	memset(buf, 'a', sizeof(buf));
+	sy_unquote(buf, sizeof(buf), &pos, "\"\\x", 3, &err);
+	assert(err == SY_ERROR_PARSE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
