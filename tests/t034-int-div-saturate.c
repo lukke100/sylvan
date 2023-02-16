@@ -5,10 +5,16 @@
 
 int main(void)
 {
+	assert(sy_div_saturate( 1, 1, 0) == 1);
+	assert(sy_div_saturate( 1, 0, 0) == INT_MAX);
+	assert(sy_div_saturate(-1, 0, 0) == INT_MIN);
+
 	assert(sy_div_saturate(INT_MAX,  2, 0) == INT_MAX);
 	assert(sy_div_saturate(INT_MAX, -2, 0) == INT_MIN);
+	assert(sy_div_saturate(INT_MAX,  0, 0) == INT_MAX);
 	assert(sy_div_saturate(INT_MIN,  2, 0) == INT_MIN);
 	assert(sy_div_saturate(INT_MIN, -2, 0) == INT_MAX);
+	assert(sy_div_saturate(INT_MIN,  0, 0) == INT_MIN);
 
 	assert(sy_div_saturate(INT_MAX, INT_MAX, INT_MAX) == INT_MAX);
 	assert(sy_div_saturate(INT_MAX, INT_MAX,  1) ==  1);

@@ -58,9 +58,10 @@ int main(void)
 
 	pos = 0;
 	memset(buf, 'a', sizeof(buf));
-	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\a\"", 4, NULL) == 1);
-	assert(pos == 4);
-	assert(strncmp(buf, "\aa", 2) == 0);
+	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\a\\b\\f\\n\\r\\t\\v\"",
+                          16, NULL) == 7);
+	assert(pos == 16);
+	assert(strncmp(buf, "\a\b\f\n\r\t\va", 8) == 0);
 
 	pos = 0;
 	memset(buf, 'a', sizeof(buf));
@@ -193,7 +194,8 @@ int main(void)
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\a\"", 4, &err);
+	sy_unquote(buf, sizeof(buf), &pos, "\"\\a\\b\\f\\n\\r\\t\\v\"",
+                   16, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;

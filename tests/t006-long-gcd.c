@@ -13,6 +13,8 @@ int main(void)
 
 #if LONG_MAX + LONG_MIN < 0
 	assert(sy_lgcd(LONG_MIN, 0, NULL) == LONG_MAX);
+	assert(sy_lgcd(LONG_MIN, 1, NULL) == 1);
+	assert(sy_lgcd(1, LONG_MIN, NULL) == 1);
 #endif
 
 	err = SY_ERROR_NONE;
@@ -31,6 +33,14 @@ int main(void)
 	err = SY_ERROR_NONE;
 	sy_lgcd(LONG_MIN, 0, &err);
 	assert(err == SY_ERROR_OVERFLOW);
+
+	err = SY_ERROR_NONE;
+	sy_lgcd(LONG_MIN, 1, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	sy_lgcd(1, LONG_MIN, &err);
+	assert(err == SY_ERROR_NONE);
 #endif
 
 	return 0;

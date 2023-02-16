@@ -30,6 +30,14 @@ int main(void)
 	assert(sy_quote(buf, sizeof(buf), "a\a\\\"\0\0001", 7, NULL) == 16);
 	assert(strncmp(buf, "\"a\\a\\\\\\\"\\0\\0001\"e", 17) == 0);
 
+	memset(buf, 'f', sizeof(buf));
+	assert(sy_quote(buf, sizeof(buf), "\a\b\f\n\r\t\v", 7, NULL) == 16);
+	assert(strncmp(buf, "\"\\a\\b\\f\\n\\r\\t\\v\"f", 17) == 0);
+
+	memset(buf, 'g', sizeof(buf));
+	assert(sy_quote(buf, sizeof(buf), "z", 1, NULL) == 3);
+	assert(strncmp(buf, "\"z\"g", 4) == 0);
+
 	err = SY_ERROR_NONE;
 	sy_quote(NULL, 0, NULL, 0, &err);
 	assert(err == SY_ERROR_OVERRUN);
@@ -60,6 +68,16 @@ int main(void)
 
 	memset(buf, 'e', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, sizeof(buf), "a\a\\\"\0\0001", 7, NULL);
+	sy_quote(buf, sizeof(buf), "a\a\\\"\0\0001", 7, &err);
+	assert(err == SY_ERROR_NONE);
+
+	memset(buf, 'f', sizeof(buf));
+	err = SY_ERROR_NONE;
+	sy_quote(buf, sizeof(buf), "\a\b\f\n\r\t\v", 7, &err);
+	assert(err == SY_ERROR_NONE);
+
+	memset(buf, 'g', sizeof(buf));
+	err = SY_ERROR_NONE;
+	sy_quote(buf, sizeof(buf), "z", 1, &err);
 	assert(err == SY_ERROR_NONE);
 }

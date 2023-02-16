@@ -17,6 +17,8 @@ int main(void)
 	assert(sy_div(INT_MIN, -1, NULL) == INT_MAX);
 #endif
 
+	assert(sy_div(0, 1, NULL) == 0);
+
 	err = SY_ERROR_NONE;
 	sy_div(0, 0, &err);
 	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
@@ -38,6 +40,10 @@ int main(void)
 	sy_div(INT_MIN, -1, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 #endif
+
+	err = SY_ERROR_NONE;
+	sy_div(0, 1, &err);
+	assert(err == SY_ERROR_NONE);
 
 	return 0;
 }

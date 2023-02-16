@@ -17,6 +17,8 @@ int main(void)
 	assert(sy_ldiv(LONG_MIN, -1, NULL) == LONG_MAX);
 #endif
 
+	assert(sy_ldiv(0, 1, NULL) == 0);
+
 	err = SY_ERROR_NONE;
 	sy_ldiv(0, 0, &err);
 	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
@@ -38,6 +40,10 @@ int main(void)
 	sy_ldiv(LONG_MIN, -1, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 #endif
+
+	err = SY_ERROR_NONE;
+	sy_ldiv(0, 1, &err);
+	assert(err == SY_ERROR_NONE);
 
 	return 0;
 }

@@ -5,6 +5,8 @@
 
 int main(void)
 {
+	assert(sy_lsub_saturate(1, -1, 0) == 2);
+
 	assert(sy_lsub_saturate(LONG_MAX,  1, 0) == LONG_MAX);
 	assert(sy_lsub_saturate(LONG_MAX, -1, 0) == LONG_MAX);
 	assert(sy_lsub_saturate(LONG_MIN,  1, 0) == LONG_MIN);

@@ -5,6 +5,8 @@
 
 int main(void)
 {
+	assert(sy_add_saturate(1, 1, 0) == 2);
+
 	assert(sy_add_saturate(INT_MAX,  1, 0) == INT_MAX);
 	assert(sy_add_saturate(INT_MAX, -1, 0) == INT_MAX);
 	assert(sy_add_saturate(INT_MIN,  1, 0) == INT_MIN);

@@ -128,26 +128,34 @@ long sy_ldiv(long x, long y, enum sy_error *err)
 long sy_lgcd(long x, long y, enum sy_error *err)
 {
 #if LONG_MAX + LONG_MIN < 0
-	if (x < -LONG_MAX || y < -LONG_MAX) {
-		if (x == 0 || y == 0)
-			goto overflow;
+	long max1, min1;
 
-		while (x < -LONG_MAX || y < -LONG_MAX) {
-			if (x == y)
-				goto overflow;
+	max1 = MAX(x, y);
+	min1 = MIN(x, y);
 
-			if (x < y)
-				x -= y;
-			else
-				y -= x;
+	while (min1 < -LONG_MAX) {
+		long max2, min2;
+
+		if (max1 == 0) {
+			if (err != NULL)
+				*err = SY_ERROR_OVERFLOW;
+
+			return LONG_MAX;
 		}
 
-	overflow:
-		if (err != NULL)
-			*err = SY_ERROR_OVERFLOW;
+		if (max1 > 0)
+			min1 += max1;
+		else
+			min1 -= max1;
 
-		return LONG_MAX;
+		max2 = MAX(max1, min1);
+		min2 = MIN(max1, min1);
+		max1 = max2;
+		min1 = min2;
 	}
+
+	x = max1;
+	y = min1;
 #endif
 
 	x = labs(x);
