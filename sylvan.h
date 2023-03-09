@@ -7,11 +7,7 @@ enum sy_error {
 	SY_ERROR_NONE,
 	SY_ERROR_OVERFLOW,
 	SY_ERROR_UNDERFLOW,
-	SY_ERROR_DIVIDE_BY_ZERO,
-	SY_ERROR_NULL,
-	SY_ERROR_PARSE,
-	SY_ERROR_OVERRUN,
-	SY_ERROR_FILE
+	SY_ERROR_DIVIDE_BY_ZERO
 };
 
 long sy_ladd(long x, long y, enum sy_error *err);
@@ -63,35 +59,4 @@ unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err);
 unsigned sy_uadd_saturate(unsigned x, unsigned y);
 unsigned sy_umul_saturate(unsigned x, unsigned y);
 unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias);
-
-long sy_atol(size_t *pos, const char str[], size_t size, enum sy_error *err);
-int  sy_atoi(size_t *pos, const char str[], size_t size, enum sy_error *err);
-
-size_t sy_quote(char dest[], size_t destsz, const char src[],
-                size_t srcsz, enum sy_error *err);
-
-size_t sy_unquote(char dest[], size_t destsz, size_t *pos,
-                  const char src[], size_t srcsz, enum sy_error *err);
-
-size_t sy_spn(char dest[], size_t destsz, size_t *pos,
-              const char src[], size_t srcsz, const char set[],
-              size_t setsz, enum sy_error *err);
-
-size_t sy_cspn(char dest[], size_t destsz, size_t *pos,
-               const char src[], size_t srcsz, const char set[],
-               size_t setsz, enum sy_error *err);
-
-size_t sy_exact(size_t *pos, const char src[], size_t srcsz,
-                const char str[], size_t strsz, enum sy_error *err);
-
-size_t sy_skip(size_t *pos, const char src[], size_t srcsz,
-               const char set[], size_t setsz, enum sy_error *err);
-
-size_t sy_cskip(size_t *pos, const char src[], size_t srcsz,
-                const char set[], size_t setsz, enum sy_error *err);
-
-char sy_uctoc(unsigned char x, enum sy_error *err);
-
-size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
-                 size_t req, FILE *stream, enum sy_error *err);
 #endif
