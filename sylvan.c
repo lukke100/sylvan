@@ -809,3 +809,39 @@ unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias)
 
 	return x / y;
 }
+
+size_t sy_token(int *last, int *state, const char src[], size_t srcsz,
+                int classify(int *state, char ch, int last),
+                enum sy_error *err)
+{
+	int last2;
+	size_t srcidx;
+
+	if (srcsz == 0)
+		return 0;
+
+	if (state == NULL || src == NULL || last == NULL || classify == NULL) {
+		if (err != NULL)
+			*err = SY_ERROR_NULL;
+
+		return 0;
+	}
+
+	last2 = *last;
+
+	for (srcidx = 0; srcidx < srcsz; ++srcidx) {
+		int state2, class;
+
+		state2 = *state;
+		class  = classify(&state2, src[srcidx], last2);
+
+		if (class != last2 && srcidx > 0)
+			break;
+
+		*state = state2;
+		last2  = class;
+	}
+
+	*last = last2;
+	return srcidx;
+}

@@ -7,7 +7,8 @@ enum sy_error {
 	SY_ERROR_NONE,
 	SY_ERROR_OVERFLOW,
 	SY_ERROR_UNDERFLOW,
-	SY_ERROR_DIVIDE_BY_ZERO
+	SY_ERROR_DIVIDE_BY_ZERO,
+	SY_ERROR_NULL
 };
 
 long sy_ladd(long x, long y, enum sy_error *err);
@@ -59,4 +60,8 @@ unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err);
 unsigned sy_uadd_saturate(unsigned x, unsigned y);
 unsigned sy_umul_saturate(unsigned x, unsigned y);
 unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias);
+
+size_t sy_token(int *last, int *state, const char src[], size_t srcsz,
+                int classify(int *state, char ch, int last),
+                enum sy_error *err);
 #endif
