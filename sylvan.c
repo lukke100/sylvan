@@ -1,5 +1,7 @@
 #include <limits.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "sylvan.h"
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
@@ -844,4 +846,63 @@ size_t sy_token(int *last, int *state, const char src[], size_t srcsz,
 
 	*last = last2;
 	return srcidx;
+}
+
+size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
+                 size_t req, FILE *stream, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	size_t oldpos, oldlen, newlen;
+
+	oldlen = 0;
+
+	if (pos == NULL)
+		goto nullerr;
+
+	oldpos = *pos;
+	tmperr = SY_ERROR_NONE;
+	oldlen = sy_zsub(bufsz, oldpos, &tmperr);
+
+	if (req <= oldlen && tmperr != SY_ERROR_UNDERFLOW)
+		return oldlen;
+
+	if (oldlen > 0 && buf == NULL)
+		goto nullerr;
+
+	if (MAX(bufsz, req) > 0 && stream == NULL)
+		goto nullerr;
+
+	if (bufsz > 0 && buf == NULL)
+		goto nullerr;
+
+	if (req > bufsz) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERRUN;
+
+		return oldlen;
+	}
+
+	*pos = 0;
+
+	if (bufsz == 0)
+		return 0;
+
+	if (oldlen > 0)
+		memmove(buf, buf + oldpos, oldlen);
+
+	if (oldpos > bufsz)
+		oldpos = bufsz;
+
+	newlen = fread(buf + oldlen, sizeof(char), oldpos, stream);
+
+	if (newlen < oldpos && !feof(stream) && err != NULL)
+		*err = SY_ERROR_FILE;
+
+	return oldlen + newlen;
+
+nullerr:
+	if (err != NULL)
+		*err = SY_ERROR_NULL;
+
+	return oldlen;
 }
