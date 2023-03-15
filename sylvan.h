@@ -63,9 +63,8 @@ unsigned sy_uadd_saturate(unsigned x, unsigned y);
 unsigned sy_umul_saturate(unsigned x, unsigned y);
 unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias);
 
-size_t sy_token(int *last, int *state, const char src[], size_t srcsz,
-                int classify(int *state, char ch, int last),
-                enum sy_error *err);
+size_t sy_token(int *last, const char src[], size_t srcsz,
+                int classify(char ch, int last), enum sy_error *err);
 
 size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
                  size_t req, FILE *stream, enum sy_error *err);

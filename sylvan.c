@@ -812,40 +812,36 @@ unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias)
 	return x / y;
 }
 
-size_t sy_token(int *last, int *state, const char src[], size_t srcsz,
-                int classify(int *state, char ch, int last),
-                enum sy_error *err)
+size_t sy_token(int *last, const char src[], size_t srcsz,
+                int classify(char ch, int last), enum sy_error *err)
 {
-	int last2;
-	size_t srcidx;
+	int tmplast;
+	size_t idx;
 
 	if (srcsz == 0)
 		return 0;
 
-	if (state == NULL || src == NULL || last == NULL || classify == NULL) {
+	if (src == NULL || last == NULL || classify == NULL) {
 		if (err != NULL)
 			*err = SY_ERROR_NULL;
 
 		return 0;
 	}
 
-	last2 = *last;
+	tmplast = *last;
 
-	for (srcidx = 0; srcidx < srcsz; ++srcidx) {
-		int state2, class;
+	for (idx = 0; idx < srcsz; ++idx) {
+		int cls;
 
-		state2 = *state;
-		class  = classify(&state2, src[srcidx], last2);
+		cls = classify(src[idx], tmplast);
 
-		if (class != last2 && srcidx > 0)
+		if (idx == 0)
+			*last = tmplast = cls;
+		else if (cls != tmplast)
 			break;
-
-		*state = state2;
-		last2  = class;
 	}
 
-	*last = last2;
-	return srcidx;
+	return idx;
 }
 
 size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
