@@ -5,9 +5,9 @@
 static int classify(char ch, int last) {
 	switch (ch) {
 	case 'a':
-		return -1;
+		return 1;
 	case '!':
-		return -2 * (last / abs(last));
+		return 2 * (-last / abs(last));
 	default:
 		return 0;
 	}
@@ -25,11 +25,11 @@ int main(void)
 
 	last = 1;
 	assert(sy_token(&last, "aa", 2, classify, NULL) == 2);
-	assert(last == -1);
+	assert(last == 1);
 
 	last = 1;
 	assert(sy_token(&last, "aab", 3, classify, NULL) == 2);
-	assert(last == -1);
+	assert(last == 1);
 
 	last = 1;
 	assert(sy_token(&last, "!!a", 3, classify, NULL) == 1);
