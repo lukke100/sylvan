@@ -844,6 +844,80 @@ size_t sy_token(int *last, const char src[], size_t srcsz,
 	return idx;
 }
 
+long sy_atol(const char src[], size_t srcsz, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	long result, sign;
+	size_t idx;
+
+	if (srcsz == 0)
+		goto errparse;
+
+	if (src == NULL)
+		goto errnull;
+
+	idx  = 0;
+	sign = 1;
+
+	if (src[idx] == '-')
+		sign = -1;
+
+	if (src[idx] == '+' || src[idx] == '-')
+		++idx;
+
+	tmperr = SY_ERROR_NONE;
+	result = 0;
+
+	for (; idx < srcsz; ++idx) {
+		long diff;
+
+		if (src[idx] < '0' || '9' < src[idx])
+			goto errparse;
+
+		diff   = sign * (src[idx] - '0');
+		result = sy_lmul(result, 10, &tmperr);
+		result = sy_ladd(result, diff, &tmperr);
+	}
+
+	if (tmperr != SY_ERROR_NONE && err != NULL)
+		*err = tmperr;
+
+	return result;
+
+errparse:
+	if (err != NULL)
+		*err = SY_ERROR_PARSE;
+
+	return 0;
+errnull:
+	if (err != NULL)
+		*err = SY_ERROR_NULL;
+
+	return 0;
+}
+
+int sy_atoi(const char src[], size_t srcsz, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	long result;
+
+	tmperr = SY_ERROR_NONE;
+	result = sy_atol(src, srcsz, &tmperr);
+
+	if (result > INT_MAX) {
+		tmperr = SY_ERROR_OVERFLOW;
+		result = INT_MAX;
+	} else if (result < INT_MIN) {
+		tmperr = SY_ERROR_UNDERFLOW;
+		result = INT_MIN;
+	}
+
+	if (tmperr != SY_ERROR_NONE && err != NULL)
+		*err = tmperr;
+
+	return result;
+}
+
 size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
                  size_t req, FILE *stream, enum sy_error *err)
 {

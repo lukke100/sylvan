@@ -9,6 +9,7 @@ enum sy_error {
 	SY_ERROR_UNDERFLOW,
 	SY_ERROR_DIVIDE_BY_ZERO,
 	SY_ERROR_NULL,
+	SY_ERROR_PARSE,
 	SY_ERROR_OVERRUN,
 	SY_ERROR_FILE
 };
@@ -65,6 +66,9 @@ unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias);
 
 size_t sy_token(int *last, const char src[], size_t srcsz,
                 int classify(char ch, int last), enum sy_error *err);
+
+long sy_atol(const char src[], size_t srcsz, enum sy_error *err);
+int  sy_atoi(const char src[], size_t srcsz, enum sy_error *err);
 
 size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
                  size_t req, FILE *stream, enum sy_error *err);
