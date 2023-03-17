@@ -8,7 +8,12 @@ int main(void)
 {
 	enum sy_error err;
 
+	assert(sy_zadd(ZMAX, 0, NULL) == ZMAX);
 	assert(sy_zadd(ZMAX, 1, NULL) == ZMAX);
+
+	err = SY_ERROR_NONE;
+	sy_zadd(ZMAX, 0, &err);
+	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
 	sy_zadd(ZMAX, 1, &err);
