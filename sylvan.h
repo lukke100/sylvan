@@ -70,6 +70,12 @@ size_t sy_token(int *last, const char src[], size_t srcsz,
 long sy_atol(const char src[], size_t srcsz, enum sy_error *err);
 int  sy_atoi(const char src[], size_t srcsz, enum sy_error *err);
 
+size_t sy_quote(char dest[], size_t destsz, const char src[],
+                size_t srcsz, enum sy_error *err);
+
+size_t sy_unquote(char dest[], size_t destsz, size_t *pos,
+                  const char src[], size_t srcsz, enum sy_error *err);
+
 size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
                  size_t req, FILE *stream, enum sy_error *err);
 #endif
