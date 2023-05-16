@@ -988,6 +988,26 @@ static char escspecial(char ch)
 	}
 }
 
+static void eschex(char dest[], char ch)
+{
+	unsigned char uch;
+	size_t scale, idx;
+
+	uch = ch;
+	idx = 0;
+
+	for (scale = hexdigits(); scale > 0; --scale) {
+		const char digits[] = "0123456789ABCDEF";
+		unsigned char digit;
+
+		digit  = uch;
+		digit /= 1 << 4 * (scale - 1);
+		digit %= 16;
+
+		dest[idx++] = digits[digit];
+	}
+}
+
 static size_t quotesz(const char src[], size_t srcsz)
 {
 	size_t srcidx, destidx;
@@ -1056,9 +1076,8 @@ static void quote(char dest[], const char src[], size_t srcsz)
 				dest[destidx++] = '\\';
 				dest[destidx++] = 'x';
 
-				/* TODO: the hard part */
-				dest[destidx++] = '0';
-				dest[destidx++] = '0';
+				eschex(dest + destidx, src[srcidx]);
+				destidx += hexdigits();
 			}
 
 			break;
