@@ -27,8 +27,8 @@ int main(void)
 	assert(strncmp(buf, "ddd", 3) == 0);
 
 	memset(buf, 'e', sizeof(buf));
-	assert(sy_quote(buf, sizeof(buf), "a\a\\\"", 4, NULL) == 9);
-	assert(strncmp(buf, "\"a\\a\\\\\\\"\"e", 10) == 0);
+	assert(sy_quote(buf, sizeof(buf), "a\aa\\\"", 5, NULL) == 10);
+	assert(strncmp(buf, "\"a\\aa\\\\\\\"\"e", 11) == 0);
 
 	memset(buf, 'f', sizeof(buf));
 	assert(sy_quote(buf, sizeof(buf), "\a\b\f\n\r\t\v", 7, NULL) == 16);
@@ -78,7 +78,7 @@ int main(void)
 
 	memset(buf, 'e', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, sizeof(buf), "a\a\\\"", 4, &err);
+	sy_quote(buf, sizeof(buf), "a\aa\\\"", 5, &err);
 	assert(err == SY_ERROR_NONE);
 
 	memset(buf, 'f', sizeof(buf));

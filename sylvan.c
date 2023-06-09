@@ -1021,6 +1021,7 @@ static size_t quotesz(const char src[], size_t srcsz)
 
 		diff = sy_token(&lastcls, src + srcidx, srcsz - srcidx,
 		                clsquote, NULL);
+		srcidx += diff;
 
 		switch (lastcls) {
 		case QUOTE_SPECIAL:
@@ -1031,7 +1032,6 @@ static size_t quotesz(const char src[], size_t srcsz)
 			break;
 		}
 
-		srcidx += diff;
 		destidx = sy_zadd_saturate(destidx, diff);
 	}
 
