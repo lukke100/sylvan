@@ -918,6 +918,34 @@ int sy_atoi(const char src[], size_t srcsz, enum sy_error *err)
 	return result;
 }
 
+char sy_uctoc(unsigned char x, enum sy_error *err)
+{
+	char result;
+
+	if (x <= CHAR_MAX)
+		return x;
+
+	result = -1;
+
+	while (x < UCHAR_MAX) {
+		char dx;
+
+		dx = MIN(UCHAR_MAX - x, CHAR_MAX);
+		x += dx;
+
+		if (result < CHAR_MIN + dx) {
+			if (err != NULL)
+				*err = SY_ERROR_UNDERFLOW;
+
+			return CHAR_MIN;
+		}
+
+		result -= dx;
+	}
+
+	return result;
+}
+
 enum {
 	QUOTE_LITERAL = 1,
 	QUOTE_SPECIAL = 2,

@@ -70,6 +70,8 @@ size_t sy_token(int *last, const char src[], size_t srcsz,
 long sy_atol(const char src[], size_t srcsz, enum sy_error *err);
 int  sy_atoi(const char src[], size_t srcsz, enum sy_error *err);
 
+char sy_uctoc(unsigned char x, enum sy_error *err);
+
 size_t sy_quote(char dest[], size_t destsz, const char src[],
                 size_t srcsz, enum sy_error *err);
 
