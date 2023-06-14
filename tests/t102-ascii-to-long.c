@@ -8,7 +8,6 @@ int main(void)
 {
 	enum sy_error err;
 	char buf[sizeof(long) * CHAR_BIT];
-	size_t idx;
 
 	assert(sy_atol(NULL, 0, NULL) == 0);
 	assert(sy_atol(NULL, 1, NULL) == 0);
