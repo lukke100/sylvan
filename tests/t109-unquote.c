@@ -5,7 +5,7 @@
 int main(void)
 {
 	enum sy_error err;
-	char buf[10];
+	char buf[20];
 	size_t pos;
 
 	assert(sy_unquote(NULL, 0, NULL, NULL, 0, NULL) == 0);
@@ -64,10 +64,10 @@ int main(void)
 
 	pos = 0;
 	memset(buf, 'a', sizeof(buf));
-	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\a\\b\\f\\n\\r\\t\\v\"",
-                          16, NULL) == 7);
-	assert(pos == 16);
-	assert(strncmp(buf, "\a\b\f\n\r\t\va", 8) == 0);
+	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\'\\\"\\?\\\\"
+	                  "\\a\\b\\f\\n\\r\\t\\v\"", 24, NULL) == 11);
+	assert(pos == 24);
+	assert(strncmp(buf, "'\"?\\\a\b\f\n\r\t\va", 12) == 0);
 
 	pos = 0;
 	memset(buf, 'a', sizeof(buf));
@@ -121,15 +121,17 @@ int main(void)
 
 	pos = 0;
 	memset(buf, 'a', sizeof(buf));
-	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\xA\"", 5, NULL) == 1);
-	assert(pos == 5);
-	assert(strncmp(buf, "\12a", 2) == 0);
+	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\xA\\xB\\xC"
+	                  "\\xD\\xE\\xF\"", 20, NULL) == 6);
+	assert(pos == 20);
+	assert(strncmp(buf, "\12\13\14\15\16\17a", 7) == 0);
 
 	pos = 0;
 	memset(buf, 'a', sizeof(buf));
-	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\xa\"", 5, NULL) == 1);
-	assert(pos == 5);
-	assert(strncmp(buf, "\12a", 2) == 0);
+	assert(sy_unquote(buf, sizeof(buf), &pos, "\"\\xa\\xb\\xc"
+	                  "\\xd\\xe\\xf\"", 20, NULL) == 6);
+	assert(pos == 20);
+	assert(strncmp(buf, "\12\13\14\15\16\17a", 7) == 0);
 
 #if UCHAR_MAX < 4095
 	pos = 0;
@@ -212,8 +214,8 @@ int main(void)
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\a\\b\\f\\n\\r\\t\\v\"",
-                   16, &err);
+	sy_unquote(buf, sizeof(buf), &pos, "\"\\'\\\"\\?\\\\"
+	           "\\a\\b\\f\\n\\r\\t\\v\"", 24, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;
@@ -276,6 +278,20 @@ int main(void)
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
 	sy_unquote(buf, sizeof(buf), &pos, "\"\\xa\"", 5, &err);
+	assert(err == SY_ERROR_NONE);
+
+	pos = 0;
+	err = SY_ERROR_NONE;
+	memset(buf, 'a', sizeof(buf));
+	sy_unquote(buf, sizeof(buf), &pos, "\"\\xA\\xB\\xC"
+	           "\\xD\\xE\\xF\"", 20, &err);
+	assert(err == SY_ERROR_NONE);
+
+	pos = 0;
+	err = SY_ERROR_NONE;
+	memset(buf, 'a', sizeof(buf));
+	sy_unquote(buf, sizeof(buf), &pos, "\"\\xa\\xb\\xc"
+	           "\\xd\\xe\\xf\"", 20, &err);
 	assert(err == SY_ERROR_NONE);
 
 #if UCHAR_MAX < 4095
