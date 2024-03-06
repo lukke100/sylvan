@@ -44,6 +44,7 @@ size_t sy_zadd(size_t x, size_t y, enum sy_error *err);
 size_t sy_zsub(size_t x, size_t y, enum sy_error *err);
 size_t sy_zmul(size_t x, size_t y, enum sy_error *err);
 size_t sy_zdiv(size_t x, size_t y, enum sy_error *err);
+size_t sy_zmod(size_t x, size_t y, enum sy_error *err);
 
 size_t sy_zgcd(size_t x, size_t y);
 size_t sy_zlcm(size_t x, size_t y, enum sy_error *err);
@@ -56,6 +57,7 @@ unsigned sy_uadd(unsigned x, unsigned y, enum sy_error *err);
 unsigned sy_usub(unsigned x, unsigned y, enum sy_error *err);
 unsigned sy_umul(unsigned x, unsigned y, enum sy_error *err);
 unsigned sy_udiv(unsigned x, unsigned y, enum sy_error *err);
+unsigned sy_umod(unsigned x, unsigned y, enum sy_error *err);
 
 unsigned sy_ugcd(unsigned x, unsigned y);
 unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err);

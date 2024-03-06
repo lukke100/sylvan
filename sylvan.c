@@ -546,6 +546,18 @@ size_t sy_zdiv(size_t x, size_t y, enum sy_error *err)
 	return x / y;
 }
 
+size_t sy_zmod(size_t x, size_t y, enum sy_error *err)
+{
+	if (y == 0) {
+		if (err != NULL)
+			*err = SY_ERROR_DIVIDE_BY_ZERO;
+
+		return 0;
+	}
+
+	return x % y;
+}
+
 size_t sy_zgcd(size_t x, size_t y)
 {
 	for (;;) {
@@ -676,6 +688,18 @@ unsigned sy_udiv(unsigned x, unsigned y, enum sy_error *err)
 	}
 
 	return x / y;
+}
+
+unsigned sy_umod(unsigned x, unsigned y, enum sy_error *err)
+{
+	if (y == 0) {
+		if (err != NULL)
+			*err = SY_ERROR_DIVIDE_BY_ZERO;
+
+		return 0;
+	}
+
+	return x % y;
 }
 
 unsigned sy_ugcd(unsigned x, unsigned y)
