@@ -1495,6 +1495,25 @@ erroverrun:
 	return 0;
 }
 
+int sy_ltoi(long x, enum sy_error *err)
+{
+	if (x > INT_MAX) {
+		if (err != NULL)
+			*err = SY_ERROR_OVERFLOW;
+
+		return INT_MAX;
+	}
+
+	if (x < INT_MIN) {
+		if (err != NULL)
+			*err = SY_ERROR_UNDERFLOW;
+
+		return INT_MIN;
+	}
+
+	return x;
+}
+
 size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
                  size_t req, FILE *stream, enum sy_error *err)
 {
