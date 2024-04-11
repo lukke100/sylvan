@@ -21,6 +21,8 @@ long sy_ldiv(long x, long y, enum sy_error *err);
 
 long sy_lgcd(long x, long y, enum sy_error *err);
 long sy_llcm(long x, long y, enum sy_error *err);
+long sy_lmax(long x, long y);
+long sy_lmin(long x, long y);
 
 int sy_add(int x, int y, enum sy_error *err);
 int sy_sub(int x, int y, enum sy_error *err);
@@ -29,6 +31,8 @@ int sy_div(int x, int y, enum sy_error *err);
 
 int sy_gcd(int x, int y, enum sy_error *err);
 int sy_lcm(int x, int y, enum sy_error *err);
+int sy_max(int x, int y);
+int sy_min(int x, int y);
 
 long sy_ladd_saturate(long x, long y, long bias);
 long sy_lsub_saturate(long x, long y, long bias);
@@ -48,6 +52,8 @@ size_t sy_zmod(size_t x, size_t y, enum sy_error *err);
 
 size_t sy_zgcd(size_t x, size_t y);
 size_t sy_zlcm(size_t x, size_t y, enum sy_error *err);
+size_t sy_zmax(size_t x, size_t y);
+size_t sy_zmin(size_t x, size_t y);
 
 size_t sy_zadd_saturate(size_t x, size_t y);
 size_t sy_zmul_saturate(size_t x, size_t y);
@@ -61,6 +67,8 @@ unsigned sy_umod(unsigned x, unsigned y, enum sy_error *err);
 
 unsigned sy_ugcd(unsigned x, unsigned y);
 unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err);
+unsigned sy_umax(unsigned x, unsigned y);
+unsigned sy_umin(unsigned x, unsigned y);
 
 unsigned sy_uadd_saturate(unsigned x, unsigned y);
 unsigned sy_umul_saturate(unsigned x, unsigned y);

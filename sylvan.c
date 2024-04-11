@@ -4,9 +4,6 @@
 #include <string.h>
 #include "sylvan.h"
 
-#define MIN(x, y) ((x) < (y) ? (x) : (y))
-#define MAX(x, y) ((x) > (y) ? (x) : (y))
-
 static void seterr(enum sy_error *err, enum sy_error val)
 {
 	if (err == NULL)
@@ -19,8 +16,8 @@ long sy_ladd(long x, long y, enum sy_error *err)
 {
 	long max, min;
 
-	max = MAX(x, y);
-	min = MIN(x, y);
+	max = sy_lmax(x, y);
+	min = sy_lmin(x, y);
 
 	if (min > 0 && LONG_MAX - min < max) {
 		seterr(err, SY_ERROR_OVERFLOW);
@@ -54,8 +51,8 @@ long sy_lmul(long x, long y, enum sy_error *err)
 {
 	long max, min;
 
-	max = MAX(x, y);
-	min = MIN(x, y);
+	max = sy_lmax(x, y);
+	min = sy_lmin(x, y);
 
 #if LONG_MAX + LONG_MIN < 0
 	if (max < 0 && ldiv(LONG_MAX, min).quot > max) {
@@ -121,8 +118,8 @@ long sy_lgcd(long x, long y, enum sy_error *err)
 #if LONG_MAX + LONG_MIN < 0
 	long max1, min1;
 
-	max1 = MAX(x, y);
-	min1 = MIN(x, y);
+	max1 = sy_lmax(x, y);
+	min1 = sy_lmin(x, y);
 
 	while (min1 < -LONG_MAX) {
 		long max2, min2;
@@ -137,8 +134,8 @@ long sy_lgcd(long x, long y, enum sy_error *err)
 		else
 			min1 -= max1;
 
-		max2 = MAX(max1, min1);
-		min2 = MIN(max1, min1);
+		max2 = sy_lmax(max1, min1);
+		min2 = sy_lmin(max1, min1);
 		max1 = max2;
 		min1 = min2;
 	}
@@ -199,6 +196,22 @@ long sy_llcm(long x, long y, enum sy_error *err)
 	}
 
 	return result;
+}
+
+long sy_lmax(long x, long y)
+{
+	if (y > x)
+		return y;
+	else
+		return x;
+}
+
+long sy_lmin(long x, long y)
+{
+	if (y < x)
+		return y;
+	else
+		return x;
 }
 
 int sy_add(int x, int y, enum sy_error *err)
@@ -295,12 +308,22 @@ int sy_lcm(int x, int y, enum sy_error *err)
 	return result;
 }
 
+int sy_max(int x, int y)
+{
+	return sy_lmax(x, y);
+}
+
+int sy_min(int x, int y)
+{
+	return sy_lmin(x, y);
+}
+
 long sy_ladd_saturate(long x, long y, long bias)
 {
 	long max, min;
 
-	max = MAX(x, y);
-	min = MIN(x, y);
+	max = sy_lmax(x, y);
+	min = sy_lmin(x, y);
 
 	if (max == LONG_MAX && min == LONG_MIN)
 		return bias;
@@ -330,8 +353,8 @@ long sy_lmul_saturate(long x, long y)
 {
 	long max, min;
 
-	max = MAX(x, y);
-	min = MIN(x, y);
+	max = sy_lmax(x, y);
+	min = sy_lmin(x, y);
 
 #if LONG_MAX + LONG_MIN > 0
 	if (min == LONG_MIN && max < 0)
@@ -392,8 +415,8 @@ int sy_add_saturate(int x, int y, int bias)
 {
 	int max, min;
 
-	max = MAX(x, y);
-	min = MIN(x, y);
+	max = sy_max(x, y);
+	min = sy_min(x, y);
 
 	if (max == INT_MAX && min == INT_MIN)
 		return bias;
@@ -423,8 +446,8 @@ int sy_mul_saturate(int x, int y)
 {
 	int max, min;
 
-	max = MAX(x, y);
-	min = MIN(x, y);
+	max = sy_max(x, y);
+	min = sy_min(x, y);
 
 #if INT_MAX + INT_MIN > 0
 	if (min == INT_MIN && max < 0)
@@ -585,6 +608,22 @@ size_t sy_zlcm(size_t x, size_t y, enum sy_error *err)
 	return result;
 }
 
+size_t sy_zmax(size_t x, size_t y)
+{
+	if (y > x)
+		return y;
+	else
+		return x;
+}
+
+size_t sy_zmin(size_t x, size_t y)
+{
+	if (y < x)
+		return y;
+	else
+		return x;
+}
+
 size_t sy_zadd_saturate(size_t x, size_t y)
 {
 	return sy_zadd(x, y, NULL);
@@ -716,6 +755,22 @@ unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err)
 	}
 
 	return result;
+}
+
+unsigned sy_umax(unsigned x, unsigned y)
+{
+	if (y > x)
+		return y;
+	else
+		return x;
+}
+
+unsigned sy_umin(unsigned x, unsigned y)
+{
+	if (y < x)
+		return y;
+	else
+		return x;
 }
 
 unsigned sy_uadd_saturate(unsigned x, unsigned y)
@@ -851,7 +906,7 @@ char sy_uctoc(unsigned char x, enum sy_error *err)
 	while (x < UCHAR_MAX) {
 		char dx;
 
-		dx = MIN(UCHAR_MAX - x, CHAR_MAX);
+		dx = sy_min(UCHAR_MAX - x, CHAR_MAX);
 		x += dx;
 
 		if (result < CHAR_MIN + dx) {
@@ -1448,7 +1503,7 @@ size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
 		return oldlen;
 	}
 
-	if (MAX(bufsz, req) > 0 && stream == NULL) {
+	if (sy_zmax(bufsz, req) > 0 && stream == NULL) {
 		seterr(err, SY_ERROR_NULL);
 		return oldlen;
 	}
