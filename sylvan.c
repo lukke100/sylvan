@@ -113,6 +113,37 @@ long sy_ldiv(long x, long y, enum sy_error *err)
 	return ldiv(x, y).quot;
 }
 
+long sy_lmod(long x, long y, enum sy_error *err)
+{
+	long result;
+
+	if (y == 0) {
+		seterr(err, SY_ERROR_DIVIDE_BY_ZERO);
+		return 0;
+	}
+
+	result = x;
+
+#if LONG_MAX + LONG_MIN >= 0
+	while (labs(result) >= labs(y))
+		result -= sy_ldiv(result, y, NULL) * y;
+#else
+	while (1) {
+		long rtmp, ytmp;
+
+		rtmp = result > 0 ? -result : result;
+		ytmp = y > 0 ? -y : y;
+
+		if (rtmp > ytmp)
+			break;
+
+		result -= sy_ldiv(result, y, NULL) * y;
+	}
+#endif
+
+	return result;
+}
+
 long sy_lgcd(long x, long y, enum sy_error *err)
 {
 #if LONG_MAX + LONG_MIN < 0
@@ -274,6 +305,24 @@ int sy_div(int x, int y, enum sy_error *err)
 
 	if (tmperr != SY_ERROR_NONE)
 		seterr(err, tmperr);
+
+	return result;
+}
+
+int sy_mod(int x, int y, enum sy_error *err)
+{
+	enum sy_error tmperr1, tmperr2;
+	long result;
+
+	tmperr1 = SY_ERROR_NONE;
+	result  = sy_lmod(x, y, &tmperr1);
+	tmperr2 = SY_ERROR_NONE;
+	result  = sy_ltoi(result, &tmperr2);
+
+	if (tmperr1 != SY_ERROR_NONE)
+		seterr(err, tmperr1);
+	else if (tmperr2 != SY_ERROR_NONE)
+		seterr(err, tmperr2);
 
 	return result;
 }
