@@ -1529,6 +1529,26 @@ int sy_ltoi(long x, enum sy_error *err)
 	return x;
 }
 
+void sy_rev(char buf[], size_t bufsz, enum sy_error *err)
+{
+	size_t idx1;
+
+	if (buf == NULL && bufsz > 0) {
+		seterr(err, SY_ERROR_NULL);
+		return;
+	}
+
+	for (idx1 = 0; idx1 < bufsz / 2; ++idx1) {
+		size_t idx2;
+		char tmp;
+
+		idx2 = bufsz - idx1 - 1;
+		tmp  = buf[idx1];
+		buf[idx1] = buf[idx2];
+		buf[idx2] = tmp;
+	}
+}
+
 size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
                  size_t req, FILE *stream, enum sy_error *err)
 {
