@@ -1553,7 +1553,7 @@ size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
                  size_t req, FILE *stream, enum sy_error *err)
 {
 	enum sy_error tmperr;
-	size_t oldpos, oldlen, newlen;
+	size_t oldpos, oldlen, needed, newlen;
 
 	if (pos == NULL) {
 		seterr(err, SY_ERROR_NULL);
@@ -1567,41 +1567,35 @@ size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
 	if (req <= oldlen && tmperr != SY_ERROR_UNDERFLOW)
 		return oldlen;
 
-	if (oldlen > 0 && buf == NULL) {
+	oldpos = sy_zmin(oldpos, bufsz);
+	needed = req - oldlen;
+
+	if ((oldpos > 0 || needed > 0) && (stream == NULL || buf == NULL)) {
 		seterr(err, SY_ERROR_NULL);
 		return oldlen;
 	}
 
-	if (sy_zmax(bufsz, req) > 0 && stream == NULL) {
-		seterr(err, SY_ERROR_NULL);
-		return oldlen;
-	}
-
-	if (bufsz > 0 && buf == NULL) {
-		seterr(err, SY_ERROR_NULL);
-		return oldlen;
-	}
-
-	if (req > bufsz) {
+	if (needed > oldpos) {
 		seterr(err, SY_ERROR_OVERRUN);
 		return oldlen;
 	}
 
-	*pos = 0;
-
-	if (bufsz == 0)
+	if (bufsz == 0) {
+		*pos = 0;
 		return 0;
+	}
 
-	if (oldlen > 0)
-		memmove(buf, buf + oldpos, oldlen);
-
-	if (oldpos > bufsz)
-		oldpos = bufsz;
-
-	newlen = fread(buf + oldlen, sizeof(char), oldpos, stream);
+	newlen = fread(buf, sizeof(char), oldpos, stream);
 
 	if (newlen < oldpos && !feof(stream))
 		seterr(err, SY_ERROR_FILE);
 
+	if (newlen > 0) {
+		sy_rev(buf, newlen, NULL);
+		sy_rev(buf + newlen, bufsz - newlen, NULL);
+		sy_rev(buf, bufsz, NULL);
+	}
+
+	*pos = oldpos - newlen;
 	return oldlen + newlen;
 }

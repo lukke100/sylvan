@@ -87,6 +87,21 @@ int main(void)
 	ioresult = fclose(tmpf);
 	assert(ioresult == 0);
 
+	tmpf = tmpfile();
+	assert(tmpf != NULL);
+	ioresult = fputs("ab", tmpf);
+	assert(ioresult != EOF);
+	ioresult = fseek(tmpf, 0, SEEK_SET);
+	assert(ioresult == 0);
+	memcpy(buf, "0123456789", 10);
+	pos = 7;
+	assert(sy_refill(buf, 10, &pos, 7, tmpf, NULL) == 5);
+	assert(strncmp(buf, "23456789ab", 10) == 0);
+	assert(pos == 5);
+	assert(feof(tmpf));
+	ioresult = fclose(tmpf);
+	assert(ioresult == 0);
+
 	err = SY_ERROR_NONE;
 	sy_refill(NULL, 0, NULL, 0, NULL, &err);
 	assert(err == SY_ERROR_NULL);
@@ -165,6 +180,20 @@ int main(void)
 	pos = 11;
 	sy_refill(buf, 10, &pos, 10, tmpf, &err);
 	assert(err == SY_ERROR_NONE);
+	ioresult = fclose(tmpf);
+	assert(ioresult == 0);
+
+	tmpf = tmpfile();
+	assert(tmpf != NULL);
+	ioresult = fputs("ab", tmpf);
+	assert(ioresult != EOF);
+	ioresult = fseek(tmpf, 0, SEEK_SET);
+	assert(ioresult == 0);
+	memcpy(buf, "0123456789", 10);
+	pos = 7;
+	sy_refill(buf, 10, &pos, 7, tmpf, &err);
+	assert(err == SY_ERROR_NONE);
+	assert(feof(tmpf));
 	ioresult = fclose(tmpf);
 	assert(ioresult == 0);
 }
