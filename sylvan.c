@@ -248,11 +248,12 @@ long sy_lmin(long x, long y)
 int sy_add(int x, int y, enum sy_error *err)
 {
 	enum sy_error tmperr;
-	long result;
+	long tmpval;
+	int result;
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_ladd(x, y, &tmperr);
-	result = sy_ltoi(result, &tmperr);
+	tmpval = sy_ladd(x, y, &tmperr);
+	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
 		seterr(err, tmperr);
@@ -263,11 +264,12 @@ int sy_add(int x, int y, enum sy_error *err)
 int sy_sub(int x, int y, enum sy_error *err)
 {
 	enum sy_error tmperr;
-	long result;
+	long tmpval;
+	int result;
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_lsub(x, y, &tmperr);
-	result = sy_ltoi(result, &tmperr);
+	tmpval = sy_lsub(x, y, &tmperr);
+	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
 		seterr(err, tmperr);
@@ -278,11 +280,12 @@ int sy_sub(int x, int y, enum sy_error *err)
 int sy_mul(int x, int y, enum sy_error *err)
 {
 	enum sy_error tmperr;
-	long result;
+	long tmpval;
+	int result;
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_lmul(x, y, &tmperr);
-	result = sy_ltoi(result, &tmperr);
+	tmpval = sy_lmul(x, y, &tmperr);
+	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
 		seterr(err, tmperr);
@@ -292,19 +295,19 @@ int sy_mul(int x, int y, enum sy_error *err)
 
 int sy_div(int x, int y, enum sy_error *err)
 {
-	enum sy_error tmperr;
-	long result;
+	enum sy_error tmperr1, tmperr2;
+	long tmpval;
+	int result;
 
-	tmperr = SY_ERROR_NONE;
-	result = sy_ldiv(x, y, &tmperr);
+	tmperr1 = SY_ERROR_NONE;
+	tmpval  = sy_ldiv(x, y, &tmperr1);
+	tmperr2 = SY_ERROR_NONE;
+	result  = sy_ltoi(tmpval, &tmperr2);
 
-	if (tmperr == SY_ERROR_DIVIDE_BY_ZERO)
-		result = sy_ltoi(result, NULL);
-	else
-		result = sy_ltoi(result, &tmperr);
-
-	if (tmperr != SY_ERROR_NONE)
-		seterr(err, tmperr);
+	if (tmperr1 != SY_ERROR_NONE)
+		seterr(err, tmperr1);
+	else if (tmperr2 != SY_ERROR_NONE)
+		seterr(err, tmperr2);
 
 	return result;
 }
@@ -312,12 +315,13 @@ int sy_div(int x, int y, enum sy_error *err)
 int sy_mod(int x, int y, enum sy_error *err)
 {
 	enum sy_error tmperr1, tmperr2;
-	long result;
+	long tmpval;
+	int result;
 
 	tmperr1 = SY_ERROR_NONE;
-	result  = sy_lmod(x, y, &tmperr1);
+	tmpval  = sy_lmod(x, y, &tmperr1);
 	tmperr2 = SY_ERROR_NONE;
-	result  = sy_ltoi(result, &tmperr2);
+	result  = sy_ltoi(tmpval, &tmperr2);
 
 	if (tmperr1 != SY_ERROR_NONE)
 		seterr(err, tmperr1);
@@ -330,11 +334,12 @@ int sy_mod(int x, int y, enum sy_error *err)
 int sy_gcd(int x, int y, enum sy_error *err)
 {
 	enum sy_error tmperr;
-	long result;
+	long tmpval;
+	int result;
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_lgcd(x, y, &tmperr);
-	result = sy_ltoi(result, &tmperr);
+	tmpval = sy_lgcd(x, y, &tmperr);
+	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
 		seterr(err, tmperr);
@@ -345,11 +350,12 @@ int sy_gcd(int x, int y, enum sy_error *err)
 int sy_lcm(int x, int y, enum sy_error *err)
 {
 	enum sy_error tmperr;
-	long result;
+	long tmpval;
+	int result;
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_llcm(x, y, &tmperr);
-	result = sy_ltoi(result, &tmperr);
+	tmpval = sy_llcm(x, y, &tmperr);
+	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
 		seterr(err, tmperr);
@@ -359,12 +365,12 @@ int sy_lcm(int x, int y, enum sy_error *err)
 
 int sy_max(int x, int y)
 {
-	return sy_lmax(x, y);
+	return sy_ltoi(sy_lmax(x, y), NULL);
 }
 
 int sy_min(int x, int y)
 {
-	return sy_lmin(x, y);
+	return sy_ltoi(sy_lmin(x, y), NULL);
 }
 
 long sy_ladd_saturate(long x, long y, long bias)
@@ -931,11 +937,12 @@ long sy_atol(const char src[], size_t srcsz, enum sy_error *err)
 int sy_atoi(const char src[], size_t srcsz, enum sy_error *err)
 {
 	enum sy_error tmperr;
-	long result;
+	long tmpval;
+	int result;
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_atol(src, srcsz, &tmperr);
-	result = sy_ltoi(result, &tmperr);
+	tmpval = sy_atol(src, srcsz, &tmperr);
+	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
 		seterr(err, tmperr);
@@ -1526,7 +1533,7 @@ int sy_ltoi(long x, enum sy_error *err)
 		return INT_MIN;
 	}
 
-	return x;
+	return (int)x;
 }
 
 void sy_rev(char buf[], size_t bufsz, enum sy_error *err)
