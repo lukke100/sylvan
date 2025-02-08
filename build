@@ -1,6 +1,18 @@
 #!/bin/sh -eu
 cd "$(dirname -- "$0")"
 
+if which splint >/dev/null
+then
+	splintout=$(mktemp)
+
+	if ! splint sylvan.c >"$splintout" 2>&1
+	then
+		sed -e 's/^/# [SPLINT] /' -- "$splintout"
+	fi
+
+	rm -- "$splintout"
+fi
+
 "${CC-c99}" ${CFLAGS-} -c sylvan.c
 "${AR-ar}" ${ARFLAGS--r} libsylvan.a sylvan.o
 
@@ -11,15 +23,25 @@ index=0
 
 for test in tests/t*.c
 do
+	splintout=$(mktemp)
 	tmpout=$(mktemp)
 	tmperr=$(mktemp)
 
+	if which splint >/dev/null
+	then
+		if splint "$test" >"$splintout" 2>&1
+		then
+			>"$splintout"
+		fi
+	fi
+
 	if ! "${CC-c99}" ${CFLAGS-} -I . -UNDEBUG ${LDFLAGS-} -L . \
-		-o "${test%.c}" "$test" -lsylvan >"$tmpout" 2>"$tmperr"
+		-o "${test%.c}" "$test" -lsylvan >>"$tmpout" 2>>"$tmperr"
 	then
 		echo not ok $((index += 1)) - "$test"
 		: $((failures += 1))
 
+		sed -e 's/^/# [SPLINT] /' -- "$splintout"
 		sed -e 's/^/# [STDOUT] /' -- "$tmpout"
 		sed -e 's/^/# [STDERR] /' -- "$tmperr"
 	elif ! "${test%.c}" </dev/null >>"$tmpout" 2>>"$tmperr"
@@ -27,13 +49,15 @@ do
 		echo not ok $((index += 1)) - "$test"
 		: $((failures += 1))
 
+		sed -e 's/^/# [SPLINT] /' -- "$splintout"
 		sed -e 's/^/# [STDOUT] /' -- "$tmpout"
 		sed -e 's/^/# [STDERR] /' -- "$tmperr"
 	else
 		echo ok $((index += 1)) - "$test"
+		sed -e 's/^/# [SPLINT] /' -- "$splintout"
 	fi
 
-	rm -- "$tmpout" "$tmperr"
+	rm -- "$splintout" "$tmpout" "$tmperr"
 done
 
 exit "$failures"
