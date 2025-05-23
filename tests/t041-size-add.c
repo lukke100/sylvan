@@ -12,11 +12,11 @@ int main(void)
 	assert(sy_zadd(ZMAX, 1, NULL) == ZMAX);
 
 	err = SY_ERROR_NONE;
-	sy_zadd(ZMAX, 0, &err);
+	(void)sy_zadd(ZMAX, 0, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_zadd(ZMAX, 1, &err);
+	(void)sy_zadd(ZMAX, 1, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	return 0;

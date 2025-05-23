@@ -12,11 +12,11 @@ int main(void)
 	assert(sy_zmul(ZMAX, ZMAX, NULL) == ZMAX);
 
 	err = SY_ERROR_NONE;
-	sy_zmul(ZMAX, 2, &err);
+	(void)sy_zmul(ZMAX, 2, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	err = SY_ERROR_NONE;
-	sy_zmul(ZMAX, ZMAX, &err);
+	(void)sy_zmul(ZMAX, ZMAX, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	return 0;

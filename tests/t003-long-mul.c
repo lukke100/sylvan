@@ -21,33 +21,33 @@ int main(void)
 	assert(sy_lmul(LONG_MIN, LONG_MAX, NULL) == LONG_MIN);
 
 	err = SY_ERROR_NONE;
-	sy_lmul(LONG_MAX, 2, &err);
+	(void)sy_lmul(LONG_MAX, 2, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	err = SY_ERROR_NONE;
-	sy_lmul(LONG_MIN, 2, &err);
+	(void)sy_lmul(LONG_MIN, 2, &err);
 	assert(err == SY_ERROR_UNDERFLOW);
 
 #if LONG_MAX + LONG_MIN > 0
 	err = SY_ERROR_NONE;
-	sy_lmul(LONG_MAX, -1, &err);
+	(void)sy_lmul(LONG_MAX, -1, &err);
 	assert(err == SY_ERROR_UNDERFLOW);
 #elif LONG_MAX + LONG_MIN < 0
 	err = SY_ERROR_NONE;
-	sy_lmul(LONG_MIN, -1, &err);
+	(void)sy_lmul(LONG_MIN, -1, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 #endif
 
 	err = SY_ERROR_NONE;
-	sy_lmul(LONG_MAX, LONG_MAX, &err);
+	(void)sy_lmul(LONG_MAX, LONG_MAX, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	err = SY_ERROR_NONE;
-	sy_lmul(LONG_MAX, LONG_MIN, &err);
+	(void)sy_lmul(LONG_MAX, LONG_MIN, &err);
 	assert(err == SY_ERROR_UNDERFLOW);
 
 	err = SY_ERROR_NONE;
-	sy_lmul(LONG_MIN, LONG_MAX, &err);
+	(void)sy_lmul(LONG_MIN, LONG_MAX, &err);
 	assert(err == SY_ERROR_UNDERFLOW);
 
 	return 0;

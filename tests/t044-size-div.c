@@ -13,15 +13,15 @@ int main(void)
 	assert(sy_zdiv(1, 0, NULL) == ZMAX);
 
 	err = SY_ERROR_NONE;
-	sy_zdiv(1, 1, &err);
+	(void)sy_zdiv(1, 1, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_zdiv(0, 0, &err);
+	(void)sy_zdiv(0, 0, &err);
 	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
 
 	err = SY_ERROR_NONE;
-	sy_zdiv(1, 0, &err);
+	(void)sy_zdiv(1, 0, &err);
 	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
 
 	return 0;

@@ -103,43 +103,43 @@ int main(void)
 	assert(ioresult == 0);
 
 	err = SY_ERROR_NONE;
-	sy_refill(NULL, 0, NULL, 0, NULL, &err);
+	(void)sy_refill(NULL, 0, NULL, 0, NULL, &err);
 	assert(err == SY_ERROR_NULL);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_refill(NULL, 0, &pos, 0, NULL, &err);
+	(void)sy_refill(NULL, 0, &pos, 0, NULL, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 1;
 	err = SY_ERROR_NONE;
-	sy_refill(NULL, 0, &pos, 0, NULL, &err);
+	(void)sy_refill(NULL, 0, &pos, 0, NULL, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 5;
 	err = SY_ERROR_NONE;
-	sy_refill(NULL, 3, &pos, 0, NULL, &err);
+	(void)sy_refill(NULL, 3, &pos, 0, NULL, &err);
 	assert(err == SY_ERROR_NULL);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_refill(NULL, 0, &pos, 3, NULL, &err);
+	(void)sy_refill(NULL, 0, &pos, 3, NULL, &err);
 	assert(err == SY_ERROR_NULL);
 
 	pos = 5;
 	err = SY_ERROR_NONE;
-	sy_refill(NULL, 7, &pos, 3, NULL, &err);
+	(void)sy_refill(NULL, 7, &pos, 3, NULL, &err);
 	assert(err == SY_ERROR_NULL);
 
 	pos = 5;
 	err = SY_ERROR_NONE;
-	sy_refill(NULL, 5, &pos, 3, stdin, &err);
+	(void)sy_refill(NULL, 5, &pos, 3, stdin, &err);
 	assert(err == SY_ERROR_NULL);
 
 	memcpy(buf, "0123456789", 10);
 	pos = 7;
 	err = SY_ERROR_NONE;
-	sy_refill(buf, 10, &pos, 5, NULL, &err);
+	(void)sy_refill(buf, 10, &pos, 5, NULL, &err);
 	assert(err == SY_ERROR_NULL);
 
 	tmpf = tmpfile();
@@ -151,7 +151,7 @@ int main(void)
 	memcpy(buf, "0123456789", 10);
 	pos = 5;
 	err = SY_ERROR_NONE;
-	sy_refill(buf, 7, &pos, 10, tmpf, &err);
+	(void)sy_refill(buf, 7, &pos, 10, tmpf, &err);
 	assert(err == SY_ERROR_OVERRUN);
 	ioresult = fclose(tmpf);
 	assert(ioresult == 0);
@@ -165,7 +165,7 @@ int main(void)
 	memcpy(buf, "0123456789", 10);
 	pos = 5;
 	err = SY_ERROR_NONE;
-	sy_refill(buf, 10, &pos, 10, tmpf, &err);
+	(void)sy_refill(buf, 10, &pos, 10, tmpf, &err);
 	assert(err == SY_ERROR_NONE);
 	ioresult = fclose(tmpf);
 	assert(ioresult == 0);
@@ -178,7 +178,7 @@ int main(void)
 	assert(ioresult == 0);
 	memcpy(buf, "0123456789", 10);
 	pos = 11;
-	sy_refill(buf, 10, &pos, 10, tmpf, &err);
+	(void)sy_refill(buf, 10, &pos, 10, tmpf, &err);
 	assert(err == SY_ERROR_NONE);
 	ioresult = fclose(tmpf);
 	assert(ioresult == 0);
@@ -191,7 +191,7 @@ int main(void)
 	assert(ioresult == 0);
 	memcpy(buf, "0123456789", 10);
 	pos = 7;
-	sy_refill(buf, 10, &pos, 7, tmpf, &err);
+	(void)sy_refill(buf, 10, &pos, 7, tmpf, &err);
 	assert(err == SY_ERROR_NONE);
 	assert(feof(tmpf));
 	ioresult = fclose(tmpf);

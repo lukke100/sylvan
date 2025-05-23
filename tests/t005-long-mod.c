@@ -28,7 +28,7 @@ int main(void)
 #endif
 
 	err = SY_ERROR_NONE;
-	sy_lmod(1, 0, &err);
+	(void)sy_lmod(1, 0, &err);
 	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
 
 	for (x = -13; x <= 13; ++x) {
@@ -37,18 +37,18 @@ int main(void)
 				continue;
 
 			err = SY_ERROR_NONE;
-			sy_lmod(x, y, &err);
+			(void)sy_lmod(x, y, &err);
 			assert(err == SY_ERROR_NONE);
 		}
 	}
 
 #if LONG_MAX + LONG_MIN > 0
 	err = SY_ERROR_NONE;
-	sy_lmod(LONG_MAX, -1, &err);
+	(void)sy_lmod(LONG_MAX, -1, &err);
 	assert(err == SY_ERROR_NONE);
 #elif LONG_MAX + LONG_MIN < 0
 	err = SY_ERROR_NONE;
-	sy_lmod(LONG_MIN, -1, &err);
+	(void)sy_lmod(LONG_MIN, -1, &err);
 	assert(err == SY_ERROR_NONE);
 #endif
 

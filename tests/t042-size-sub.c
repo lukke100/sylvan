@@ -9,7 +9,7 @@ int main(void)
 	assert(sy_zsub(0, 1, NULL) == 0);
 
 	err = SY_ERROR_NONE;
-	sy_zsub(0, 1, &err);
+	(void)sy_zsub(0, 1, &err);
 	assert(err == SY_ERROR_UNDERFLOW);
 
 	return 0;

@@ -142,163 +142,163 @@ int main(void)
 #endif
 
 	err = SY_ERROR_NONE;
-	sy_unquote(NULL, 0, NULL, NULL, 0, &err);
+	(void)sy_unquote(NULL, 0, NULL, NULL, 0, &err);
 	assert(err == SY_ERROR_NULL);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_unquote(NULL, 0, &pos, NULL, 0, &err);
+	(void)sy_unquote(NULL, 0, &pos, NULL, 0, &err);
 	assert(pos == 0);
 	assert(err == SY_ERROR_PARSE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_unquote(NULL, 0, &pos, NULL, 1, &err);
+	(void)sy_unquote(NULL, 0, &pos, NULL, 1, &err);
 	assert(pos == 0);
 	assert(err == SY_ERROR_NULL);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_unquote(NULL, 0, &pos, "a", 1, &err);
+	(void)sy_unquote(NULL, 0, &pos, "a", 1, &err);
 	assert(pos == 0);
 	assert(err == SY_ERROR_PARSE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_unquote(NULL, 0, &pos, "\"", 1, &err);
+	(void)sy_unquote(NULL, 0, &pos, "\"", 1, &err);
 	assert(pos == 0);
 	assert(err == SY_ERROR_PARSE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_unquote(NULL, 0, &pos, "\"\"", 2, &err);
+	(void)sy_unquote(NULL, 0, &pos, "\"\"", 2, &err);
 	assert(pos == 2);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_unquote(NULL, 0, &pos, "\"a\"", 3, &err);
+	(void)sy_unquote(NULL, 0, &pos, "\"a\"", 3, &err);
 	assert(pos == 0);
 	assert(err == SY_ERROR_OVERRUN);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
-	sy_unquote(NULL, 1, &pos, "\"a\"", 3, &err);
+	(void)sy_unquote(NULL, 1, &pos, "\"a\"", 3, &err);
 	assert(pos == 0);
 	assert(err == SY_ERROR_NULL);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"b\"", 3, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"b\"", 3, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\n\"", 3, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\n\"", 3, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\", 2, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\", 2, &err);
 	assert(err = SY_ERROR_PARSE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\\"", 3, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\\"", 3, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\'\\\"\\?\\\\"
-	           "\\a\\b\\f\\n\\r\\t\\v\"", 24, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\'\\\"\\?\\\\"
+	                 "\\a\\b\\f\\n\\r\\t\\v\"", 24, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\c\"", 4, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\c\"", 4, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\1\"", 4, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\1\"", 4, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\9\"", 4, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\9\"", 4, &err);
 	assert(err == SY_ERROR_PARSE);
 
 #if UCHAR_MAX < 511
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\777\"", 6, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\777\"", 6, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 #endif
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\0000\"", 7, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\0000\"", 7, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\x", 3, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\x", 3, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\x\"", 4, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\x\"", 4, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\x1\"", 5, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\x1\"", 5, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\xA\"", 5, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\xA\"", 5, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\xa\"", 5, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\xa\"", 5, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\xA\\xB\\xC"
-	           "\\xD\\xE\\xF\"", 20, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\xA\\xB\\xC"
+	                 "\\xD\\xE\\xF\"", 20, &err);
 	assert(err == SY_ERROR_NONE);
 
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\xa\\xb\\xc"
-	           "\\xd\\xe\\xf\"", 20, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\xa\\xb\\xc"
+	                 "\\xd\\xe\\xf\"", 20, &err);
 	assert(err == SY_ERROR_NONE);
 
 #if UCHAR_MAX < 4095
 	pos = 0;
 	err = SY_ERROR_NONE;
 	memset(buf, 'a', sizeof(buf));
-	sy_unquote(buf, sizeof(buf), &pos, "\"\\xFFF\"", 7, &err);
+	(void)sy_unquote(buf, sizeof(buf), &pos, "\"\\xFFF\"", 7, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 #endif
 

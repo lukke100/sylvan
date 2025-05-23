@@ -49,57 +49,57 @@ int main(void)
 #endif
 
 	err = SY_ERROR_NONE;
-	sy_quote(NULL, 0, NULL, 0, &err);
+	(void)sy_quote(NULL, 0, NULL, 0, &err);
 	assert(err == SY_ERROR_OVERRUN);
 
 	err = SY_ERROR_NONE;
-	sy_quote(NULL, 1, NULL, 0, &err);
+	(void)sy_quote(NULL, 1, NULL, 0, &err);
 	assert(err == SY_ERROR_NULL);
 
 	memset(buf, 'a', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, 1, NULL, 0, &err);
+	(void)sy_quote(buf, 1, NULL, 0, &err);
 	assert(err == SY_ERROR_OVERRUN);
 
 	memset(buf, 'b', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, 2, NULL, 0, &err);
+	(void)sy_quote(buf, 2, NULL, 0, &err);
 	assert(err == SY_ERROR_NONE);
 
 	memset(buf, 'c', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, 2, NULL, 1, &err);
+	(void)sy_quote(buf, 2, NULL, 1, &err);
 	assert(err == SY_ERROR_NULL);
 
 	memset(buf, 'd', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, 2, "z", 1, &err);
+	(void)sy_quote(buf, 2, "z", 1, &err);
 	assert(err == SY_ERROR_OVERRUN);
 
 	memset(buf, 'e', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, sizeof(buf), "a\aa\\\"", 5, &err);
+	(void)sy_quote(buf, sizeof(buf), "a\aa\\\"", 5, &err);
 	assert(err == SY_ERROR_NONE);
 
 	memset(buf, 'f', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, sizeof(buf), "\a\b\f\n\r\t\v", 7, &err);
+	(void)sy_quote(buf, sizeof(buf), "\a\b\f\n\r\t\v", 7, &err);
 	assert(err == SY_ERROR_NONE);
 
 	memset(buf, 'g', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, sizeof(buf), "z", 1, &err);
+	(void)sy_quote(buf, sizeof(buf), "z", 1, &err);
 	assert(err == SY_ERROR_NONE);
 
 #if UCHAR_MAX < 256
 	memset(buf, 'h', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, sizeof(buf), "\0", 1, &err);
+	(void)sy_quote(buf, sizeof(buf), "\0", 1, &err);
 	assert(err == SY_ERROR_NONE);
 
 	memset(buf, 'i', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_quote(buf, sizeof(buf), "\000a", 2, &err);
+	(void)sy_quote(buf, sizeof(buf), "\000a", 2, &err);
 	assert(err == SY_ERROR_NONE);
 #endif
 }

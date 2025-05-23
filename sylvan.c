@@ -954,8 +954,8 @@ char sy_uctoc(unsigned char x, enum sy_error *err)
 {
 	char result;
 
-	if (x <= CHAR_MAX)
-		return x;
+	if (x <= (unsigned char)CHAR_MAX)
+		return (char)x;
 
 	result = -1;
 
@@ -1051,7 +1051,7 @@ static void eschex(char dest[], char ch)
 	unsigned char uch;
 	size_t scale, idx;
 
-	uch = ch;
+	uch = (unsigned char)ch;
 	idx = 0;
 
 	for (scale = hexdigits(); scale > 0; --scale) {
@@ -1276,7 +1276,7 @@ static unsigned hextoval(char ch)
 	case 'F': case 'f':
 		return 15;
 	default:
-		return ch - '0';
+		return (unsigned)(ch - '0');
 	}
 }
 
@@ -1337,7 +1337,7 @@ static size_t unquotesz(size_t *pos, const char src[],
 				return 0;
 			}
 
-			sy_uctoc(val, &tmperr);
+			(void)sy_uctoc(val, &tmperr);
 
 			if (tmperr == SY_ERROR_UNDERFLOW) {
 				seterr(err, SY_ERROR_UNDERFLOW);
@@ -1361,7 +1361,7 @@ static size_t unquotesz(size_t *pos, const char src[],
 				return 0;
 			}
 
-			sy_uctoc(val, &tmperr);
+			(void)sy_uctoc(val, &tmperr);
 
 			if (tmperr == SY_ERROR_UNDERFLOW) {
 				seterr(err, SY_ERROR_UNDERFLOW);

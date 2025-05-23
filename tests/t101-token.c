@@ -36,34 +36,34 @@ int main(void)
 	assert(last == -2);
 
 	err = SY_ERROR_NONE;
-	sy_token(NULL, NULL, 0, NULL, &err);
+	(void)sy_token(NULL, NULL, 0, NULL, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_token(NULL, NULL, 2, NULL, &err);
+	(void)sy_token(NULL, NULL, 2, NULL, &err);
 	assert(err == SY_ERROR_NULL);
 
 	err = SY_ERROR_NONE;
-	sy_token(NULL, "aa", 2, NULL, &err);
+	(void)sy_token(NULL, "aa", 2, NULL, &err);
 	assert(err == SY_ERROR_NULL);
 
 	err = SY_ERROR_NONE;
-	sy_token(NULL, "aa", 2, classify, &err);
+	(void)sy_token(NULL, "aa", 2, classify, &err);
 	assert(err == SY_ERROR_NULL);
 
 	last = 1;
 	err  = SY_ERROR_NONE;
-	sy_token(&last, "aa", 2, classify, &err);
+	(void)sy_token(&last, "aa", 2, classify, &err);
 	assert(err == SY_ERROR_NONE);
 
 	last = 1;
 	err  = SY_ERROR_NONE;
-	sy_token(&last, "aab", 3, classify, &err);
+	(void)sy_token(&last, "aab", 3, classify, &err);
 	assert(err == SY_ERROR_NONE);
 
 	last = 1;
 	err  = SY_ERROR_NONE;
-	sy_token(&last, "!!a", 3, classify, &err);
+	(void)sy_token(&last, "!!a", 3, classify, &err);
 	assert(err == SY_ERROR_NONE);
 
 	return 0;

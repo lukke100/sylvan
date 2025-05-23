@@ -18,20 +18,20 @@ int main(void)
 #endif
 
 	err = SY_ERROR_NONE;
-	sy_llcm(2, 0, &err);
+	(void)sy_llcm(2, 0, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_llcm(-2, 0, &err);
+	(void)sy_llcm(-2, 0, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_llcm(0, 0, &err);
+	(void)sy_llcm(0, 0, &err);
 	assert(err == SY_ERROR_NONE);
 
 #if LONG_MAX + LONG_MIN < 0
 	err = SY_ERROR_NONE;
-	sy_llcm(LONG_MIN, LONG_MIN, &err);
+	(void)sy_llcm(LONG_MIN, LONG_MIN, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 #endif
 

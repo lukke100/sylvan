@@ -14,15 +14,15 @@ int main(void)
 	assert(sy_zlcm(ZMAX, ZMAX - 1, NULL) == ZMAX);
 
 	err = SY_ERROR_NONE;
-	sy_zlcm(2, 0, &err);
+	(void)sy_zlcm(2, 0, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_zlcm(0, 0, &err);
+	(void)sy_zlcm(0, 0, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_zlcm(ZMAX, ZMAX - 1u, &err);
+	(void)sy_zlcm(ZMAX, ZMAX - 1u, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	return 0;

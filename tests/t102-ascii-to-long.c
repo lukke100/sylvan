@@ -27,39 +27,39 @@ int main(void)
 	assert(sy_atol(buf, sizeof(buf), NULL) == LONG_MIN);
 
 	err = SY_ERROR_NONE;
-	sy_atol(NULL, 0, &err);
+	(void)sy_atol(NULL, 0, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	err = SY_ERROR_NONE;
-	sy_atol(NULL, 1, &err);
+	(void)sy_atol(NULL, 1, &err);
 	assert(err == SY_ERROR_NULL);
 
 	err = SY_ERROR_NONE;
-	sy_atol("", 1, &err);
+	(void)sy_atol("", 1, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	err = SY_ERROR_NONE;
-	sy_atol("a", 1, &err);
+	(void)sy_atol("a", 1, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	err = SY_ERROR_NONE;
-	sy_atol(" 1", 2, &err);
+	(void)sy_atol(" 1", 2, &err);
 	assert(err == SY_ERROR_PARSE);
 
 	memset(buf, '9', sizeof(buf));
 	err = SY_ERROR_NONE;
-	sy_atol(buf, sizeof(buf), &err);
+	(void)sy_atol(buf, sizeof(buf), &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	memset(buf, '9', sizeof(buf));
 	buf[0] = '+';
 	err = SY_ERROR_NONE;
-	sy_atol(buf, sizeof(buf), &err);
+	(void)sy_atol(buf, sizeof(buf), &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	memset(buf, '9', sizeof(buf));
 	buf[0] = '-';
 	err = SY_ERROR_NONE;
-	sy_atol(buf, sizeof(buf), &err);
+	(void)sy_atol(buf, sizeof(buf), &err);
 	assert(err == SY_ERROR_UNDERFLOW);
 }

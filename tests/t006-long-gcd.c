@@ -18,28 +18,28 @@ int main(void)
 #endif
 
 	err = SY_ERROR_NONE;
-	sy_lgcd(2, 0, &err);
+	(void)sy_lgcd(2, 0, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_lgcd(-2, 0, &err);
+	(void)sy_lgcd(-2, 0, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_lgcd(0, 0, &err);
+	(void)sy_lgcd(0, 0, &err);
 	assert(err == SY_ERROR_NONE);
 
 #if LONG_MAX + LONG_MIN < 0
 	err = SY_ERROR_NONE;
-	sy_lgcd(LONG_MIN, 0, &err);
+	(void)sy_lgcd(LONG_MIN, 0, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 
 	err = SY_ERROR_NONE;
-	sy_lgcd(LONG_MIN, 1, &err);
+	(void)sy_lgcd(LONG_MIN, 1, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_lgcd(1, LONG_MIN, &err);
+	(void)sy_lgcd(1, LONG_MIN, &err);
 	assert(err == SY_ERROR_NONE);
 #endif
 

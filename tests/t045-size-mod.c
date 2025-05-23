@@ -11,15 +11,15 @@ int main(void)
 	assert(sy_zmod(1, 0, NULL) == 0);
 
 	err = SY_ERROR_NONE;
-	sy_zmod(1, 2, &err);
+	(void)sy_zmod(1, 2, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_zmod(1, 1, &err);
+	(void)sy_zmod(1, 1, &err);
 	assert(err == SY_ERROR_NONE);
 
 	err = SY_ERROR_NONE;
-	sy_zmod(1, 0, &err);
+	(void)sy_zmod(1, 0, &err);
 	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
 
 	return 0;

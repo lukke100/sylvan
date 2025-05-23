@@ -20,29 +20,29 @@ int main(void)
 	assert(sy_ldiv(0, 1, NULL) == 0);
 
 	err = SY_ERROR_NONE;
-	sy_ldiv(0, 0, &err);
+	(void)sy_ldiv(0, 0, &err);
 	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
 
 	err = SY_ERROR_NONE;
-	sy_ldiv(1, 0, &err);
+	(void)sy_ldiv(1, 0, &err);
 	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
 
 	err = SY_ERROR_NONE;
-	sy_ldiv(-1, 0, &err);
+	(void)sy_ldiv(-1, 0, &err);
 	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
 
 #if LONG_MAX + LONG_MIN > 0
 	err = SY_ERROR_NONE;
-	sy_ldiv(LONG_MAX, -1, &err);
+	(void)sy_ldiv(LONG_MAX, -1, &err);
 	assert(err == SY_ERROR_UNDERFLOW);
 #elif LONG_MAX + LONG_MIN < 0
 	err = SY_ERROR_NONE;
-	sy_ldiv(LONG_MIN, -1, &err);
+	(void)sy_ldiv(LONG_MIN, -1, &err);
 	assert(err == SY_ERROR_OVERFLOW);
 #endif
 
 	err = SY_ERROR_NONE;
-	sy_ldiv(0, 1, &err);
+	(void)sy_ldiv(0, 1, &err);
 	assert(err == SY_ERROR_NONE);
 
 	return 0;
