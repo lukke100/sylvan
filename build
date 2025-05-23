@@ -31,7 +31,7 @@ do
 	then
 		if splint "$test" >"$splintout" 2>&1
 		then
-			>"$splintout"
+			true >"$splintout"
 		fi
 	fi
 
