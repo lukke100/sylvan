@@ -708,17 +708,17 @@ size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias)
 	return x / y;
 }
 
-unsigned sy_uadd(unsigned x, unsigned y, enum sy_error *err)
+unsigned long sy_uladd(unsigned long x, unsigned long y, enum sy_error *err)
 {
-	if (UINT_MAX - x < y) {
+	if (ULONG_MAX - x < y) {
 		seterr(err, SY_ERROR_OVERFLOW);
-		return UINT_MAX;
+		return ULONG_MAX;
 	}
 
 	return x + y;
 }
 
-unsigned sy_usub(unsigned x, unsigned y, enum sy_error *err)
+unsigned long sy_ulsub(unsigned long x, unsigned long y, enum sy_error *err)
 {
 	if (y > x) {
 		seterr(err, SY_ERROR_UNDERFLOW);
@@ -728,20 +728,20 @@ unsigned sy_usub(unsigned x, unsigned y, enum sy_error *err)
 	return x - y;
 }
 
-unsigned sy_umul(unsigned x, unsigned y, enum sy_error *err)
+unsigned long sy_ulmul(unsigned long x, unsigned long y, enum sy_error *err)
 {
 	if (x == 0)
 		return 0;
 
-	if (UINT_MAX / x < y) {
+	if (ULONG_MAX / x < y) {
 		seterr(err, SY_ERROR_OVERFLOW);
-		return UINT_MAX;
+		return ULONG_MAX;
 	}
 
 	return x * y;
 }
 
-unsigned sy_udiv(unsigned x, unsigned y, enum sy_error *err)
+unsigned long sy_uldiv(unsigned long x, unsigned long y, enum sy_error *err)
 {
 	if (y == 0) {
 		seterr(err, SY_ERROR_DIVIDE_BY_ZERO);
@@ -749,13 +749,13 @@ unsigned sy_udiv(unsigned x, unsigned y, enum sy_error *err)
 		if (x == 0)
 			return 0;
 		else
-			return UINT_MAX;
+			return ULONG_MAX;
 	}
 
 	return x / y;
 }
 
-unsigned sy_umod(unsigned x, unsigned y, enum sy_error *err)
+unsigned long sy_ulmod(unsigned long x, unsigned long y, enum sy_error *err)
 {
 	if (y == 0) {
 		seterr(err, SY_ERROR_DIVIDE_BY_ZERO);
@@ -765,7 +765,7 @@ unsigned sy_umod(unsigned x, unsigned y, enum sy_error *err)
 	return x % y;
 }
 
-unsigned sy_ugcd(unsigned x, unsigned y)
+unsigned long sy_ulgcd(unsigned long x, unsigned long y)
 {
 	for (;;) {
 		if (x == 0)
@@ -780,12 +780,12 @@ unsigned sy_ugcd(unsigned x, unsigned y)
 	}
 }
 
-unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err)
+unsigned long sy_ullcm(unsigned long x, unsigned long y, enum sy_error *err)
 {
-	unsigned gcd, result;
+	unsigned long gcd, result;
 	enum sy_error tmperr;
 
-	gcd = sy_ugcd(x, y);
+	gcd = sy_ulgcd(x, y);
 
 	if (gcd == 0)
 		return 0;
@@ -794,25 +794,25 @@ unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err)
 	y /= gcd;
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_umul(x, y, &tmperr);
+	result = sy_ulmul(x, y, &tmperr);
 
 	if (tmperr == SY_ERROR_OVERFLOW) {
 		seterr(err, SY_ERROR_OVERFLOW);
-		return UINT_MAX;
+		return ULONG_MAX;
 	}
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_umul(result, gcd, &tmperr);
+	result = sy_ulmul(result, gcd, &tmperr);
 
 	if (tmperr == SY_ERROR_OVERFLOW) {
 		seterr(err, SY_ERROR_OVERFLOW);
-		return UINT_MAX;
+		return ULONG_MAX;
 	}
 
 	return result;
 }
 
-unsigned sy_umax(unsigned x, unsigned y)
+unsigned long sy_ulmax(unsigned long x, unsigned long y)
 {
 	if (y > x)
 		return y;
@@ -820,12 +820,159 @@ unsigned sy_umax(unsigned x, unsigned y)
 		return x;
 }
 
-unsigned sy_umin(unsigned x, unsigned y)
+unsigned long sy_ulmin(unsigned long x, unsigned long y)
 {
 	if (y < x)
 		return y;
 	else
 		return x;
+}
+
+unsigned long sy_uladd_saturate(unsigned long x, unsigned long y)
+{
+	return sy_uladd(x, y, NULL);
+}
+
+unsigned long sy_ulmul_saturate(unsigned long x, unsigned long y)
+{
+	return sy_ulmul(x, y, NULL);
+}
+
+unsigned long sy_uldiv_saturate(unsigned long x, unsigned long y,
+                                unsigned long bias)
+{
+	if (y == 0) {
+		if (x == 0)
+			return bias;
+		else
+			return ULONG_MAX;
+	}
+
+	if (x == ULONG_MAX) {
+		if (y == ULONG_MAX)
+			return bias;
+		else
+			return ULONG_MAX;
+	}
+
+	return x / y;
+}
+
+unsigned sy_uadd(unsigned x, unsigned y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	unsigned long tmpval;
+	unsigned result;
+
+	tmperr = SY_ERROR_NONE;
+	tmpval = sy_uladd(x, y, &tmperr);
+	result = sy_ultou(tmpval, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE)
+		seterr(err, tmperr);
+
+	return result;
+}
+
+unsigned sy_usub(unsigned x, unsigned y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	unsigned long tmpval;
+	unsigned result;
+
+	tmperr = SY_ERROR_NONE;
+	tmpval = sy_ulsub(x, y, &tmperr);
+	result = sy_ultou(tmpval, NULL);
+
+	if (tmperr != SY_ERROR_NONE)
+		seterr(err, tmperr);
+
+	return result;
+}
+
+unsigned sy_umul(unsigned x, unsigned y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	unsigned long tmpval;
+	unsigned result;
+
+	tmperr = SY_ERROR_NONE;
+	tmpval = sy_ulmul(x, y, &tmperr);
+	result = sy_ultou(tmpval, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE)
+		seterr(err, tmperr);
+
+	return result;
+}
+
+unsigned sy_udiv(unsigned x, unsigned y, enum sy_error *err)
+{
+	enum sy_error tmperr1, tmperr2;
+	unsigned long tmpval;
+	unsigned result;
+
+	tmperr1 = SY_ERROR_NONE;
+	tmpval  = sy_uldiv(x, y, &tmperr1);
+	tmperr2 = SY_ERROR_NONE;
+	result  = sy_ultou(tmpval, &tmperr2);
+
+	if (tmperr1 != SY_ERROR_NONE)
+		seterr(err, tmperr1);
+	else if (tmperr2 != SY_ERROR_NONE)
+		seterr(err, tmperr2);
+
+	return result;
+}
+
+unsigned sy_umod(unsigned x, unsigned y, enum sy_error *err)
+{
+	enum sy_error tmperr1, tmperr2;
+	unsigned long tmpval;
+	unsigned result;
+
+	tmperr1 = SY_ERROR_NONE;
+	tmpval  = sy_ulmod(x, y, &tmperr1);
+	tmperr2 = SY_ERROR_NONE;
+	result  = sy_ultou(tmpval, &tmperr2);
+
+	if (tmperr1 != SY_ERROR_NONE)
+		seterr(err, tmperr1);
+	else if (tmperr2 != SY_ERROR_NONE)
+		seterr(err, tmperr2);
+
+	return result;
+}
+
+unsigned sy_ugcd(unsigned x, unsigned y)
+{
+	return sy_ultou(sy_ulgcd(x, y), NULL);
+}
+
+unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	unsigned long tmpval;
+	unsigned result;
+
+	tmperr = SY_ERROR_NONE;
+	tmpval = sy_ullcm(x, y, &tmperr);
+	result = sy_ultou(tmpval, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE)
+		seterr(err, tmperr);
+
+	return result;
+}
+
+unsigned sy_umax(unsigned x, unsigned y)
+{
+	return sy_ultou(sy_ulmax(x, y), NULL);
+}
+
+unsigned sy_umin(unsigned x, unsigned y)
+{
+	return sy_ultou(sy_ulmin(x, y), NULL);
 }
 
 unsigned sy_uadd_saturate(unsigned x, unsigned y)
@@ -1521,6 +1668,16 @@ int sy_ltoi(long x, enum sy_error *err)
 	}
 
 	return (int)x;
+}
+
+unsigned sy_ultou(unsigned long x, enum sy_error *err)
+{
+	if (x > UINT_MAX) {
+		seterr(err, SY_ERROR_OVERFLOW);
+		return UINT_MAX;
+	}
+
+	return (unsigned)x;
 }
 
 void sy_rev(char buf[], size_t bufsz, enum sy_error *err)

@@ -61,6 +61,22 @@ size_t sy_zadd_saturate(size_t x, size_t y);
 size_t sy_zmul_saturate(size_t x, size_t y);
 size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias);
 
+unsigned long sy_uladd(unsigned long x, unsigned long y, enum sy_error *err);
+unsigned long sy_ulsub(unsigned long x, unsigned long y, enum sy_error *err);
+unsigned long sy_ulmul(unsigned long x, unsigned long y, enum sy_error *err);
+unsigned long sy_uldiv(unsigned long x, unsigned long y, enum sy_error *err);
+unsigned long sy_ulmod(unsigned long x, unsigned long y, enum sy_error *err);
+
+unsigned long sy_ulgcd(unsigned long x, unsigned long y);
+unsigned long sy_ullcm(unsigned long x, unsigned long y, enum sy_error *err);
+unsigned long sy_ulmax(unsigned long x, unsigned long y);
+unsigned long sy_ulmin(unsigned long x, unsigned long y);
+
+unsigned long sy_uladd_saturate(unsigned long x, unsigned long y);
+unsigned long sy_ulmul_saturate(unsigned long x, unsigned long y);
+unsigned long sy_uldiv_saturate(unsigned long x, unsigned long y,
+                                unsigned long bias);
+
 unsigned sy_uadd(unsigned x, unsigned y, enum sy_error *err);
 unsigned sy_usub(unsigned x, unsigned y, enum sy_error *err);
 unsigned sy_umul(unsigned x, unsigned y, enum sy_error *err);
@@ -91,6 +107,7 @@ size_t sy_unquote(char dest[], size_t destsz, size_t *pos,
                   const char src[], size_t srcsz, enum sy_error *err);
 
 int sy_ltoi(long x, enum sy_error *err);
+unsigned sy_ultou(unsigned long x, enum sy_error *err);
 
 void sy_rev(char buf[], size_t bufsz, enum sy_error *err);
 
