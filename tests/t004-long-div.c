@@ -21,15 +21,15 @@ int main(void)
 
 	err = SY_ERROR_NONE;
 	(void)sy_ldiv(0, 0, &err);
-	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
+	assert(err == SY_ERROR_UNDEFINED);
 
 	err = SY_ERROR_NONE;
 	(void)sy_ldiv(1, 0, &err);
-	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
+	assert(err == SY_ERROR_UNDEFINED);
 
 	err = SY_ERROR_NONE;
 	(void)sy_ldiv(-1, 0, &err);
-	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
+	assert(err == SY_ERROR_UNDEFINED);
 
 #if LONG_MAX + LONG_MIN > 0
 	err = SY_ERROR_NONE;

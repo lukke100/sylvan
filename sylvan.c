@@ -82,7 +82,7 @@ long sy_lmul(long x, long y, enum sy_error *err)
 long sy_ldiv(long x, long y, enum sy_error *err)
 {
 	if (y == 0) {
-		seterr(err, SY_ERROR_DIVIDE_BY_ZERO);
+		seterr(err, SY_ERROR_UNDEFINED);
 
 		if (x > 0)
 			return LONG_MAX;
@@ -118,7 +118,7 @@ long sy_lmod(long x, long y, enum sy_error *err)
 	long result;
 
 	if (y == 0) {
-		seterr(err, SY_ERROR_DIVIDE_BY_ZERO);
+		seterr(err, SY_ERROR_UNDEFINED);
 		return 0;
 	}
 
@@ -595,7 +595,7 @@ size_t sy_zmul(size_t x, size_t y, enum sy_error *err)
 size_t sy_zdiv(size_t x, size_t y, enum sy_error *err)
 {
 	if (y == 0) {
-		seterr(err, SY_ERROR_DIVIDE_BY_ZERO);
+		seterr(err, SY_ERROR_UNDEFINED);
 
 		if (x == 0)
 			return 0;
@@ -609,7 +609,7 @@ size_t sy_zdiv(size_t x, size_t y, enum sy_error *err)
 size_t sy_zmod(size_t x, size_t y, enum sy_error *err)
 {
 	if (y == 0) {
-		seterr(err, SY_ERROR_DIVIDE_BY_ZERO);
+		seterr(err, SY_ERROR_UNDEFINED);
 		return 0;
 	}
 
@@ -744,7 +744,7 @@ unsigned long sy_ulmul(unsigned long x, unsigned long y, enum sy_error *err)
 unsigned long sy_uldiv(unsigned long x, unsigned long y, enum sy_error *err)
 {
 	if (y == 0) {
-		seterr(err, SY_ERROR_DIVIDE_BY_ZERO);
+		seterr(err, SY_ERROR_UNDEFINED);
 
 		if (x == 0)
 			return 0;
@@ -758,7 +758,7 @@ unsigned long sy_uldiv(unsigned long x, unsigned long y, enum sy_error *err)
 unsigned long sy_ulmod(unsigned long x, unsigned long y, enum sy_error *err)
 {
 	if (y == 0) {
-		seterr(err, SY_ERROR_DIVIDE_BY_ZERO);
+		seterr(err, SY_ERROR_UNDEFINED);
 		return 0;
 	}
 

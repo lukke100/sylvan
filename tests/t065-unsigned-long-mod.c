@@ -20,7 +20,7 @@ int main(void)
 
 	err = SY_ERROR_NONE;
 	sy_ulmod(1, 0, &err);
-	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
+	assert(err == SY_ERROR_UNDEFINED);
 
 	return 0;
 }

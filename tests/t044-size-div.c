@@ -18,11 +18,11 @@ int main(void)
 
 	err = SY_ERROR_NONE;
 	(void)sy_zdiv(0, 0, &err);
-	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
+	assert(err == SY_ERROR_UNDEFINED);
 
 	err = SY_ERROR_NONE;
 	(void)sy_zdiv(1, 0, &err);
-	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
+	assert(err == SY_ERROR_UNDEFINED);
 
 	return 0;
 }

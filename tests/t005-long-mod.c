@@ -30,7 +30,7 @@ int main(void)
 
 	err = SY_ERROR_NONE;
 	(void)sy_lmod(1, 0, &err);
-	assert(err == SY_ERROR_DIVIDE_BY_ZERO);
+	assert(err == SY_ERROR_UNDEFINED);
 
 	for (x = -13; x <= 13; ++x) {
 		for (y = -13; y <= 13; ++y) {
