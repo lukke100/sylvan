@@ -466,6 +466,103 @@ long sy_ldiv_saturate(long x, long y, long bias)
 	return sy_ldiv(x, y, NULL);
 }
 
+#if LONG_MAX + LONG_MIN < 0
+static long lnegmul(long x, long y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	long max, min, result, tmpval;
+
+	max = sy_lmax(x, y);
+	min = sy_lmin(x, y);
+
+	if (min >= 0)
+		return sy_lmul(max, -min, err);
+	else if (max >= 0)
+		return sy_lmul(max, min, err);
+
+	tmperr = SY_ERROR_NONE;
+	result = 0;
+
+	while (max < -LONG_MAX) {
+		tmpval = sy_lmul(min, LONG_MAX, &tmperr);
+		result = sy_ladd(result, tmpval, &tmperr);
+		max   += LONG_MAX;
+	}
+
+	tmpval = sy_lmul(min, -max, &tmperr);
+	result = sy_ladd(result, tmpval, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE) {
+		seterr(err, SY_ERROR_UNDERFLOW);
+		return LONG_MIN;
+	}
+
+	return result;
+}
+#endif
+
+long sy_lpow(long x, long y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	long result, tmpbase, tmpexp;
+
+	if ((x > 1 || x < -1) && y < 0) {
+		seterr(err, SY_ERROR_UNDEFINED);
+		return 0;
+	}
+
+	tmperr = SY_ERROR_NONE;
+
+#if LONG_MAX + LONG_MIN >= 0
+	result  = 1;
+	tmpbase = labs(x);
+	tmpexp  = labs(y);
+
+	while (1) {
+		if (tmpexp % 2 != 0)
+			result = sy_lmul(result, tmpbase, &tmperr);
+
+		tmpexp /= 2;
+
+		if (tmpexp == 0)
+			break;
+
+		tmpbase = sy_lmul(tmpbase, tmpbase, &tmperr);
+	}
+
+	if (x < 0 && y % 2 != 0)
+		result = sy_lmul(result, -1, &tmperr);
+#else
+	result  = -1;
+	tmpbase = x;
+	tmpexp  = y;
+
+	while (1) {
+		if (tmpexp % 2 != 0)
+			result = lnegmul(result, tmpbase, &tmperr);
+
+		tmpexp /= 2;
+
+		if (tmpexp == 0)
+			break;
+
+		tmpbase = lnegmul(tmpbase, tmpbase, &tmperr);
+	}
+
+	if (x > 0 || y % 2 == 0)
+		result = sy_lmul(result, -1, &tmperr);
+#endif
+
+	if (tmperr != SY_ERROR_NONE) {
+		if (result > 0)
+			seterr(err, SY_ERROR_OVERFLOW);
+		else
+			seterr(err, SY_ERROR_UNDERFLOW);
+	}
+
+	return result;
+}
+
 int sy_add_saturate(int x, int y, int bias)
 {
 	int max, min;

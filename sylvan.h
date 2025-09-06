@@ -41,6 +41,8 @@ long sy_lsub_saturate(long x, long y, long bias);
 long sy_lmul_saturate(long x, long y);
 long sy_ldiv_saturate(long x, long y, long bias);
 
+long sy_lpow(long x, long y, enum sy_error *err);
+
 int sy_add_saturate(int x, int y, int bias);
 int sy_sub_saturate(int x, int y, int bias);
 int sy_mul_saturate(int x, int y);
