@@ -656,6 +656,22 @@ int sy_div_saturate(int x, int y, int bias)
 	return sy_div(x, y, NULL);
 }
 
+int sy_pow(int x, int y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	long tmpval;
+	int result;
+
+	tmperr = SY_ERROR_NONE;
+	tmpval = sy_lpow(x, y, &tmperr);
+	result = sy_ltoi(tmpval, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE)
+		seterr(err, tmperr);
+
+	return result;
+}
+
 size_t sy_zadd(size_t x, size_t y, enum sy_error *err)
 {
 	if (~(size_t)0 - x < y) {

@@ -48,6 +48,8 @@ int sy_sub_saturate(int x, int y, int bias);
 int sy_mul_saturate(int x, int y);
 int sy_div_saturate(int x, int y, int bias);
 
+int sy_pow(int x, int y, enum sy_error *err);
+
 size_t sy_zadd(size_t x, size_t y, enum sy_error *err);
 size_t sy_zsub(size_t x, size_t y, enum sy_error *err);
 size_t sy_zmul(size_t x, size_t y, enum sy_error *err);
