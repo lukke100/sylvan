@@ -821,6 +821,34 @@ size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias)
 	return x / y;
 }
 
+size_t sy_zpow(size_t x, size_t y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	size_t result, tmpbase, tmpexp;
+
+	tmperr  = SY_ERROR_NONE;
+	result  = 1;
+	tmpbase = x;
+	tmpexp  = y;
+
+	while (1) {
+		if (tmpexp % 2 != 0)
+			result = sy_zmul(result, tmpbase, &tmperr);
+
+		tmpexp >>= 1;
+
+		if (tmpexp == 0)
+			break;
+
+		tmpbase = sy_zmul(tmpbase, tmpbase, &tmperr);
+	}
+
+	if (tmperr != SY_ERROR_NONE)
+		seterr(err, SY_ERROR_OVERFLOW);
+
+	return result;
+}
+
 unsigned long sy_uladd(unsigned long x, unsigned long y, enum sy_error *err)
 {
 	if (ULONG_MAX - x < y) {

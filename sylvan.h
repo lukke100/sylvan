@@ -65,6 +65,8 @@ size_t sy_zadd_saturate(size_t x, size_t y);
 size_t sy_zmul_saturate(size_t x, size_t y);
 size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias);
 
+size_t sy_zpow(size_t x, size_t y, enum sy_error *err);
+
 unsigned long sy_uladd(unsigned long x, unsigned long y, enum sy_error *err);
 unsigned long sy_ulsub(unsigned long x, unsigned long y, enum sy_error *err);
 unsigned long sy_ulmul(unsigned long x, unsigned long y, enum sy_error *err);
