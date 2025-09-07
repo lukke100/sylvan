@@ -999,6 +999,34 @@ unsigned long sy_uldiv_saturate(unsigned long x, unsigned long y,
 	return x / y;
 }
 
+unsigned long sy_ulpow(unsigned long x, unsigned long y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	unsigned long result, tmpbase, tmpexp;
+
+	tmperr  = SY_ERROR_NONE;
+	result  = 1;
+	tmpbase = x;
+	tmpexp  = y;
+
+	while (1) {
+		if (tmpexp % 2 != 0)
+			result = sy_ulmul(result, tmpbase, &tmperr);
+
+		tmpexp >>= 1;
+
+		if (tmpexp == 0)
+			break;
+
+		tmpbase = sy_ulmul(tmpbase, tmpbase, &tmperr);
+	}
+
+	if (tmperr != SY_ERROR_NONE)
+		seterr(err, SY_ERROR_OVERFLOW);
+
+	return result;
+}
+
 unsigned sy_uadd(unsigned x, unsigned y, enum sy_error *err)
 {
 	enum sy_error tmperr;

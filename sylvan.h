@@ -83,6 +83,8 @@ unsigned long sy_ulmul_saturate(unsigned long x, unsigned long y);
 unsigned long sy_uldiv_saturate(unsigned long x, unsigned long y,
                                 unsigned long bias);
 
+unsigned long sy_ulpow(unsigned long x, unsigned long y, enum sy_error *err);
+
 unsigned sy_uadd(unsigned x, unsigned y, enum sy_error *err);
 unsigned sy_usub(unsigned x, unsigned y, enum sy_error *err);
 unsigned sy_umul(unsigned x, unsigned y, enum sy_error *err);
