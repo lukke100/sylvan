@@ -1173,6 +1173,22 @@ unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias)
 	return x / y;
 }
 
+unsigned sy_upow(unsigned x, unsigned y, enum sy_error *err)
+{
+	enum sy_error tmperr;
+	unsigned long tmpval;
+	unsigned result;
+
+	tmperr = SY_ERROR_NONE;
+	tmpval = sy_ulpow(x, y, &tmperr);
+	result = sy_ultou(tmpval, &tmperr);
+
+	if (tmperr != SY_ERROR_NONE)
+		seterr(err, tmperr);
+
+	return result;
+}
+
 size_t sy_token(int *last, const char src[], size_t srcsz,
                 int classify(char ch, int last), enum sy_error *err)
 {

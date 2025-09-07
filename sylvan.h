@@ -100,6 +100,8 @@ unsigned sy_uadd_saturate(unsigned x, unsigned y);
 unsigned sy_umul_saturate(unsigned x, unsigned y);
 unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias);
 
+unsigned sy_upow(unsigned x, unsigned y, enum sy_error *err);
+
 size_t sy_token(int *last, const char src[], size_t srcsz,
                 int classify(char ch, int last), enum sy_error *err);
 
