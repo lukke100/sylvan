@@ -18,10 +18,10 @@ int main(void)
 	assert(sy_zpow(1, 32766, NULL) == 1);
 	assert(sy_zpow(1, 32767, NULL) == 1);
 
-	assert(sy_zpow(ZMAX,      0, NULL) == 1);
-	assert(sy_zpow(ZMAX,      1, NULL) == ZMAX);
-	assert(sy_zpow(ZMAX,  32766, NULL) == ZMAX);
-	assert(sy_zpow(ZMAX,  32767, NULL) == ZMAX);
+	assert(sy_zpow(ZMAX,     0, NULL) == 1);
+	assert(sy_zpow(ZMAX,     1, NULL) == ZMAX);
+	assert(sy_zpow(ZMAX, 32766, NULL) == ZMAX);
+	assert(sy_zpow(ZMAX, 32767, NULL) == ZMAX);
 
 	assert(sy_zpow(179, 2, NULL) == 32041);
 	assert(sy_zpow( 31, 3, NULL) == 29791);
