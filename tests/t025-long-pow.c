@@ -50,6 +50,19 @@ int main(void)
 	assert(sy_lpow(LONG_MIN, 32766, NULL) == LONG_MAX);
 #endif
 
+	assert(sy_lpow(179, 2, NULL) == 32041);
+	assert(sy_lpow( 31, 3, NULL) == 29791);
+	assert(sy_lpow( 13, 4, NULL) == 28561);
+	assert(sy_lpow(  7, 5, NULL) == 16807);
+	assert(sy_lpow(  5, 6, NULL) == 15625);
+	assert(sy_lpow(  4, 7, NULL) == 16384);
+	assert(sy_lpow(  3, 9, NULL) == 19683);
+
+	assert(sy_lpow(-31, 3, NULL) == -29791);
+	assert(sy_lpow( -7, 5, NULL) == -16807);
+	assert(sy_lpow( -4, 7, NULL) == -16384);
+	assert(sy_lpow( -3, 9, NULL) == -19683);
+
 	err = SY_ERROR_NONE;
 	(void)sy_lpow(0, 0, &err);
 	assert(err == SY_ERROR_NONE);
@@ -191,6 +204,50 @@ int main(void)
 	err = SY_ERROR_NONE;
 	(void)sy_lpow(LONG_MIN, -32767, &err);
 	assert(err == SY_ERROR_UNDEFINED);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(179, 2, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(31, 3, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(13, 4, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(7, 5, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(5, 6, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(4, 7, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(3, 9, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(-31, 3, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(-7, 5, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(-4, 7, &err);
+	assert(err == SY_ERROR_NONE);
+
+	err = SY_ERROR_NONE;
+	(void)sy_lpow(-3, 9, &err);
+	assert(err == SY_ERROR_NONE);
 
 	return 0;
 }
