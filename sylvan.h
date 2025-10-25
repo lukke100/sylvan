@@ -36,17 +36,17 @@ int sy_lcm(int x, int y, enum sy_error *err);
 int sy_max(int x, int y);
 int sy_min(int x, int y);
 
-long sy_ladd_saturate(long x, long y, long bias);
-long sy_lsub_saturate(long x, long y, long bias);
-long sy_lmul_saturate(long x, long y);
-long sy_ldiv_saturate(long x, long y, long bias);
+long sy_ladd_sticky(long x, long y, long bias);
+long sy_lsub_sticky(long x, long y, long bias);
+long sy_lmul_sticky(long x, long y);
+long sy_ldiv_sticky(long x, long y, long bias);
 
 long sy_lpow(long x, long y, enum sy_error *err);
 
-int sy_add_saturate(int x, int y, int bias);
-int sy_sub_saturate(int x, int y, int bias);
-int sy_mul_saturate(int x, int y);
-int sy_div_saturate(int x, int y, int bias);
+int sy_add_sticky(int x, int y, int bias);
+int sy_sub_sticky(int x, int y, int bias);
+int sy_mul_sticky(int x, int y);
+int sy_div_sticky(int x, int y, int bias);
 
 int sy_pow(int x, int y, enum sy_error *err);
 
@@ -61,9 +61,9 @@ size_t sy_zlcm(size_t x, size_t y, enum sy_error *err);
 size_t sy_zmax(size_t x, size_t y);
 size_t sy_zmin(size_t x, size_t y);
 
-size_t sy_zadd_saturate(size_t x, size_t y);
-size_t sy_zmul_saturate(size_t x, size_t y);
-size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias);
+size_t sy_zadd_sticky(size_t x, size_t y);
+size_t sy_zmul_sticky(size_t x, size_t y);
+size_t sy_zdiv_sticky(size_t x, size_t y, size_t bias);
 
 size_t sy_zpow(size_t x, size_t y, enum sy_error *err);
 
@@ -78,10 +78,10 @@ unsigned long sy_ullcm(unsigned long x, unsigned long y, enum sy_error *err);
 unsigned long sy_ulmax(unsigned long x, unsigned long y);
 unsigned long sy_ulmin(unsigned long x, unsigned long y);
 
-unsigned long sy_uladd_saturate(unsigned long x, unsigned long y);
-unsigned long sy_ulmul_saturate(unsigned long x, unsigned long y);
-unsigned long sy_uldiv_saturate(unsigned long x, unsigned long y,
-                                unsigned long bias);
+unsigned long sy_uladd_sticky(unsigned long x, unsigned long y);
+unsigned long sy_ulmul_sticky(unsigned long x, unsigned long y);
+unsigned long sy_uldiv_sticky(unsigned long x, unsigned long y,
+                              unsigned long bias);
 
 unsigned long sy_ulpow(unsigned long x, unsigned long y, enum sy_error *err);
 
@@ -96,9 +96,9 @@ unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err);
 unsigned sy_umax(unsigned x, unsigned y);
 unsigned sy_umin(unsigned x, unsigned y);
 
-unsigned sy_uadd_saturate(unsigned x, unsigned y);
-unsigned sy_umul_saturate(unsigned x, unsigned y);
-unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias);
+unsigned sy_uadd_sticky(unsigned x, unsigned y);
+unsigned sy_umul_sticky(unsigned x, unsigned y);
+unsigned sy_udiv_sticky(unsigned x, unsigned y, unsigned bias);
 
 unsigned sy_upow(unsigned x, unsigned y, enum sy_error *err);
 

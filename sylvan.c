@@ -373,7 +373,7 @@ int sy_min(int x, int y)
 	return sy_ltoi(sy_lmin(x, y), NULL);
 }
 
-long sy_ladd_saturate(long x, long y, long bias)
+long sy_ladd_sticky(long x, long y, long bias)
 {
 	long max, min;
 
@@ -390,7 +390,7 @@ long sy_ladd_saturate(long x, long y, long bias)
 	return sy_ladd(max, min, NULL);
 }
 
-long sy_lsub_saturate(long x, long y, long bias)
+long sy_lsub_sticky(long x, long y, long bias)
 {
 	if (x == LONG_MAX && y == LONG_MAX)
 		return bias;
@@ -404,7 +404,7 @@ long sy_lsub_saturate(long x, long y, long bias)
 	return sy_lsub(x, y, NULL);
 }
 
-long sy_lmul_saturate(long x, long y)
+long sy_lmul_sticky(long x, long y)
 {
 	long max, min;
 
@@ -422,7 +422,7 @@ long sy_lmul_saturate(long x, long y)
 	return sy_lmul(max, min, NULL);
 }
 
-long sy_ldiv_saturate(long x, long y, long bias)
+long sy_ldiv_sticky(long x, long y, long bias)
 {
 	if (y == 0) {
 		if (x > 0)
@@ -437,7 +437,7 @@ long sy_ldiv_saturate(long x, long y, long bias)
 		if (y == LONG_MAX)
 			return bias;
 		else if (y == LONG_MIN)
-			return sy_lmul_saturate(bias, -1);
+			return sy_lmul_sticky(bias, -1);
 		else if (y > 0)
 			return LONG_MAX;
 		else if (y < 0)
@@ -446,7 +446,7 @@ long sy_ldiv_saturate(long x, long y, long bias)
 
 	if (x == LONG_MIN) {
 		if (y == LONG_MAX)
-			return sy_lmul_saturate(bias, -1);
+			return sy_lmul_sticky(bias, -1);
 		else if (y == LONG_MIN)
 			return bias;
 		else if (y > 0)
@@ -563,7 +563,7 @@ long sy_lpow(long x, long y, enum sy_error *err)
 	return result;
 }
 
-int sy_add_saturate(int x, int y, int bias)
+int sy_add_sticky(int x, int y, int bias)
 {
 	int max, min;
 
@@ -580,7 +580,7 @@ int sy_add_saturate(int x, int y, int bias)
 	return sy_add(max, min, NULL);
 }
 
-int sy_sub_saturate(int x, int y, int bias)
+int sy_sub_sticky(int x, int y, int bias)
 {
 	if (x == INT_MAX && y == INT_MAX)
 		return bias;
@@ -594,7 +594,7 @@ int sy_sub_saturate(int x, int y, int bias)
 	return sy_sub(x, y, NULL);
 }
 
-int sy_mul_saturate(int x, int y)
+int sy_mul_sticky(int x, int y)
 {
 	int max, min;
 
@@ -612,7 +612,7 @@ int sy_mul_saturate(int x, int y)
 	return sy_mul(max, min, NULL);
 }
 
-int sy_div_saturate(int x, int y, int bias)
+int sy_div_sticky(int x, int y, int bias)
 {
 	if (y == 0) {
 		if (x > 0)
@@ -627,7 +627,7 @@ int sy_div_saturate(int x, int y, int bias)
 		if (y == INT_MAX)
 			return bias;
 		else if (y == INT_MIN)
-			return sy_mul_saturate(bias, -1);
+			return sy_mul_sticky(bias, -1);
 		else if (y > 0)
 			return INT_MAX;
 		else if (y < 0)
@@ -636,7 +636,7 @@ int sy_div_saturate(int x, int y, int bias)
 
 	if (x == INT_MIN) {
 		if (y == INT_MAX)
-			return sy_mul_saturate(bias, -1);
+			return sy_mul_sticky(bias, -1);
 		else if (y == INT_MIN)
 			return bias;
 		else if (y > 0)
@@ -792,17 +792,17 @@ size_t sy_zmin(size_t x, size_t y)
 		return x;
 }
 
-size_t sy_zadd_saturate(size_t x, size_t y)
+size_t sy_zadd_sticky(size_t x, size_t y)
 {
 	return sy_zadd(x, y, NULL);
 }
 
-size_t sy_zmul_saturate(size_t x, size_t y)
+size_t sy_zmul_sticky(size_t x, size_t y)
 {
 	return sy_zmul(x, y, NULL);
 }
 
-size_t sy_zdiv_saturate(size_t x, size_t y, size_t bias)
+size_t sy_zdiv_sticky(size_t x, size_t y, size_t bias)
 {
 	if (y == 0) {
 		if (x == 0)
@@ -969,18 +969,18 @@ unsigned long sy_ulmin(unsigned long x, unsigned long y)
 		return x;
 }
 
-unsigned long sy_uladd_saturate(unsigned long x, unsigned long y)
+unsigned long sy_uladd_sticky(unsigned long x, unsigned long y)
 {
 	return sy_uladd(x, y, NULL);
 }
 
-unsigned long sy_ulmul_saturate(unsigned long x, unsigned long y)
+unsigned long sy_ulmul_sticky(unsigned long x, unsigned long y)
 {
 	return sy_ulmul(x, y, NULL);
 }
 
-unsigned long sy_uldiv_saturate(unsigned long x, unsigned long y,
-                                unsigned long bias)
+unsigned long sy_uldiv_sticky(unsigned long x, unsigned long y,
+                              unsigned long bias)
 {
 	if (y == 0) {
 		if (x == 0)
@@ -1144,17 +1144,17 @@ unsigned sy_umin(unsigned x, unsigned y)
 	return sy_ultou(sy_ulmin(x, y), NULL);
 }
 
-unsigned sy_uadd_saturate(unsigned x, unsigned y)
+unsigned sy_uadd_sticky(unsigned x, unsigned y)
 {
 	return sy_uadd(x, y, NULL);
 }
 
-unsigned sy_umul_saturate(unsigned x, unsigned y)
+unsigned sy_umul_sticky(unsigned x, unsigned y)
 {
 	return sy_umul(x, y, NULL);
 }
 
-unsigned sy_udiv_saturate(unsigned x, unsigned y, unsigned bias)
+unsigned sy_udiv_sticky(unsigned x, unsigned y, unsigned bias)
 {
 	if (y == 0) {
 		if (x == 0)
@@ -1402,14 +1402,14 @@ static size_t quotesz(const char src[], size_t srcsz)
 
 		switch (lastcls) {
 		case QUOTE_SPECIAL:
-			diff = sy_zmul_saturate(diff, 2);
+			diff = sy_zmul_sticky(diff, 2);
 			break;
 		case QUOTE_NUMERIC:
-			diff = sy_zmul_saturate(diff, 2 + hexdigits());
+			diff = sy_zmul_sticky(diff, 2 + hexdigits());
 			break;
 		}
 
-		destidx = sy_zadd_saturate(destidx, diff);
+		destidx = sy_zadd_sticky(destidx, diff);
 	}
 
 	return destidx;
