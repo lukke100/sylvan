@@ -1424,14 +1424,12 @@ static void quote(char dest[], const char src[], size_t srcsz)
 	lastcls = QUOTE_LITERAL;
 
 	while (srcidx < srcsz) {
-		size_t diff;
+		size_t diff, srcmax;
 
 		diff = sy_token(&lastcls, src + srcidx, srcsz - srcidx,
 		                clsquote, NULL);
 
 		switch (lastcls) {
-			size_t srcmax;
-
 		case QUOTE_LITERAL:
 			memcpy(dest + destidx, src + srcidx, diff);
 			srcidx  += diff;
@@ -1616,7 +1614,9 @@ static size_t unquotesz(size_t *pos, const char src[],
 	result  = 0;
 
 	while (srcidx < srcsz) {
-		size_t diff;
+		enum sy_error tmperr;
+		size_t diff, idx;
+		unsigned val;
 
 		diff = sy_token(&lastcls, src + srcidx, srcsz - srcidx,
 		                clsunquote, NULL);
@@ -1627,10 +1627,6 @@ static size_t unquotesz(size_t *pos, const char src[],
 		srcidx += diff;
 
 		switch (lastcls) {
-			enum sy_error tmperr;
-			unsigned val;
-			size_t idx;
-
 		case UNQUOTE_LITERAL:
 		case UNQUOTE_SPECIAL:
 			break;
@@ -1733,7 +1729,8 @@ static void unquote(char dest[], const char src[])
 	lastcls = UNQUOTE_LITERAL;
 
 	while (src[srcidx] != '"' || lastcls == UNQUOTE_BKSLASH) {
-		size_t diff;
+		size_t diff, idx;
+		unsigned val;
 
 		diff = sy_token(&lastcls, src + srcidx, ~(size_t)0,
 		                clsunquote, NULL);
@@ -1742,9 +1739,6 @@ static void unquote(char dest[], const char src[])
 			diff = 3;
 
 		switch (lastcls) {
-			unsigned val;
-			size_t idx;
-
 		case UNQUOTE_LITERAL:
 			memcpy(dest + destidx, src + srcidx, diff);
 			srcidx  += diff;
