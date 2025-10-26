@@ -1323,7 +1323,7 @@ static int clsquote(char ch, int last)
 		if (last == QUOTE_NUMERIC)
 			return QUOTE_NUMERIC;
 
-		/* fall through */
+		return QUOTE_LITERAL;
 	case 'G': case 'H': case 'I': case 'J': case 'K': case 'L': case 'M':
 	case 'N': case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T':
 	case 'U': case 'V': case 'W': case 'X': case 'Y': case 'Z':
