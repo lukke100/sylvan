@@ -118,6 +118,7 @@ size_t sy_unquote(char dest[], size_t destsz, size_t *pos,
 
 int sy_ltoi(long x, enum sy_error *err);
 unsigned sy_ultou(unsigned long x, enum sy_error *err);
+unsigned char sy_utouc(unsigned x, enum sy_error *err);
 
 void sy_rev(char buf[], size_t bufsz, enum sy_error *err);
 

@@ -1617,6 +1617,7 @@ static size_t unquotesz(size_t *pos, const char src[],
 		enum sy_error tmperr;
 		size_t diff, idx;
 		unsigned val;
+		unsigned char ucval;
 
 		diff = sy_token(&lastcls, src + srcidx, srcsz - srcidx,
 		                clsunquote, NULL);
@@ -1647,12 +1648,14 @@ static size_t unquotesz(size_t *pos, const char src[],
 				              &tmperr);
 			}
 
-			if (val > UCHAR_MAX || tmperr == SY_ERROR_OVERFLOW) {
+			ucval = sy_utouc(val, &tmperr);
+
+			if (tmperr == SY_ERROR_OVERFLOW) {
 				seterr(err, SY_ERROR_OVERFLOW);
 				return 0;
 			}
 
-			(void)sy_uctoc(val, &tmperr);
+			(void)sy_uctoc(ucval, &tmperr);
 
 			if (tmperr == SY_ERROR_UNDERFLOW) {
 				seterr(err, SY_ERROR_UNDERFLOW);
@@ -1671,12 +1674,14 @@ static size_t unquotesz(size_t *pos, const char src[],
 				              &tmperr);
 			}
 
-			if (val > UCHAR_MAX || tmperr == SY_ERROR_OVERFLOW) {
+			ucval = sy_utouc(val, &tmperr);
+
+			if (tmperr == SY_ERROR_OVERFLOW) {
 				seterr(err, SY_ERROR_OVERFLOW);
 				return 0;
 			}
 
-			(void)sy_uctoc(val, &tmperr);
+			(void)sy_uctoc(ucval, &tmperr);
 
 			if (tmperr == SY_ERROR_UNDERFLOW) {
 				seterr(err, SY_ERROR_UNDERFLOW);
@@ -1762,7 +1767,7 @@ static void unquote(char dest[], const char src[])
 			}
 
 			srcidx += diff;
-			dest[destidx++] = sy_uctoc(val, NULL);
+			dest[destidx++] = sy_uctoc(sy_utouc(val, NULL), NULL);
 			break;
 		case UNQUOTE_HEXCHAR:
 			val = 0;
@@ -1773,7 +1778,7 @@ static void unquote(char dest[], const char src[])
 			}
 
 			srcidx += diff;
-			dest[destidx++] = sy_uctoc(val, NULL);
+			dest[destidx++] = sy_uctoc(sy_utouc(val, NULL), NULL);
 			break;
 		case UNQUOTE_UNQUOTE:
 		case UNQUOTE_INVALID:
@@ -1857,6 +1862,16 @@ unsigned sy_ultou(unsigned long x, enum sy_error *err)
 	}
 
 	return (unsigned)x;
+}
+
+unsigned char sy_utouc(unsigned x, enum sy_error *err)
+{
+	if (x > UCHAR_MAX) {
+		seterr(err, SY_ERROR_OVERFLOW);
+		return UCHAR_MAX;
+	}
+
+	return (unsigned char)x;
 }
 
 void sy_rev(char buf[], size_t bufsz, enum sy_error *err)
