@@ -1,9 +1,8 @@
+#include "config.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "config.h"
 #include "sylvan.h"
 
 static void seterr(enum sy_error *err, enum sy_error val)

@@ -1,3 +1,4 @@
+#include "config.h"
 #include <assert.h>
 #include <limits.h>
 #include <stddef.h>
