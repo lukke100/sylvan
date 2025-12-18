@@ -13,40 +13,6 @@ void sy_eset(enum sy_error *err, enum sy_error val)
 	*err = val;
 }
 
-long sy_ldiv(long x, long y, enum sy_error *err)
-{
-	if (y == 0) {
-		sy_eset(err, SY_ERROR_UNDEFINED);
-
-		if (x > 0)
-			return LONG_MAX;
-		else if (x < 0)
-			return LONG_MIN;
-		else
-			return 0;
-	}
-
-#if LONG_MAX + LONG_MIN > 0
-	if (y > 0 || y < ldiv(LONG_MAX, LONG_MIN).quot)
-		return ldiv(x, y).quot;
-
-	if (x > y * LONG_MIN) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
-		return LONG_MIN;
-	}
-#elif LONG_MAX + LONG_MIN < 0
-	if (y > 0 || y < ldiv(LONG_MIN, LONG_MAX).quot)
-		return ldiv(x, y).quot;
-
-	if (x < y * LONG_MAX) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
-		return LONG_MAX;
-	}
-#endif
-
-	return ldiv(x, y).quot;
-}
-
 long sy_lmod(long x, long y, enum sy_error *err)
 {
 	long result;
@@ -60,7 +26,7 @@ long sy_lmod(long x, long y, enum sy_error *err)
 
 #if LONG_MAX + LONG_MIN >= 0
 	while (labs(result) >= labs(y))
-		result -= sy_ldiv(result, y, NULL) * y;
+		result -= syldiv(result, y, NULL) * y;
 #else
 	while (1) {
 		long rtmp, ytmp;
@@ -71,7 +37,7 @@ long sy_lmod(long x, long y, enum sy_error *err)
 		if (rtmp > ytmp)
 			break;
 
-		result -= sy_ldiv(result, y, NULL) * y;
+		result -= syldiv(result, y, NULL) * y;
 	}
 #endif
 
@@ -234,7 +200,7 @@ int sy_div(int x, int y, enum sy_error *err)
 	int result;
 
 	tmperr1 = SY_ERROR_NONE;
-	tmpval  = sy_ldiv(x, y, &tmperr1);
+	tmpval  = syldiv(x, y, &tmperr1);
 	tmperr2 = SY_ERROR_NONE;
 	result  = sy_ltoi(tmpval, &tmperr2);
 
@@ -397,7 +363,7 @@ long sy_ldiv_sticky(long x, long y, long bias)
 		return 0;
 #endif
 
-	return sy_ldiv(x, y, NULL);
+	return syldiv(x, y, NULL);
 }
 
 #if LONG_MAX + LONG_MIN < 0
