@@ -13,21 +13,6 @@ void sy_eset(enum sy_error *err, enum sy_error val)
 	*err = val;
 }
 
-long sy_lsub(long x, long y, enum sy_error *err)
-{
-	if (y > 0 && LONG_MIN + y > x) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
-		return LONG_MIN;
-	}
-
-	if (y < 0 && LONG_MAX + y < x) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
-		return LONG_MAX;
-	}
-
-	return x - y;
-}
-
 long sy_lmul(long x, long y, enum sy_error *err)
 {
 	long max, min;
@@ -249,7 +234,7 @@ int sy_sub(int x, int y, enum sy_error *err)
 	int result;
 
 	tmperr = SY_ERROR_NONE;
-	tmpval = sy_lsub(x, y, &tmperr);
+	tmpval = sylsub(x, y, &tmperr);
 	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
@@ -382,7 +367,7 @@ long sy_lsub_sticky(long x, long y, long bias)
 	else if (x == LONG_MIN || y == LONG_MAX)
 		return LONG_MIN;
 
-	return sy_lsub(x, y, NULL);
+	return sylsub(x, y, NULL);
 }
 
 long sy_lmul_sticky(long x, long y)
