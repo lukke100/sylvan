@@ -13,26 +13,6 @@ void sy_eset(enum sy_error *err, enum sy_error val)
 	*err = val;
 }
 
-long sy_ladd(long x, long y, enum sy_error *err)
-{
-	long max, min;
-
-	max = sy_lmax(x, y);
-	min = sy_lmin(x, y);
-
-	if (min > 0 && LONG_MAX - min < max) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
-		return LONG_MAX;
-	}
-
-	if (max < 0 && LONG_MIN - max > min) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
-		return LONG_MIN;
-	}
-
-	return max + min;
-}
-
 long sy_lsub(long x, long y, enum sy_error *err)
 {
 	if (y > 0 && LONG_MIN + y > x) {
@@ -253,7 +233,7 @@ int sy_add(int x, int y, enum sy_error *err)
 	int result;
 
 	tmperr = SY_ERROR_NONE;
-	tmpval = sy_ladd(x, y, &tmperr);
+	tmpval = syladd(x, y, &tmperr);
 	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
@@ -388,7 +368,7 @@ long sy_ladd_sticky(long x, long y, long bias)
 	else if (min == LONG_MIN)
 		return LONG_MIN;
 
-	return sy_ladd(max, min, NULL);
+	return syladd(max, min, NULL);
 }
 
 long sy_lsub_sticky(long x, long y, long bias)
@@ -486,12 +466,12 @@ static long lnegmul(long x, long y, enum sy_error *err)
 
 	while (max < -LONG_MAX) {
 		tmpval = sy_lmul(min, LONG_MAX, &tmperr);
-		result = sy_ladd(result, tmpval, &tmperr);
+		result = syladd(result, tmpval, &tmperr);
 		max   += LONG_MAX;
 	}
 
 	tmpval = sy_lmul(min, -max, &tmperr);
-	result = sy_ladd(result, tmpval, &tmperr);
+	result = syladd(result, tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE) {
 		sy_eset(err, SY_ERROR_UNDERFLOW);
@@ -1258,7 +1238,7 @@ long sy_atol(const char src[], size_t srcsz, enum sy_error *err)
 
 		diff   = sign * (src[idx] - '0');
 		result = sy_lmul(result, 10, &tmperr);
-		result = sy_ladd(result, diff, &tmperr);
+		result = syladd(result, diff, &tmperr);
 	}
 
 	if (tmperr != SY_ERROR_NONE)
