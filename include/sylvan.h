@@ -14,6 +14,8 @@ enum sy_error {
 	SY_ERROR_FILE
 };
 
+void sy_eset(enum sy_error *err, enum sy_error val);
+
 long sy_ladd(long x, long y, enum sy_error *err);
 long sy_lsub(long x, long y, enum sy_error *err);
 long sy_lmul(long x, long y, enum sy_error *err);
