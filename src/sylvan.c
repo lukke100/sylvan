@@ -13,38 +13,6 @@ void sy_eset(enum sy_error *err, enum sy_error val)
 	*err = val;
 }
 
-long sy_lmul(long x, long y, enum sy_error *err)
-{
-	long max, min;
-
-	max = sy_lmax(x, y);
-	min = sy_lmin(x, y);
-
-#if LONG_MAX + LONG_MIN < 0
-	if (max < 0 && ldiv(LONG_MAX, min).quot > max) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
-		return LONG_MAX;
-	}
-#else
-	if (max < 0) {
-		max *= -1;
-		min *= -1;
-	}
-#endif
-
-	if (min > 0 && LONG_MAX / max < min) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
-		return LONG_MAX;
-	}
-
-	if (max > 0 && min < 0 && ldiv(LONG_MIN, max).quot > min) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
-		return LONG_MIN;
-	}
-
-	return max * min;
-}
-
 long sy_ldiv(long x, long y, enum sy_error *err)
 {
 	if (y == 0) {
@@ -177,7 +145,7 @@ long sy_llcm(long x, long y, enum sy_error *err)
 	y /= gcd;
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_lmul(x, y, &tmperr);
+	result = sylmul(x, y, &tmperr);
 
 	if (tmperr == SY_ERROR_OVERFLOW) {
 		sy_eset(err, SY_ERROR_OVERFLOW);
@@ -185,7 +153,7 @@ long sy_llcm(long x, long y, enum sy_error *err)
 	}
 
 	tmperr = SY_ERROR_NONE;
-	result = sy_lmul(result, gcd, &tmperr);
+	result = sylmul(result, gcd, &tmperr);
 
 	if (tmperr == SY_ERROR_OVERFLOW) {
 		sy_eset(err, SY_ERROR_OVERFLOW);
@@ -250,7 +218,7 @@ int sy_mul(int x, int y, enum sy_error *err)
 	int result;
 
 	tmperr = SY_ERROR_NONE;
-	tmpval = sy_lmul(x, y, &tmperr);
+	tmpval = sylmul(x, y, &tmperr);
 	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
@@ -385,7 +353,7 @@ long sy_lmul_sticky(long x, long y)
 		return LONG_MIN;
 #endif
 
-	return sy_lmul(max, min, NULL);
+	return sylmul(max, min, NULL);
 }
 
 long sy_ldiv_sticky(long x, long y, long bias)
@@ -442,20 +410,20 @@ static long lnegmul(long x, long y, enum sy_error *err)
 	min = sy_lmin(x, y);
 
 	if (min >= 0)
-		return sy_lmul(max, -min, err);
+		return sylmul(max, -min, err);
 	else if (max >= 0)
-		return sy_lmul(max, min, err);
+		return sylmul(max, min, err);
 
 	tmperr = SY_ERROR_NONE;
 	result = 0;
 
 	while (max < -LONG_MAX) {
-		tmpval = sy_lmul(min, LONG_MAX, &tmperr);
+		tmpval = sylmul(min, LONG_MAX, &tmperr);
 		result = syladd(result, tmpval, &tmperr);
 		max   += LONG_MAX;
 	}
 
-	tmpval = sy_lmul(min, -max, &tmperr);
+	tmpval = sylmul(min, -max, &tmperr);
 	result = syladd(result, tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE) {
@@ -486,18 +454,18 @@ long sy_lpow(long x, long y, enum sy_error *err)
 
 	while (1) {
 		if (tmpexp % 2 != 0)
-			result = sy_lmul(result, tmpbase, &tmperr);
+			result = sylmul(result, tmpbase, &tmperr);
 
 		tmpexp /= 2;
 
 		if (tmpexp == 0)
 			break;
 
-		tmpbase = sy_lmul(tmpbase, tmpbase, &tmperr);
+		tmpbase = sylmul(tmpbase, tmpbase, &tmperr);
 	}
 
 	if (x < 0 && y % 2 != 0)
-		result = sy_lmul(result, -1, &tmperr);
+		result = sylmul(result, -1, &tmperr);
 #else
 	result  = -1;
 	tmpbase = x;
@@ -516,7 +484,7 @@ long sy_lpow(long x, long y, enum sy_error *err)
 	}
 
 	if (x > 0 || y % 2 == 0)
-		result = sy_lmul(result, -1, &tmperr);
+		result = sylmul(result, -1, &tmperr);
 #endif
 
 	if (tmperr != SY_ERROR_NONE) {
@@ -1222,7 +1190,7 @@ long sy_atol(const char src[], size_t srcsz, enum sy_error *err)
 		}
 
 		diff   = sign * (src[idx] - '0');
-		result = sy_lmul(result, 10, &tmperr);
+		result = sylmul(result, 10, &tmperr);
 		result = syladd(result, diff, &tmperr);
 	}
 

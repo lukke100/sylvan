@@ -3,4 +3,5 @@ lib_LTLIBRARIES = libsylvan.la
 libsylvan_la_SOURCES = \
 	syladd.c \
 	sylsub.c \
+	sylmul.c \
 	sylvan.c
