@@ -20,7 +20,7 @@ long syladd(long x, long y, enum sy_error *err);
 long sylsub(long x, long y, enum sy_error *err);
 long sylmul(long x, long y, enum sy_error *err);
 long syldiv(long x, long y, enum sy_error *err);
-long sy_lmod(long x, long y, enum sy_error *err);
+long sylmod(long x, long y, enum sy_error *err);
 
 long sy_lgcd(long x, long y, enum sy_error *err);
 long sy_llcm(long x, long y, enum sy_error *err);

@@ -9,7 +9,7 @@ int main(void)
 	enum sy_error err;
 	long x, y;
 
-	assert(sy_lmod(1, 0, NULL) == 0);
+	assert(sylmod(1, 0, NULL) == 0);
 
 	for (x = -13; x <= 13; ++x) {
 		for (y = -13; y <= 13; ++y) {
@@ -19,18 +19,18 @@ int main(void)
 				continue;
 
 			target = ldiv(x, y).rem;
-			assert(sy_lmod(x, y, NULL) == target);
+			assert(sylmod(x, y, NULL) == target);
 		}
 	}
 
 #if LONG_MAX + LONG_MIN > 0
-	assert(sy_lmod(LONG_MAX, -1, NULL) == 0);
+	assert(sylmod(LONG_MAX, -1, NULL) == 0);
 #elif LONG_MAX + LONG_MIN < 0
-	assert(sy_lmod(LONG_MIN, -1, NULL) == 0);
+	assert(sylmod(LONG_MIN, -1, NULL) == 0);
 #endif
 
 	err = SY_ERROR_NONE;
-	(void)sy_lmod(1, 0, &err);
+	(void)sylmod(1, 0, &err);
 	assert(err == SY_ERROR_UNDEFINED);
 
 	for (x = -13; x <= 13; ++x) {
@@ -39,18 +39,18 @@ int main(void)
 				continue;
 
 			err = SY_ERROR_NONE;
-			(void)sy_lmod(x, y, &err);
+			(void)sylmod(x, y, &err);
 			assert(err == SY_ERROR_NONE);
 		}
 	}
 
 #if LONG_MAX + LONG_MIN > 0
 	err = SY_ERROR_NONE;
-	(void)sy_lmod(LONG_MAX, -1, &err);
+	(void)sylmod(LONG_MAX, -1, &err);
 	assert(err == SY_ERROR_NONE);
 #elif LONG_MAX + LONG_MIN < 0
 	err = SY_ERROR_NONE;
-	(void)sy_lmod(LONG_MIN, -1, &err);
+	(void)sylmod(LONG_MIN, -1, &err);
 	assert(err == SY_ERROR_NONE);
 #endif
 

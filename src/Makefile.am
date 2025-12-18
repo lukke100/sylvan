@@ -5,4 +5,5 @@ libsylvan_la_SOURCES = \
 	sylsub.c \
 	sylmul.c \
 	syldiv.c \
+	sylmod.c \
 	sylvan.c

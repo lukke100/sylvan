@@ -13,37 +13,6 @@ void sy_eset(enum sy_error *err, enum sy_error val)
 	*err = val;
 }
 
-long sy_lmod(long x, long y, enum sy_error *err)
-{
-	long result;
-
-	if (y == 0) {
-		sy_eset(err, SY_ERROR_UNDEFINED);
-		return 0;
-	}
-
-	result = x;
-
-#if LONG_MAX + LONG_MIN >= 0
-	while (labs(result) >= labs(y))
-		result -= syldiv(result, y, NULL) * y;
-#else
-	while (1) {
-		long rtmp, ytmp;
-
-		rtmp = result > 0 ? -result : result;
-		ytmp = y > 0 ? -y : y;
-
-		if (rtmp > ytmp)
-			break;
-
-		result -= syldiv(result, y, NULL) * y;
-	}
-#endif
-
-	return result;
-}
-
 long sy_lgcd(long x, long y, enum sy_error *err)
 {
 #if LONG_MAX + LONG_MIN < 0
@@ -219,7 +188,7 @@ int sy_mod(int x, int y, enum sy_error *err)
 	int result;
 
 	tmperr1 = SY_ERROR_NONE;
-	tmpval  = sy_lmod(x, y, &tmperr1);
+	tmpval  = sylmod(x, y, &tmperr1);
 	tmperr2 = SY_ERROR_NONE;
 	result  = sy_ltoi(tmpval, &tmperr2);
 
