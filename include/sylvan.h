@@ -23,7 +23,7 @@ long syldiv(long x, long y, enum sy_error *err);
 long sylmod(long x, long y, enum sy_error *err);
 
 long sylgcd(long x, long y, enum sy_error *err);
-long sy_llcm(long x, long y, enum sy_error *err);
+long syllcm(long x, long y, enum sy_error *err);
 long sy_lmax(long x, long y);
 long sy_lmin(long x, long y);
 

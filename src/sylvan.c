@@ -13,44 +13,6 @@ void sy_eset(enum sy_error *err, enum sy_error val)
 	*err = val;
 }
 
-long sy_llcm(long x, long y, enum sy_error *err)
-{
-	enum sy_error tmperr;
-	long gcd, result;
-
-	tmperr = SY_ERROR_NONE;
-	gcd = sylgcd(x, y, &tmperr);
-
-	if (tmperr == SY_ERROR_OVERFLOW) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
-		return LONG_MAX;
-	}
-
-	if (gcd == 0)
-		return 0;
-
-	x /= gcd;
-	y /= gcd;
-
-	tmperr = SY_ERROR_NONE;
-	result = sylmul(x, y, &tmperr);
-
-	if (tmperr == SY_ERROR_OVERFLOW) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
-		return LONG_MAX;
-	}
-
-	tmperr = SY_ERROR_NONE;
-	result = sylmul(result, gcd, &tmperr);
-
-	if (tmperr == SY_ERROR_OVERFLOW) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
-		return LONG_MAX;
-	}
-
-	return result;
-}
-
 long sy_lmax(long x, long y)
 {
 	if (y > x)
@@ -176,7 +138,7 @@ int sy_lcm(int x, int y, enum sy_error *err)
 	int result;
 
 	tmperr = SY_ERROR_NONE;
-	tmpval = sy_llcm(x, y, &tmperr);
+	tmpval = syllcm(x, y, &tmperr);
 	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
