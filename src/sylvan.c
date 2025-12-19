@@ -13,14 +13,6 @@ void sy_eset(enum sy_error *err, enum sy_error val)
 	*err = val;
 }
 
-long sy_lmin(long x, long y)
-{
-	if (y < x)
-		return y;
-	else
-		return x;
-}
-
 int sy_add(int x, int y, enum sy_error *err)
 {
 	enum sy_error tmperr;
@@ -146,7 +138,7 @@ int sy_max(int x, int y)
 
 int sy_min(int x, int y)
 {
-	return sy_ltoi(sy_lmin(x, y), NULL);
+	return sy_ltoi(sylmin(x, y), NULL);
 }
 
 long sy_ladd_sticky(long x, long y, long bias)
@@ -154,7 +146,7 @@ long sy_ladd_sticky(long x, long y, long bias)
 	long max, min;
 
 	max = sylmax(x, y);
-	min = sy_lmin(x, y);
+	min = sylmin(x, y);
 
 	if (max == LONG_MAX && min == LONG_MIN)
 		return bias;
@@ -185,7 +177,7 @@ long sy_lmul_sticky(long x, long y)
 	long max, min;
 
 	max = sylmax(x, y);
-	min = sy_lmin(x, y);
+	min = sylmin(x, y);
 
 #if LONG_MAX + LONG_MIN > 0
 	if (min == LONG_MIN && max < 0)
@@ -249,7 +241,7 @@ static long lnegmul(long x, long y, enum sy_error *err)
 	long max, min, result, tmpval;
 
 	max = sylmax(x, y);
-	min = sy_lmin(x, y);
+	min = sylmin(x, y);
 
 	if (min >= 0)
 		return sylmul(max, -min, err);

@@ -9,7 +9,7 @@ long sylgcd(long x, long y, enum sy_error *err)
 	long max1, min1;
 
 	max1 = sylmax(x, y);
-	min1 = sy_lmin(x, y);
+	min1 = sylmin(x, y);
 
 	while (min1 < -LONG_MAX) {
 		long max2, min2;
@@ -25,7 +25,7 @@ long sylgcd(long x, long y, enum sy_error *err)
 			min1 -= max1;
 
 		max2 = sylmax(max1, min1);
-		min2 = sy_lmin(max1, min1);
+		min2 = sylmin(max1, min1);
 		max1 = max2;
 		min1 = min2;
 	}

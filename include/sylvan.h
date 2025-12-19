@@ -25,7 +25,7 @@ long sylmod(long x, long y, enum sy_error *err);
 long sylgcd(long x, long y, enum sy_error *err);
 long syllcm(long x, long y, enum sy_error *err);
 long sylmax(long x, long y);
-long sy_lmin(long x, long y);
+long sylmin(long x, long y);
 
 int sy_add(int x, int y, enum sy_error *err);
 int sy_sub(int x, int y, enum sy_error *err);

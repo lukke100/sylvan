@@ -8,7 +8,7 @@ long sylmul(long x, long y, enum sy_error *err)
 	long max, min;
 
 	max = sylmax(x, y);
-	min = sy_lmin(x, y);
+	min = sylmin(x, y);
 
 #if LONG_MAX + LONG_MIN < 0
 	if (max < 0 && ldiv(LONG_MAX, min).quot > max) {
