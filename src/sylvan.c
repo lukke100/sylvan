@@ -13,60 +13,13 @@ void sy_eset(enum sy_error *err, enum sy_error val)
 	*err = val;
 }
 
-long sy_lgcd(long x, long y, enum sy_error *err)
-{
-#if LONG_MAX + LONG_MIN < 0
-	long max1, min1;
-
-	max1 = sy_lmax(x, y);
-	min1 = sy_lmin(x, y);
-
-	while (min1 < -LONG_MAX) {
-		long max2, min2;
-
-		if (max1 == 0) {
-			sy_eset(err, SY_ERROR_OVERFLOW);
-			return LONG_MAX;
-		}
-
-		if (max1 > 0)
-			min1 += max1;
-		else
-			min1 -= max1;
-
-		max2 = sy_lmax(max1, min1);
-		min2 = sy_lmin(max1, min1);
-		max1 = max2;
-		min1 = min2;
-	}
-
-	x = max1;
-	y = min1;
-#endif
-
-	x = labs(x);
-	y = labs(y);
-
-	for (;;) {
-		if (x == 0)
-			return y;
-
-		y %= x;
-
-		if (y == 0)
-			return x;
-
-		x %= y;
-	}
-}
-
 long sy_llcm(long x, long y, enum sy_error *err)
 {
 	enum sy_error tmperr;
 	long gcd, result;
 
 	tmperr = SY_ERROR_NONE;
-	gcd = sy_lgcd(x, y, &tmperr);
+	gcd = sylgcd(x, y, &tmperr);
 
 	if (tmperr == SY_ERROR_OVERFLOW) {
 		sy_eset(err, SY_ERROR_OVERFLOW);
@@ -207,7 +160,7 @@ int sy_gcd(int x, int y, enum sy_error *err)
 	int result;
 
 	tmperr = SY_ERROR_NONE;
-	tmpval = sy_lgcd(x, y, &tmperr);
+	tmpval = sylgcd(x, y, &tmperr);
 	result = sy_ltoi(tmpval, &tmperr);
 
 	if (tmperr != SY_ERROR_NONE)
