@@ -6,7 +6,7 @@ long syladd(long x, long y, enum sy_error *err)
 {
 	long max, min;
 
-	max = sy_lmax(x, y);
+	max = sylmax(x, y);
 	min = sy_lmin(x, y);
 
 	if (min > 0 && LONG_MAX - min < max) {

@@ -7,7 +7,7 @@ long sylmul(long x, long y, enum sy_error *err)
 {
 	long max, min;
 
-	max = sy_lmax(x, y);
+	max = sylmax(x, y);
 	min = sy_lmin(x, y);
 
 #if LONG_MAX + LONG_MIN < 0

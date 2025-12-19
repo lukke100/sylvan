@@ -8,4 +8,5 @@ libsylvan_la_SOURCES = \
 	sylmod.c \
 	sylgcd.c \
 	syllcm.c \
+	sylmax.c \
 	sylvan.c
