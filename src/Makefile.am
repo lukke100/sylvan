@@ -19,4 +19,8 @@ libsylvan_la_SOURCES = \
 	snlcm.c \
 	snmax.c \
 	snmin.c \
+	skladd.c \
+	sklsub.c \
+	sklmul.c \
+	skldiv.c \
 	sylvan.c

@@ -6,18 +6,18 @@
 
 int main(void)
 {
-	assert(sk_ladd(1, 1, 0) == 2);
+	assert(skladd(1, 1, 0) == 2);
 
-	assert(sk_ladd(LONG_MAX,  1, 0) == LONG_MAX);
-	assert(sk_ladd(LONG_MAX, -1, 0) == LONG_MAX);
-	assert(sk_ladd(LONG_MIN,  1, 0) == LONG_MIN);
-	assert(sk_ladd(LONG_MIN, -1, 0) == LONG_MIN);
+	assert(skladd(LONG_MAX,  1, 0) == LONG_MAX);
+	assert(skladd(LONG_MAX, -1, 0) == LONG_MAX);
+	assert(skladd(LONG_MIN,  1, 0) == LONG_MIN);
+	assert(skladd(LONG_MIN, -1, 0) == LONG_MIN);
 
-	assert(sk_ladd(LONG_MAX, LONG_MIN, LONG_MAX) == LONG_MAX);
-	assert(sk_ladd(LONG_MAX, LONG_MIN, LONG_MIN) == LONG_MIN);
-	assert(sk_ladd(LONG_MAX, LONG_MIN, 1) ==  1);
-	assert(sk_ladd(LONG_MAX, LONG_MIN, 0) ==  0);
-	assert(sk_ladd(LONG_MAX, LONG_MIN,-1) == -1);
+	assert(skladd(LONG_MAX, LONG_MIN, LONG_MAX) == LONG_MAX);
+	assert(skladd(LONG_MAX, LONG_MIN, LONG_MIN) == LONG_MIN);
+	assert(skladd(LONG_MAX, LONG_MIN, 1) ==  1);
+	assert(skladd(LONG_MAX, LONG_MIN, 0) ==  0);
+	assert(skladd(LONG_MAX, LONG_MIN,-1) == -1);
 
 	return 0;
 }

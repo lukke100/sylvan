@@ -38,10 +38,10 @@ int snlcm(int x, int y, enum sn_error *err);
 int snmax(int x, int y);
 int snmin(int x, int y);
 
-long sk_ladd(long x, long y, long bias);
-long sk_lsub(long x, long y, long bias);
-long sk_lmul(long x, long y);
-long sk_ldiv(long x, long y, long bias);
+long skladd(long x, long y, long bias);
+long sklsub(long x, long y, long bias);
+long sklmul(long x, long y);
+long skldiv(long x, long y, long bias);
 
 long sn_lpow(long x, long y, enum sn_error *err);
 
