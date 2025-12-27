@@ -45,10 +45,10 @@ long skldiv(long x, long y, long bias);
 
 long snlpow(long x, long y, enum sn_error *err);
 
-int sk_add(int x, int y, int bias);
-int sk_sub(int x, int y, int bias);
-int sk_mul(int x, int y);
-int sk_div(int x, int y, int bias);
+int skadd(int x, int y, int bias);
+int sksub(int x, int y, int bias);
+int skmul(int x, int y);
+int skdiv(int x, int y, int bias);
 
 int sn_pow(int x, int y, enum sn_error *err);
 
