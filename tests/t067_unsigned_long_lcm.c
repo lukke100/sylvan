@@ -8,21 +8,21 @@ int main(void)
 {
 	enum sn_error err;
 
-	assert(sn_ullcm(2, 0, NULL) == 0);
-	assert(sn_ullcm(0, 0, NULL) == 0);
+	assert(snullcm(2, 0, NULL) == 0);
+	assert(snullcm(0, 0, NULL) == 0);
 
-	assert(sn_ullcm(ULONG_MAX, ULONG_MAX - 1, NULL) == ULONG_MAX);
+	assert(snullcm(ULONG_MAX, ULONG_MAX - 1, NULL) == ULONG_MAX);
 
 	err = SN_ERROR_NONE;
-	sn_ullcm(2, 0, &err);
+	snullcm(2, 0, &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	sn_ullcm(0, 0, &err);
+	snullcm(0, 0, &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	sn_ullcm(ULONG_MAX, ULONG_MAX - 1, &err);
+	snullcm(ULONG_MAX, ULONG_MAX - 1, &err);
 	assert(err == SN_ERROR_OVERFLOW);
 
 	return 0;

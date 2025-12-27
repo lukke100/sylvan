@@ -13,183 +13,6 @@ void sn_eset(enum sn_error *err, enum sn_error val)
 	*err = val;
 }
 
-unsigned long sn_uladd(unsigned long x, unsigned long y, enum sn_error *err)
-{
-	if (ULONG_MAX - x < y) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return ULONG_MAX;
-	}
-
-	return x + y;
-}
-
-unsigned long sn_ulsub(unsigned long x, unsigned long y, enum sn_error *err)
-{
-	if (y > x) {
-		sn_eset(err, SN_ERROR_UNDERFLOW);
-		return 0;
-	}
-
-	return x - y;
-}
-
-unsigned long sn_ulmul(unsigned long x, unsigned long y, enum sn_error *err)
-{
-	if (x == 0)
-		return 0;
-
-	if (ULONG_MAX / x < y) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return ULONG_MAX;
-	}
-
-	return x * y;
-}
-
-unsigned long sn_uldiv(unsigned long x, unsigned long y, enum sn_error *err)
-{
-	if (y == 0) {
-		sn_eset(err, SN_ERROR_UNDEFINED);
-
-		if (x == 0)
-			return 0;
-		else
-			return ULONG_MAX;
-	}
-
-	return x / y;
-}
-
-unsigned long sn_ulmod(unsigned long x, unsigned long y, enum sn_error *err)
-{
-	if (y == 0) {
-		sn_eset(err, SN_ERROR_UNDEFINED);
-		return 0;
-	}
-
-	return x % y;
-}
-
-unsigned long sn_ulgcd(unsigned long x, unsigned long y)
-{
-	for (;;) {
-		if (x == 0)
-			return y;
-
-		y %= x;
-
-		if (y == 0)
-			return x;
-
-		x %= y;
-	}
-}
-
-unsigned long sn_ullcm(unsigned long x, unsigned long y, enum sn_error *err)
-{
-	unsigned long gcd, result;
-	enum sn_error tmperr;
-
-	gcd = sn_ulgcd(x, y);
-
-	if (gcd == 0)
-		return 0;
-
-	x /= gcd;
-	y /= gcd;
-
-	tmperr = SN_ERROR_NONE;
-	result = sn_ulmul(x, y, &tmperr);
-
-	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return ULONG_MAX;
-	}
-
-	tmperr = SN_ERROR_NONE;
-	result = sn_ulmul(result, gcd, &tmperr);
-
-	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return ULONG_MAX;
-	}
-
-	return result;
-}
-
-unsigned long sn_ulmax(unsigned long x, unsigned long y)
-{
-	if (y > x)
-		return y;
-	else
-		return x;
-}
-
-unsigned long sn_ulmin(unsigned long x, unsigned long y)
-{
-	if (y < x)
-		return y;
-	else
-		return x;
-}
-
-unsigned long sk_uladd(unsigned long x, unsigned long y)
-{
-	return sn_uladd(x, y, NULL);
-}
-
-unsigned long sk_ulmul(unsigned long x, unsigned long y)
-{
-	return sn_ulmul(x, y, NULL);
-}
-
-unsigned long sk_uldiv(unsigned long x, unsigned long y, unsigned long bias)
-{
-	if (y == 0) {
-		if (x == 0)
-			return bias;
-		else
-			return ULONG_MAX;
-	}
-
-	if (x == ULONG_MAX) {
-		if (y == ULONG_MAX)
-			return bias;
-		else
-			return ULONG_MAX;
-	}
-
-	return x / y;
-}
-
-unsigned long sn_ulpow(unsigned long x, unsigned long y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	unsigned long result, tmpbase, tmpexp;
-
-	tmperr  = SN_ERROR_NONE;
-	result  = 1;
-	tmpbase = x;
-	tmpexp  = y;
-
-	while (1) {
-		if (tmpexp % 2 != 0)
-			result = sn_ulmul(result, tmpbase, &tmperr);
-
-		tmpexp >>= 1;
-
-		if (tmpexp == 0)
-			break;
-
-		tmpbase = sn_ulmul(tmpbase, tmpbase, &tmperr);
-	}
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, SN_ERROR_OVERFLOW);
-
-	return result;
-}
-
 unsigned sn_uadd(unsigned x, unsigned y, enum sn_error *err)
 {
 	enum sn_error tmperr;
@@ -197,7 +20,7 @@ unsigned sn_uadd(unsigned x, unsigned y, enum sn_error *err)
 	unsigned result;
 
 	tmperr = SN_ERROR_NONE;
-	tmpval = sn_uladd(x, y, &tmperr);
+	tmpval = snuladd(x, y, &tmperr);
 	result = sn_ultou(tmpval, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE)
@@ -213,7 +36,7 @@ unsigned sn_usub(unsigned x, unsigned y, enum sn_error *err)
 	unsigned result;
 
 	tmperr = SN_ERROR_NONE;
-	tmpval = sn_ulsub(x, y, &tmperr);
+	tmpval = snulsub(x, y, &tmperr);
 	result = sn_ultou(tmpval, NULL);
 
 	if (tmperr != SN_ERROR_NONE)
@@ -229,7 +52,7 @@ unsigned sn_umul(unsigned x, unsigned y, enum sn_error *err)
 	unsigned result;
 
 	tmperr = SN_ERROR_NONE;
-	tmpval = sn_ulmul(x, y, &tmperr);
+	tmpval = snulmul(x, y, &tmperr);
 	result = sn_ultou(tmpval, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE)
@@ -245,7 +68,7 @@ unsigned sn_udiv(unsigned x, unsigned y, enum sn_error *err)
 	unsigned result;
 
 	tmperr1 = SN_ERROR_NONE;
-	tmpval  = sn_uldiv(x, y, &tmperr1);
+	tmpval  = snuldiv(x, y, &tmperr1);
 	tmperr2 = SN_ERROR_NONE;
 	result  = sn_ultou(tmpval, &tmperr2);
 
@@ -264,7 +87,7 @@ unsigned sn_umod(unsigned x, unsigned y, enum sn_error *err)
 	unsigned result;
 
 	tmperr1 = SN_ERROR_NONE;
-	tmpval  = sn_ulmod(x, y, &tmperr1);
+	tmpval  = snulmod(x, y, &tmperr1);
 	tmperr2 = SN_ERROR_NONE;
 	result  = sn_ultou(tmpval, &tmperr2);
 
@@ -278,7 +101,7 @@ unsigned sn_umod(unsigned x, unsigned y, enum sn_error *err)
 
 unsigned sn_ugcd(unsigned x, unsigned y)
 {
-	return sn_ultou(sn_ulgcd(x, y), NULL);
+	return sn_ultou(snulgcd(x, y), NULL);
 }
 
 unsigned sn_ulcm(unsigned x, unsigned y, enum sn_error *err)
@@ -288,7 +111,7 @@ unsigned sn_ulcm(unsigned x, unsigned y, enum sn_error *err)
 	unsigned result;
 
 	tmperr = SN_ERROR_NONE;
-	tmpval = sn_ullcm(x, y, &tmperr);
+	tmpval = snullcm(x, y, &tmperr);
 	result = sn_ultou(tmpval, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE)
@@ -299,12 +122,12 @@ unsigned sn_ulcm(unsigned x, unsigned y, enum sn_error *err)
 
 unsigned sn_umax(unsigned x, unsigned y)
 {
-	return sn_ultou(sn_ulmax(x, y), NULL);
+	return sn_ultou(snulmax(x, y), NULL);
 }
 
 unsigned sn_umin(unsigned x, unsigned y)
 {
-	return sn_ultou(sn_ulmin(x, y), NULL);
+	return sn_ultou(snulmin(x, y), NULL);
 }
 
 unsigned sk_uadd(unsigned x, unsigned y)
@@ -343,7 +166,7 @@ unsigned sn_upow(unsigned x, unsigned y, enum sn_error *err)
 	unsigned result;
 
 	tmperr = SN_ERROR_NONE;
-	tmpval = sn_ulpow(x, y, &tmperr);
+	tmpval = snulpow(x, y, &tmperr);
 	result = sn_ultou(tmpval, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE)

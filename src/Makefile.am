@@ -42,4 +42,17 @@ libsylvan_la_SOURCES = \
 	skzmul.c \
 	skzdiv.c \
 	snzpow.c \
+	snuladd.c \
+	snulsub.c \
+	snulmul.c \
+	snuldiv.c \
+	snulmod.c \
+	snulgcd.c \
+	snullcm.c \
+	snulmax.c \
+	snulmin.c \
+	skuladd.c \
+	skulmul.c \
+	skuldiv.c \
+	snulpow.c \
 	sylvan.c

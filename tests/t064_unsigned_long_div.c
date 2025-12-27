@@ -8,20 +8,20 @@ int main(void)
 {
 	enum sn_error err;
 
-	assert(sn_uldiv(1, 1, NULL) == 1);
-	assert(sn_uldiv(0, 0, NULL) == 0);
-	assert(sn_uldiv(1, 0, NULL) == ULONG_MAX);
+	assert(snuldiv(1, 1, NULL) == 1);
+	assert(snuldiv(0, 0, NULL) == 0);
+	assert(snuldiv(1, 0, NULL) == ULONG_MAX);
 
 	err = SN_ERROR_NONE;
-	sn_uldiv(1, 1, &err);
+	snuldiv(1, 1, &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	sn_uldiv(0, 0, &err);
+	snuldiv(0, 0, &err);
 	assert(err == SN_ERROR_UNDEFINED);
 
 	err = SN_ERROR_NONE;
-	sn_uldiv(1, 0, &err);
+	snuldiv(1, 0, &err);
 	assert(err == SN_ERROR_UNDEFINED);
 
 	return 0;

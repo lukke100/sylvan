@@ -69,22 +69,22 @@ size_t skzdiv(size_t x, size_t y, size_t bias);
 
 size_t snzpow(size_t x, size_t y, enum sn_error *err);
 
-unsigned long sn_uladd(unsigned long x, unsigned long y, enum sn_error *err);
-unsigned long sn_ulsub(unsigned long x, unsigned long y, enum sn_error *err);
-unsigned long sn_ulmul(unsigned long x, unsigned long y, enum sn_error *err);
-unsigned long sn_uldiv(unsigned long x, unsigned long y, enum sn_error *err);
-unsigned long sn_ulmod(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snuladd(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snulsub(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snulmul(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snuldiv(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snulmod(unsigned long x, unsigned long y, enum sn_error *err);
 
-unsigned long sn_ulgcd(unsigned long x, unsigned long y);
-unsigned long sn_ullcm(unsigned long x, unsigned long y, enum sn_error *err);
-unsigned long sn_ulmax(unsigned long x, unsigned long y);
-unsigned long sn_ulmin(unsigned long x, unsigned long y);
+unsigned long snulgcd(unsigned long x, unsigned long y);
+unsigned long snullcm(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snulmax(unsigned long x, unsigned long y);
+unsigned long snulmin(unsigned long x, unsigned long y);
 
-unsigned long sk_uladd(unsigned long x, unsigned long y);
-unsigned long sk_ulmul(unsigned long x, unsigned long y);
-unsigned long sk_uldiv(unsigned long x, unsigned long y, unsigned long bias);
+unsigned long skuladd(unsigned long x, unsigned long y);
+unsigned long skulmul(unsigned long x, unsigned long y);
+unsigned long skuldiv(unsigned long x, unsigned long y, unsigned long bias);
 
-unsigned long sn_ulpow(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snulpow(unsigned long x, unsigned long y, enum sn_error *err);
 
 unsigned sn_uadd(unsigned x, unsigned y, enum sn_error *err);
 unsigned sn_usub(unsigned x, unsigned y, enum sn_error *err);

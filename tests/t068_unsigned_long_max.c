@@ -4,7 +4,7 @@
 
 int main(void)
 {
-	assert(sn_ulmax(1, 0) == 1);
-	assert(sn_ulmax(0, 1) == 1);
+	assert(snulmax(1, 0) == 1);
+	assert(snulmax(0, 1) == 1);
 	return 0;
 }
