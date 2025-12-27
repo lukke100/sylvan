@@ -23,4 +23,5 @@ libsylvan_la_SOURCES = \
 	sklsub.c \
 	sklmul.c \
 	skldiv.c \
+	snlpow.c \
 	sylvan.c

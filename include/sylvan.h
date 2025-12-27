@@ -43,7 +43,7 @@ long sklsub(long x, long y, long bias);
 long sklmul(long x, long y);
 long skldiv(long x, long y, long bias);
 
-long sn_lpow(long x, long y, enum sn_error *err);
+long snlpow(long x, long y, enum sn_error *err);
 
 int sk_add(int x, int y, int bias);
 int sk_sub(int x, int y, int bias);
