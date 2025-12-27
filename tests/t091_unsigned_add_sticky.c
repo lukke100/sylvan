@@ -5,7 +5,7 @@
 
 int main(void)
 {
-	assert(sk_uadd(UINT_MAX, 1) == UINT_MAX);
+	assert(skuadd(UINT_MAX, 1) == UINT_MAX);
 
 	return 0;
 }

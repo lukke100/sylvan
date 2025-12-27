@@ -13,168 +13,6 @@ void sn_eset(enum sn_error *err, enum sn_error val)
 	*err = val;
 }
 
-unsigned sn_uadd(unsigned x, unsigned y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	unsigned long tmpval;
-	unsigned result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snuladd(x, y, &tmperr);
-	result = sn_ultou(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-unsigned sn_usub(unsigned x, unsigned y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	unsigned long tmpval;
-	unsigned result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snulsub(x, y, &tmperr);
-	result = sn_ultou(tmpval, NULL);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-unsigned sn_umul(unsigned x, unsigned y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	unsigned long tmpval;
-	unsigned result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snulmul(x, y, &tmperr);
-	result = sn_ultou(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-unsigned sn_udiv(unsigned x, unsigned y, enum sn_error *err)
-{
-	enum sn_error tmperr1, tmperr2;
-	unsigned long tmpval;
-	unsigned result;
-
-	tmperr1 = SN_ERROR_NONE;
-	tmpval  = snuldiv(x, y, &tmperr1);
-	tmperr2 = SN_ERROR_NONE;
-	result  = sn_ultou(tmpval, &tmperr2);
-
-	if (tmperr1 != SN_ERROR_NONE)
-		sn_eset(err, tmperr1);
-	else if (tmperr2 != SN_ERROR_NONE)
-		sn_eset(err, tmperr2);
-
-	return result;
-}
-
-unsigned sn_umod(unsigned x, unsigned y, enum sn_error *err)
-{
-	enum sn_error tmperr1, tmperr2;
-	unsigned long tmpval;
-	unsigned result;
-
-	tmperr1 = SN_ERROR_NONE;
-	tmpval  = snulmod(x, y, &tmperr1);
-	tmperr2 = SN_ERROR_NONE;
-	result  = sn_ultou(tmpval, &tmperr2);
-
-	if (tmperr1 != SN_ERROR_NONE)
-		sn_eset(err, tmperr1);
-	else if (tmperr2 != SN_ERROR_NONE)
-		sn_eset(err, tmperr2);
-
-	return result;
-}
-
-unsigned sn_ugcd(unsigned x, unsigned y)
-{
-	return sn_ultou(snulgcd(x, y), NULL);
-}
-
-unsigned sn_ulcm(unsigned x, unsigned y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	unsigned long tmpval;
-	unsigned result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snullcm(x, y, &tmperr);
-	result = sn_ultou(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-unsigned sn_umax(unsigned x, unsigned y)
-{
-	return sn_ultou(snulmax(x, y), NULL);
-}
-
-unsigned sn_umin(unsigned x, unsigned y)
-{
-	return sn_ultou(snulmin(x, y), NULL);
-}
-
-unsigned sk_uadd(unsigned x, unsigned y)
-{
-	return sn_uadd(x, y, NULL);
-}
-
-unsigned sk_umul(unsigned x, unsigned y)
-{
-	return sn_umul(x, y, NULL);
-}
-
-unsigned sk_udiv(unsigned x, unsigned y, unsigned bias)
-{
-	if (y == 0) {
-		if (x == 0)
-			return bias;
-		else
-			return UINT_MAX;
-	}
-
-	if (x == UINT_MAX) {
-		if (y == UINT_MAX)
-			return bias;
-		else
-			return UINT_MAX;
-	}
-
-	return x / y;
-}
-
-unsigned sn_upow(unsigned x, unsigned y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	unsigned long tmpval;
-	unsigned result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snulpow(x, y, &tmperr);
-	result = sn_ultou(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
 size_t sn_token(int *last, const char src[], size_t srcsz,
                 int classify(char ch, int last), enum sn_error *err)
 {
@@ -629,9 +467,8 @@ static size_t unquotesz(size_t *pos, const char src[],
 			val = 0;
 
 			for (idx = srcidx - diff; idx < srcidx; ++idx) {
-				val = sn_umul(val, 8, &tmperr);
-				val = sn_uadd(val, hextoval(src[idx]),
-				              &tmperr);
+				val = snumul(val, 8, &tmperr);
+				val = snuadd(val, hextoval(src[idx]), &tmperr);
 			}
 
 			ucval = sn_utouc(val, &tmperr);
@@ -655,9 +492,8 @@ static size_t unquotesz(size_t *pos, const char src[],
 			val = 0;
 
 			for (idx = srcidx - diff; idx < srcidx; ++idx) {
-				val = sn_umul(val, 16, &tmperr);
-				val = sn_uadd(val, hextoval(src[idx]),
-				              &tmperr);
+				val = snumul(val, 16, &tmperr);
+				val = snuadd(val, hextoval(src[idx]), &tmperr);
 			}
 
 			ucval = sn_utouc(val, &tmperr);

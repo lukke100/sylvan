@@ -86,22 +86,22 @@ unsigned long skuldiv(unsigned long x, unsigned long y, unsigned long bias);
 
 unsigned long snulpow(unsigned long x, unsigned long y, enum sn_error *err);
 
-unsigned sn_uadd(unsigned x, unsigned y, enum sn_error *err);
-unsigned sn_usub(unsigned x, unsigned y, enum sn_error *err);
-unsigned sn_umul(unsigned x, unsigned y, enum sn_error *err);
-unsigned sn_udiv(unsigned x, unsigned y, enum sn_error *err);
-unsigned sn_umod(unsigned x, unsigned y, enum sn_error *err);
+unsigned snuadd(unsigned x, unsigned y, enum sn_error *err);
+unsigned snusub(unsigned x, unsigned y, enum sn_error *err);
+unsigned snumul(unsigned x, unsigned y, enum sn_error *err);
+unsigned snudiv(unsigned x, unsigned y, enum sn_error *err);
+unsigned snumod(unsigned x, unsigned y, enum sn_error *err);
 
-unsigned sn_ugcd(unsigned x, unsigned y);
-unsigned sn_ulcm(unsigned x, unsigned y, enum sn_error *err);
-unsigned sn_umax(unsigned x, unsigned y);
-unsigned sn_umin(unsigned x, unsigned y);
+unsigned snugcd(unsigned x, unsigned y);
+unsigned snulcm(unsigned x, unsigned y, enum sn_error *err);
+unsigned snumax(unsigned x, unsigned y);
+unsigned snumin(unsigned x, unsigned y);
 
-unsigned sk_uadd(unsigned x, unsigned y);
-unsigned sk_umul(unsigned x, unsigned y);
-unsigned sk_udiv(unsigned x, unsigned y, unsigned bias);
+unsigned skuadd(unsigned x, unsigned y);
+unsigned skumul(unsigned x, unsigned y);
+unsigned skudiv(unsigned x, unsigned y, unsigned bias);
 
-unsigned sn_upow(unsigned x, unsigned y, enum sn_error *err);
+unsigned snupow(unsigned x, unsigned y, enum sn_error *err);
 
 size_t sn_token(int *last, const char src[], size_t srcsz,
                 int classify(char ch, int last), enum sn_error *err);
