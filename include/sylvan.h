@@ -50,7 +50,7 @@ int sksub(int x, int y, int bias);
 int skmul(int x, int y);
 int skdiv(int x, int y, int bias);
 
-int sn_pow(int x, int y, enum sn_error *err);
+int snpow(int x, int y, enum sn_error *err);
 
 size_t sn_zadd(size_t x, size_t y, enum sn_error *err);
 size_t sn_zsub(size_t x, size_t y, enum sn_error *err);
