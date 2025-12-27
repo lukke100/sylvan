@@ -5,23 +5,23 @@
 
 int main(void)
 {
-	enum sy_error err;
+	enum sn_error err;
 
-	assert(sy_zmod(1, 2, NULL) == 1);
-	assert(sy_zmod(1, 1, NULL) == 0);
-	assert(sy_zmod(1, 0, NULL) == 0);
+	assert(sn_zmod(1, 2, NULL) == 1);
+	assert(sn_zmod(1, 1, NULL) == 0);
+	assert(sn_zmod(1, 0, NULL) == 0);
 
-	err = SY_ERROR_NONE;
-	(void)sy_zmod(1, 2, &err);
-	assert(err == SY_ERROR_NONE);
+	err = SN_ERROR_NONE;
+	(void)sn_zmod(1, 2, &err);
+	assert(err == SN_ERROR_NONE);
 
-	err = SY_ERROR_NONE;
-	(void)sy_zmod(1, 1, &err);
-	assert(err == SY_ERROR_NONE);
+	err = SN_ERROR_NONE;
+	(void)sn_zmod(1, 1, &err);
+	assert(err == SN_ERROR_NONE);
 
-	err = SY_ERROR_NONE;
-	(void)sy_zmod(1, 0, &err);
-	assert(err == SY_ERROR_UNDEFINED);
+	err = SN_ERROR_NONE;
+	(void)sn_zmod(1, 0, &err);
+	assert(err == SN_ERROR_UNDEFINED);
 
 	return 0;
 }

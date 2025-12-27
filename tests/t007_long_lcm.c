@@ -6,34 +6,34 @@
 
 int main(void)
 {
-	enum sy_error err;
+	enum sn_error err;
 
-	assert(syllcm( 2, 0, NULL) == 0);
-	assert(syllcm(-2, 0, NULL) == 0);
-	assert(syllcm( 0, 0, NULL) == 0);
+	assert(snllcm( 2, 0, NULL) == 0);
+	assert(snllcm(-2, 0, NULL) == 0);
+	assert(snllcm( 0, 0, NULL) == 0);
 
-	assert(syllcm(LONG_MAX, LONG_MAX - 1, NULL) == LONG_MAX);
+	assert(snllcm(LONG_MAX, LONG_MAX - 1, NULL) == LONG_MAX);
 
 #if LONG_MAX + LONG_MIN < 0
-	assert(syllcm(LONG_MIN, LONG_MIN, NULL) == LONG_MAX);
+	assert(snllcm(LONG_MIN, LONG_MIN, NULL) == LONG_MAX);
 #endif
 
-	err = SY_ERROR_NONE;
-	(void)syllcm(2, 0, &err);
-	assert(err == SY_ERROR_NONE);
+	err = SN_ERROR_NONE;
+	(void)snllcm(2, 0, &err);
+	assert(err == SN_ERROR_NONE);
 
-	err = SY_ERROR_NONE;
-	(void)syllcm(-2, 0, &err);
-	assert(err == SY_ERROR_NONE);
+	err = SN_ERROR_NONE;
+	(void)snllcm(-2, 0, &err);
+	assert(err == SN_ERROR_NONE);
 
-	err = SY_ERROR_NONE;
-	(void)syllcm(0, 0, &err);
-	assert(err == SY_ERROR_NONE);
+	err = SN_ERROR_NONE;
+	(void)snllcm(0, 0, &err);
+	assert(err == SN_ERROR_NONE);
 
 #if LONG_MAX + LONG_MIN < 0
-	err = SY_ERROR_NONE;
-	(void)syllcm(LONG_MIN, LONG_MIN, &err);
-	assert(err == SY_ERROR_OVERFLOW);
+	err = SN_ERROR_NONE;
+	(void)snllcm(LONG_MIN, LONG_MIN, &err);
+	assert(err == SN_ERROR_OVERFLOW);
 #endif
 
 	return 0;

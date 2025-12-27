@@ -3,12 +3,12 @@
 #include <stdlib.h>
 #include "sylvan.h"
 
-long sylmod(long x, long y, enum sy_error *err)
+long snlmod(long x, long y, enum sn_error *err)
 {
 	long result;
 
 	if (y == 0) {
-		sy_eset(err, SY_ERROR_UNDEFINED);
+		sn_eset(err, SN_ERROR_UNDEFINED);
 		return 0;
 	}
 
@@ -16,7 +16,7 @@ long sylmod(long x, long y, enum sy_error *err)
 
 #if LONG_MAX + LONG_MIN >= 0
 	while (labs(result) >= labs(y))
-		result -= syldiv(result, y, NULL) * y;
+		result -= snldiv(result, y, NULL) * y;
 #else
 	while (1) {
 		long rtmp, ytmp;
@@ -27,7 +27,7 @@ long sylmod(long x, long y, enum sy_error *err)
 		if (rtmp > ytmp)
 			break;
 
-		result -= syldiv(result, y, NULL) * y;
+		result -= snldiv(result, y, NULL) * y;
 	}
 #endif
 

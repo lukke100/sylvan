@@ -1,7 +1,7 @@
 #include "config.h"
 #include "sylvan.h"
 
-long sylmin(long x, long y)
+long snlmin(long x, long y)
 {
 	if (y < x)
 		return y;

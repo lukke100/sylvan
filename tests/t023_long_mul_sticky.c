@@ -6,14 +6,14 @@
 
 int main(void)
 {
-	assert(sy_lmul_sticky(LONG_MAX,  2) == LONG_MAX);
-	assert(sy_lmul_sticky(LONG_MAX, -1) == LONG_MIN);
-	assert(sy_lmul_sticky(LONG_MIN,  2) == LONG_MIN);
-	assert(sy_lmul_sticky(LONG_MIN, -1) == LONG_MAX);
+	assert(sk_lmul(LONG_MAX,  2) == LONG_MAX);
+	assert(sk_lmul(LONG_MAX, -1) == LONG_MIN);
+	assert(sk_lmul(LONG_MIN,  2) == LONG_MIN);
+	assert(sk_lmul(LONG_MIN, -1) == LONG_MAX);
 
-	assert(sy_lmul_sticky(LONG_MAX, LONG_MAX) == LONG_MAX);
-	assert(sy_lmul_sticky(LONG_MAX, LONG_MIN) == LONG_MIN);
-	assert(sy_lmul_sticky(LONG_MIN, LONG_MIN) == LONG_MAX);
+	assert(sk_lmul(LONG_MAX, LONG_MAX) == LONG_MAX);
+	assert(sk_lmul(LONG_MAX, LONG_MIN) == LONG_MIN);
+	assert(sk_lmul(LONG_MIN, LONG_MIN) == LONG_MAX);
 
 	return 0;
 }

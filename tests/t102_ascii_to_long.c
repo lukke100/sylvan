@@ -7,60 +7,60 @@
 
 int main(void)
 {
-	enum sy_error err;
+	enum sn_error err;
 	char buf[sizeof(long) * CHAR_BIT];
 
-	assert(sy_atol(NULL, 0, NULL) == 0);
-	assert(sy_atol(NULL, 1, NULL) == 0);
-	assert(sy_atol("",   1, NULL) == 0);
-	assert(sy_atol("a",  1, NULL) == 0);
-	assert(sy_atol(" 1", 2, NULL) == 0);
+	assert(sn_atol(NULL, 0, NULL) == 0);
+	assert(sn_atol(NULL, 1, NULL) == 0);
+	assert(sn_atol("",   1, NULL) == 0);
+	assert(sn_atol("a",  1, NULL) == 0);
+	assert(sn_atol(" 1", 2, NULL) == 0);
 
 	memset(buf, '9', sizeof(buf));
-	assert(sy_atol(buf, sizeof(buf), NULL) == LONG_MAX);
-
-	memset(buf, '9', sizeof(buf));
-	buf[0] = '+';
-	assert(sy_atol(buf, sizeof(buf), NULL) == LONG_MAX);
-
-	memset(buf, '9', sizeof(buf));
-	buf[0] = '-';
-	assert(sy_atol(buf, sizeof(buf), NULL) == LONG_MIN);
-
-	err = SY_ERROR_NONE;
-	(void)sy_atol(NULL, 0, &err);
-	assert(err == SY_ERROR_PARSE);
-
-	err = SY_ERROR_NONE;
-	(void)sy_atol(NULL, 1, &err);
-	assert(err == SY_ERROR_NULL);
-
-	err = SY_ERROR_NONE;
-	(void)sy_atol("", 1, &err);
-	assert(err == SY_ERROR_PARSE);
-
-	err = SY_ERROR_NONE;
-	(void)sy_atol("a", 1, &err);
-	assert(err == SY_ERROR_PARSE);
-
-	err = SY_ERROR_NONE;
-	(void)sy_atol(" 1", 2, &err);
-	assert(err == SY_ERROR_PARSE);
-
-	memset(buf, '9', sizeof(buf));
-	err = SY_ERROR_NONE;
-	(void)sy_atol(buf, sizeof(buf), &err);
-	assert(err == SY_ERROR_OVERFLOW);
+	assert(sn_atol(buf, sizeof(buf), NULL) == LONG_MAX);
 
 	memset(buf, '9', sizeof(buf));
 	buf[0] = '+';
-	err = SY_ERROR_NONE;
-	(void)sy_atol(buf, sizeof(buf), &err);
-	assert(err == SY_ERROR_OVERFLOW);
+	assert(sn_atol(buf, sizeof(buf), NULL) == LONG_MAX);
 
 	memset(buf, '9', sizeof(buf));
 	buf[0] = '-';
-	err = SY_ERROR_NONE;
-	(void)sy_atol(buf, sizeof(buf), &err);
-	assert(err == SY_ERROR_UNDERFLOW);
+	assert(sn_atol(buf, sizeof(buf), NULL) == LONG_MIN);
+
+	err = SN_ERROR_NONE;
+	(void)sn_atol(NULL, 0, &err);
+	assert(err == SN_ERROR_PARSE);
+
+	err = SN_ERROR_NONE;
+	(void)sn_atol(NULL, 1, &err);
+	assert(err == SN_ERROR_NULL);
+
+	err = SN_ERROR_NONE;
+	(void)sn_atol("", 1, &err);
+	assert(err == SN_ERROR_PARSE);
+
+	err = SN_ERROR_NONE;
+	(void)sn_atol("a", 1, &err);
+	assert(err == SN_ERROR_PARSE);
+
+	err = SN_ERROR_NONE;
+	(void)sn_atol(" 1", 2, &err);
+	assert(err == SN_ERROR_PARSE);
+
+	memset(buf, '9', sizeof(buf));
+	err = SN_ERROR_NONE;
+	(void)sn_atol(buf, sizeof(buf), &err);
+	assert(err == SN_ERROR_OVERFLOW);
+
+	memset(buf, '9', sizeof(buf));
+	buf[0] = '+';
+	err = SN_ERROR_NONE;
+	(void)sn_atol(buf, sizeof(buf), &err);
+	assert(err == SN_ERROR_OVERFLOW);
+
+	memset(buf, '9', sizeof(buf));
+	buf[0] = '-';
+	err = SN_ERROR_NONE;
+	(void)sn_atol(buf, sizeof(buf), &err);
+	assert(err == SN_ERROR_UNDERFLOW);
 }

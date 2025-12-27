@@ -6,28 +6,28 @@
 
 int main(void)
 {
-	enum sy_error err;
+	enum sn_error err;
 
-	assert(sy_add(INT_MAX,  1, NULL) == INT_MAX);
-	assert(sy_add(INT_MIN, -1, NULL) == INT_MIN);
-	assert(sy_add(INT_MAX, -1, NULL) == INT_MAX - 1);
-	assert(sy_add(INT_MIN,  1, NULL) == INT_MIN + 1);
+	assert(sn_add(INT_MAX,  1, NULL) == INT_MAX);
+	assert(sn_add(INT_MIN, -1, NULL) == INT_MIN);
+	assert(sn_add(INT_MAX, -1, NULL) == INT_MAX - 1);
+	assert(sn_add(INT_MIN,  1, NULL) == INT_MIN + 1);
 
-	err = SY_ERROR_NONE;
-	sy_add(INT_MAX, 1, &err);
-	assert(err == SY_ERROR_OVERFLOW);
+	err = SN_ERROR_NONE;
+	sn_add(INT_MAX, 1, &err);
+	assert(err == SN_ERROR_OVERFLOW);
 
-	err = SY_ERROR_NONE;
-	sy_add(INT_MIN, -1, &err);
-	assert(err == SY_ERROR_UNDERFLOW);
+	err = SN_ERROR_NONE;
+	sn_add(INT_MIN, -1, &err);
+	assert(err == SN_ERROR_UNDERFLOW);
 
-	err = SY_ERROR_NONE;
-	sy_add(INT_MAX, -1, &err);
-	assert(err == SY_ERROR_NONE);
+	err = SN_ERROR_NONE;
+	sn_add(INT_MAX, -1, &err);
+	assert(err == SN_ERROR_NONE);
 
-	err = SY_ERROR_NONE;
-	sy_add(INT_MIN, 1, &err);
-	assert(err == SY_ERROR_NONE);
+	err = SN_ERROR_NONE;
+	sn_add(INT_MIN, 1, &err);
+	assert(err == SN_ERROR_NONE);
 
 	return 0;
 }

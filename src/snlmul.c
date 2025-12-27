@@ -3,16 +3,16 @@
 #include <stdlib.h>
 #include "sylvan.h"
 
-long sylmul(long x, long y, enum sy_error *err)
+long snlmul(long x, long y, enum sn_error *err)
 {
 	long max, min;
 
-	max = sylmax(x, y);
-	min = sylmin(x, y);
+	max = snlmax(x, y);
+	min = snlmin(x, y);
 
 #if LONG_MAX + LONG_MIN < 0
 	if (max < 0 && ldiv(LONG_MAX, min).quot > max) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return LONG_MAX;
 	}
 #else
@@ -23,12 +23,12 @@ long sylmul(long x, long y, enum sy_error *err)
 #endif
 
 	if (min > 0 && LONG_MAX / max < min) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return LONG_MAX;
 	}
 
 	if (max > 0 && min < 0 && ldiv(LONG_MIN, max).quot > min) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
+		sn_eset(err, SN_ERROR_UNDERFLOW);
 		return LONG_MIN;
 	}
 

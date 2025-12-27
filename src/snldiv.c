@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include "sylvan.h"
 
-long syldiv(long x, long y, enum sy_error *err)
+long snldiv(long x, long y, enum sn_error *err)
 {
 	if (y == 0) {
-		sy_eset(err, SY_ERROR_UNDEFINED);
+		sn_eset(err, SN_ERROR_UNDEFINED);
 
 		if (x > 0)
 			return LONG_MAX;
@@ -21,7 +21,7 @@ long syldiv(long x, long y, enum sy_error *err)
 		return ldiv(x, y).quot;
 
 	if (x > y * LONG_MIN) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
+		sn_eset(err, SN_ERROR_UNDERFLOW);
 		return LONG_MIN;
 	}
 #elif LONG_MAX + LONG_MIN < 0
@@ -29,7 +29,7 @@ long syldiv(long x, long y, enum sy_error *err)
 		return ldiv(x, y).quot;
 
 	if (x < y * LONG_MAX) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return LONG_MAX;
 	}
 #endif

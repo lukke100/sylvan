@@ -3,127 +3,126 @@
 #include <stddef.h>
 #include <stdio.h>
 
-enum sy_error {
-	SY_ERROR_NONE,
-	SY_ERROR_OVERFLOW,
-	SY_ERROR_UNDERFLOW,
-	SY_ERROR_UNDEFINED,
-	SY_ERROR_NULL,
-	SY_ERROR_PARSE,
-	SY_ERROR_OVERRUN,
-	SY_ERROR_FILE
+enum sn_error {
+	SN_ERROR_NONE,
+	SN_ERROR_OVERFLOW,
+	SN_ERROR_UNDERFLOW,
+	SN_ERROR_UNDEFINED,
+	SN_ERROR_NULL,
+	SN_ERROR_PARSE,
+	SN_ERROR_OVERRUN,
+	SN_ERROR_FILE
 };
 
-void sy_eset(enum sy_error *err, enum sy_error val);
+void sn_eset(enum sn_error *err, enum sn_error val);
 
-long syladd(long x, long y, enum sy_error *err);
-long sylsub(long x, long y, enum sy_error *err);
-long sylmul(long x, long y, enum sy_error *err);
-long syldiv(long x, long y, enum sy_error *err);
-long sylmod(long x, long y, enum sy_error *err);
+long snladd(long x, long y, enum sn_error *err);
+long snlsub(long x, long y, enum sn_error *err);
+long snlmul(long x, long y, enum sn_error *err);
+long snldiv(long x, long y, enum sn_error *err);
+long snlmod(long x, long y, enum sn_error *err);
 
-long sylgcd(long x, long y, enum sy_error *err);
-long syllcm(long x, long y, enum sy_error *err);
-long sylmax(long x, long y);
-long sylmin(long x, long y);
+long snlgcd(long x, long y, enum sn_error *err);
+long snllcm(long x, long y, enum sn_error *err);
+long snlmax(long x, long y);
+long snlmin(long x, long y);
 
-int sy_add(int x, int y, enum sy_error *err);
-int sy_sub(int x, int y, enum sy_error *err);
-int sy_mul(int x, int y, enum sy_error *err);
-int sy_div(int x, int y, enum sy_error *err);
-int sy_mod(int x, int y, enum sy_error *err);
+int sn_add(int x, int y, enum sn_error *err);
+int sn_sub(int x, int y, enum sn_error *err);
+int sn_mul(int x, int y, enum sn_error *err);
+int sn_div(int x, int y, enum sn_error *err);
+int sn_mod(int x, int y, enum sn_error *err);
 
-int sy_gcd(int x, int y, enum sy_error *err);
-int sy_lcm(int x, int y, enum sy_error *err);
-int sy_max(int x, int y);
-int sy_min(int x, int y);
+int sn_gcd(int x, int y, enum sn_error *err);
+int sn_lcm(int x, int y, enum sn_error *err);
+int sn_max(int x, int y);
+int sn_min(int x, int y);
 
-long sy_ladd_sticky(long x, long y, long bias);
-long sy_lsub_sticky(long x, long y, long bias);
-long sy_lmul_sticky(long x, long y);
-long sy_ldiv_sticky(long x, long y, long bias);
+long sk_ladd(long x, long y, long bias);
+long sk_lsub(long x, long y, long bias);
+long sk_lmul(long x, long y);
+long sk_ldiv(long x, long y, long bias);
 
-long sy_lpow(long x, long y, enum sy_error *err);
+long sn_lpow(long x, long y, enum sn_error *err);
 
-int sy_add_sticky(int x, int y, int bias);
-int sy_sub_sticky(int x, int y, int bias);
-int sy_mul_sticky(int x, int y);
-int sy_div_sticky(int x, int y, int bias);
+int sk_add(int x, int y, int bias);
+int sk_sub(int x, int y, int bias);
+int sk_mul(int x, int y);
+int sk_div(int x, int y, int bias);
 
-int sy_pow(int x, int y, enum sy_error *err);
+int sn_pow(int x, int y, enum sn_error *err);
 
-size_t sy_zadd(size_t x, size_t y, enum sy_error *err);
-size_t sy_zsub(size_t x, size_t y, enum sy_error *err);
-size_t sy_zmul(size_t x, size_t y, enum sy_error *err);
-size_t sy_zdiv(size_t x, size_t y, enum sy_error *err);
-size_t sy_zmod(size_t x, size_t y, enum sy_error *err);
+size_t sn_zadd(size_t x, size_t y, enum sn_error *err);
+size_t sn_zsub(size_t x, size_t y, enum sn_error *err);
+size_t sn_zmul(size_t x, size_t y, enum sn_error *err);
+size_t sn_zdiv(size_t x, size_t y, enum sn_error *err);
+size_t sn_zmod(size_t x, size_t y, enum sn_error *err);
 
-size_t sy_zgcd(size_t x, size_t y);
-size_t sy_zlcm(size_t x, size_t y, enum sy_error *err);
-size_t sy_zmax(size_t x, size_t y);
-size_t sy_zmin(size_t x, size_t y);
+size_t sn_zgcd(size_t x, size_t y);
+size_t sn_zlcm(size_t x, size_t y, enum sn_error *err);
+size_t sn_zmax(size_t x, size_t y);
+size_t sn_zmin(size_t x, size_t y);
 
-size_t sy_zadd_sticky(size_t x, size_t y);
-size_t sy_zmul_sticky(size_t x, size_t y);
-size_t sy_zdiv_sticky(size_t x, size_t y, size_t bias);
+size_t sk_zadd(size_t x, size_t y);
+size_t sk_zmul(size_t x, size_t y);
+size_t sk_zdiv(size_t x, size_t y, size_t bias);
 
-size_t sy_zpow(size_t x, size_t y, enum sy_error *err);
+size_t sn_zpow(size_t x, size_t y, enum sn_error *err);
 
-unsigned long sy_uladd(unsigned long x, unsigned long y, enum sy_error *err);
-unsigned long sy_ulsub(unsigned long x, unsigned long y, enum sy_error *err);
-unsigned long sy_ulmul(unsigned long x, unsigned long y, enum sy_error *err);
-unsigned long sy_uldiv(unsigned long x, unsigned long y, enum sy_error *err);
-unsigned long sy_ulmod(unsigned long x, unsigned long y, enum sy_error *err);
+unsigned long sn_uladd(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long sn_ulsub(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long sn_ulmul(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long sn_uldiv(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long sn_ulmod(unsigned long x, unsigned long y, enum sn_error *err);
 
-unsigned long sy_ulgcd(unsigned long x, unsigned long y);
-unsigned long sy_ullcm(unsigned long x, unsigned long y, enum sy_error *err);
-unsigned long sy_ulmax(unsigned long x, unsigned long y);
-unsigned long sy_ulmin(unsigned long x, unsigned long y);
+unsigned long sn_ulgcd(unsigned long x, unsigned long y);
+unsigned long sn_ullcm(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long sn_ulmax(unsigned long x, unsigned long y);
+unsigned long sn_ulmin(unsigned long x, unsigned long y);
 
-unsigned long sy_uladd_sticky(unsigned long x, unsigned long y);
-unsigned long sy_ulmul_sticky(unsigned long x, unsigned long y);
-unsigned long sy_uldiv_sticky(unsigned long x, unsigned long y,
-                              unsigned long bias);
+unsigned long sk_uladd(unsigned long x, unsigned long y);
+unsigned long sk_ulmul(unsigned long x, unsigned long y);
+unsigned long sk_uldiv(unsigned long x, unsigned long y, unsigned long bias);
 
-unsigned long sy_ulpow(unsigned long x, unsigned long y, enum sy_error *err);
+unsigned long sn_ulpow(unsigned long x, unsigned long y, enum sn_error *err);
 
-unsigned sy_uadd(unsigned x, unsigned y, enum sy_error *err);
-unsigned sy_usub(unsigned x, unsigned y, enum sy_error *err);
-unsigned sy_umul(unsigned x, unsigned y, enum sy_error *err);
-unsigned sy_udiv(unsigned x, unsigned y, enum sy_error *err);
-unsigned sy_umod(unsigned x, unsigned y, enum sy_error *err);
+unsigned sn_uadd(unsigned x, unsigned y, enum sn_error *err);
+unsigned sn_usub(unsigned x, unsigned y, enum sn_error *err);
+unsigned sn_umul(unsigned x, unsigned y, enum sn_error *err);
+unsigned sn_udiv(unsigned x, unsigned y, enum sn_error *err);
+unsigned sn_umod(unsigned x, unsigned y, enum sn_error *err);
 
-unsigned sy_ugcd(unsigned x, unsigned y);
-unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err);
-unsigned sy_umax(unsigned x, unsigned y);
-unsigned sy_umin(unsigned x, unsigned y);
+unsigned sn_ugcd(unsigned x, unsigned y);
+unsigned sn_ulcm(unsigned x, unsigned y, enum sn_error *err);
+unsigned sn_umax(unsigned x, unsigned y);
+unsigned sn_umin(unsigned x, unsigned y);
 
-unsigned sy_uadd_sticky(unsigned x, unsigned y);
-unsigned sy_umul_sticky(unsigned x, unsigned y);
-unsigned sy_udiv_sticky(unsigned x, unsigned y, unsigned bias);
+unsigned sk_uadd(unsigned x, unsigned y);
+unsigned sk_umul(unsigned x, unsigned y);
+unsigned sk_udiv(unsigned x, unsigned y, unsigned bias);
 
-unsigned sy_upow(unsigned x, unsigned y, enum sy_error *err);
+unsigned sn_upow(unsigned x, unsigned y, enum sn_error *err);
 
-size_t sy_token(int *last, const char src[], size_t srcsz,
-                int classify(char ch, int last), enum sy_error *err);
+size_t sn_token(int *last, const char src[], size_t srcsz,
+                int classify(char ch, int last), enum sn_error *err);
 
-long sy_atol(const char src[], size_t srcsz, enum sy_error *err);
-int  sy_atoi(const char src[], size_t srcsz, enum sy_error *err);
+long sn_atol(const char src[], size_t srcsz, enum sn_error *err);
+int  sn_atoi(const char src[], size_t srcsz, enum sn_error *err);
 
-char sy_uctoc(unsigned char x, enum sy_error *err);
+char sn_uctoc(unsigned char x, enum sn_error *err);
 
-size_t sy_quote(char dest[], size_t destsz, const char src[],
-                size_t srcsz, enum sy_error *err);
+size_t sn_quote(char dest[], size_t destsz, const char src[],
+                size_t srcsz, enum sn_error *err);
 
-size_t sy_unquote(char dest[], size_t destsz, size_t *pos,
-                  const char src[], size_t srcsz, enum sy_error *err);
+size_t sn_unquote(char dest[], size_t destsz, size_t *pos,
+                  const char src[], size_t srcsz, enum sn_error *err);
 
-int sy_ltoi(long x, enum sy_error *err);
-unsigned sy_ultou(unsigned long x, enum sy_error *err);
-unsigned char sy_utouc(unsigned x, enum sy_error *err);
+int sn_ltoi(long x, enum sn_error *err);
+unsigned sn_ultou(unsigned long x, enum sn_error *err);
+unsigned char sn_utouc(unsigned x, enum sn_error *err);
 
-void sy_rev(char buf[], size_t bufsz, enum sy_error *err);
+void sn_rev(char buf[], size_t bufsz, enum sn_error *err);
 
-size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
-                 size_t req, FILE *stream, enum sy_error *err);
+size_t sn_refill(char buf[], size_t bufsz, size_t *pos,
+                 size_t req, FILE *stream, enum sn_error *err);
 #endif

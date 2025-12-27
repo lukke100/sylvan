@@ -5,7 +5,7 @@
 #include <string.h>
 #include "sylvan.h"
 
-void sy_eset(enum sy_error *err, enum sy_error val)
+void sn_eset(enum sn_error *err, enum sn_error val)
 {
 	if (err == NULL)
 		return;
@@ -13,140 +13,140 @@ void sy_eset(enum sy_error *err, enum sy_error val)
 	*err = val;
 }
 
-int sy_add(int x, int y, enum sy_error *err)
+int sn_add(int x, int y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	long tmpval;
 	int result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = syladd(x, y, &tmperr);
-	result = sy_ltoi(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = snladd(x, y, &tmperr);
+	result = sn_ltoi(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-int sy_sub(int x, int y, enum sy_error *err)
+int sn_sub(int x, int y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	long tmpval;
 	int result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = sylsub(x, y, &tmperr);
-	result = sy_ltoi(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = snlsub(x, y, &tmperr);
+	result = sn_ltoi(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-int sy_mul(int x, int y, enum sy_error *err)
+int sn_mul(int x, int y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	long tmpval;
 	int result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = sylmul(x, y, &tmperr);
-	result = sy_ltoi(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = snlmul(x, y, &tmperr);
+	result = sn_ltoi(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-int sy_div(int x, int y, enum sy_error *err)
+int sn_div(int x, int y, enum sn_error *err)
 {
-	enum sy_error tmperr1, tmperr2;
+	enum sn_error tmperr1, tmperr2;
 	long tmpval;
 	int result;
 
-	tmperr1 = SY_ERROR_NONE;
-	tmpval  = syldiv(x, y, &tmperr1);
-	tmperr2 = SY_ERROR_NONE;
-	result  = sy_ltoi(tmpval, &tmperr2);
+	tmperr1 = SN_ERROR_NONE;
+	tmpval  = snldiv(x, y, &tmperr1);
+	tmperr2 = SN_ERROR_NONE;
+	result  = sn_ltoi(tmpval, &tmperr2);
 
-	if (tmperr1 != SY_ERROR_NONE)
-		sy_eset(err, tmperr1);
-	else if (tmperr2 != SY_ERROR_NONE)
-		sy_eset(err, tmperr2);
+	if (tmperr1 != SN_ERROR_NONE)
+		sn_eset(err, tmperr1);
+	else if (tmperr2 != SN_ERROR_NONE)
+		sn_eset(err, tmperr2);
 
 	return result;
 }
 
-int sy_mod(int x, int y, enum sy_error *err)
+int sn_mod(int x, int y, enum sn_error *err)
 {
-	enum sy_error tmperr1, tmperr2;
+	enum sn_error tmperr1, tmperr2;
 	long tmpval;
 	int result;
 
-	tmperr1 = SY_ERROR_NONE;
-	tmpval  = sylmod(x, y, &tmperr1);
-	tmperr2 = SY_ERROR_NONE;
-	result  = sy_ltoi(tmpval, &tmperr2);
+	tmperr1 = SN_ERROR_NONE;
+	tmpval  = snlmod(x, y, &tmperr1);
+	tmperr2 = SN_ERROR_NONE;
+	result  = sn_ltoi(tmpval, &tmperr2);
 
-	if (tmperr1 != SY_ERROR_NONE)
-		sy_eset(err, tmperr1);
-	else if (tmperr2 != SY_ERROR_NONE)
-		sy_eset(err, tmperr2);
+	if (tmperr1 != SN_ERROR_NONE)
+		sn_eset(err, tmperr1);
+	else if (tmperr2 != SN_ERROR_NONE)
+		sn_eset(err, tmperr2);
 
 	return result;
 }
 
-int sy_gcd(int x, int y, enum sy_error *err)
+int sn_gcd(int x, int y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	long tmpval;
 	int result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = sylgcd(x, y, &tmperr);
-	result = sy_ltoi(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = snlgcd(x, y, &tmperr);
+	result = sn_ltoi(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-int sy_lcm(int x, int y, enum sy_error *err)
+int sn_lcm(int x, int y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	long tmpval;
 	int result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = syllcm(x, y, &tmperr);
-	result = sy_ltoi(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = snllcm(x, y, &tmperr);
+	result = sn_ltoi(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-int sy_max(int x, int y)
+int sn_max(int x, int y)
 {
-	return sy_ltoi(sylmax(x, y), NULL);
+	return sn_ltoi(snlmax(x, y), NULL);
 }
 
-int sy_min(int x, int y)
+int sn_min(int x, int y)
 {
-	return sy_ltoi(sylmin(x, y), NULL);
+	return sn_ltoi(snlmin(x, y), NULL);
 }
 
-long sy_ladd_sticky(long x, long y, long bias)
+long sk_ladd(long x, long y, long bias)
 {
 	long max, min;
 
-	max = sylmax(x, y);
-	min = sylmin(x, y);
+	max = snlmax(x, y);
+	min = snlmin(x, y);
 
 	if (max == LONG_MAX && min == LONG_MIN)
 		return bias;
@@ -155,10 +155,10 @@ long sy_ladd_sticky(long x, long y, long bias)
 	else if (min == LONG_MIN)
 		return LONG_MIN;
 
-	return syladd(max, min, NULL);
+	return snladd(max, min, NULL);
 }
 
-long sy_lsub_sticky(long x, long y, long bias)
+long sk_lsub(long x, long y, long bias)
 {
 	if (x == LONG_MAX && y == LONG_MAX)
 		return bias;
@@ -169,15 +169,15 @@ long sy_lsub_sticky(long x, long y, long bias)
 	else if (x == LONG_MIN || y == LONG_MAX)
 		return LONG_MIN;
 
-	return sylsub(x, y, NULL);
+	return snlsub(x, y, NULL);
 }
 
-long sy_lmul_sticky(long x, long y)
+long sk_lmul(long x, long y)
 {
 	long max, min;
 
-	max = sylmax(x, y);
-	min = sylmin(x, y);
+	max = snlmax(x, y);
+	min = snlmin(x, y);
 
 #if LONG_MAX + LONG_MIN > 0
 	if (min == LONG_MIN && max < 0)
@@ -187,10 +187,10 @@ long sy_lmul_sticky(long x, long y)
 		return LONG_MIN;
 #endif
 
-	return sylmul(max, min, NULL);
+	return snlmul(max, min, NULL);
 }
 
-long sy_ldiv_sticky(long x, long y, long bias)
+long sk_ldiv(long x, long y, long bias)
 {
 	if (y == 0) {
 		if (x > 0)
@@ -205,7 +205,7 @@ long sy_ldiv_sticky(long x, long y, long bias)
 		if (y == LONG_MAX)
 			return bias;
 		else if (y == LONG_MIN)
-			return sy_lmul_sticky(bias, -1);
+			return sk_lmul(bias, -1);
 		else if (y > 0)
 			return LONG_MAX;
 		else if (y < 0)
@@ -214,7 +214,7 @@ long sy_ldiv_sticky(long x, long y, long bias)
 
 	if (x == LONG_MIN) {
 		if (y == LONG_MAX)
-			return sy_lmul_sticky(bias, -1);
+			return sk_lmul(bias, -1);
 		else if (y == LONG_MIN)
 			return bias;
 		else if (y > 0)
@@ -231,37 +231,37 @@ long sy_ldiv_sticky(long x, long y, long bias)
 		return 0;
 #endif
 
-	return syldiv(x, y, NULL);
+	return snldiv(x, y, NULL);
 }
 
 #if LONG_MAX + LONG_MIN < 0
-static long lnegmul(long x, long y, enum sy_error *err)
+static long lnegmul(long x, long y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	long max, min, result, tmpval;
 
-	max = sylmax(x, y);
-	min = sylmin(x, y);
+	max = snlmax(x, y);
+	min = snlmin(x, y);
 
 	if (min >= 0)
-		return sylmul(max, -min, err);
+		return snlmul(max, -min, err);
 	else if (max >= 0)
-		return sylmul(max, min, err);
+		return snlmul(max, min, err);
 
-	tmperr = SY_ERROR_NONE;
+	tmperr = SN_ERROR_NONE;
 	result = 0;
 
 	while (max < -LONG_MAX) {
-		tmpval = sylmul(min, LONG_MAX, &tmperr);
-		result = syladd(result, tmpval, &tmperr);
+		tmpval = snlmul(min, LONG_MAX, &tmperr);
+		result = snladd(result, tmpval, &tmperr);
 		max   += LONG_MAX;
 	}
 
-	tmpval = sylmul(min, -max, &tmperr);
-	result = syladd(result, tmpval, &tmperr);
+	tmpval = snlmul(min, -max, &tmperr);
+	result = snladd(result, tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
+	if (tmperr != SN_ERROR_NONE) {
+		sn_eset(err, SN_ERROR_UNDERFLOW);
 		return LONG_MIN;
 	}
 
@@ -269,17 +269,17 @@ static long lnegmul(long x, long y, enum sy_error *err)
 }
 #endif
 
-long sy_lpow(long x, long y, enum sy_error *err)
+long sn_lpow(long x, long y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	long result, tmpbase, tmpexp;
 
 	if ((x > 1 || x < -1) && y < 0) {
-		sy_eset(err, SY_ERROR_UNDEFINED);
+		sn_eset(err, SN_ERROR_UNDEFINED);
 		return 0;
 	}
 
-	tmperr = SY_ERROR_NONE;
+	tmperr = SN_ERROR_NONE;
 
 #if LONG_MAX + LONG_MIN >= 0
 	result  = 1;
@@ -288,18 +288,18 @@ long sy_lpow(long x, long y, enum sy_error *err)
 
 	while (1) {
 		if (tmpexp % 2 != 0)
-			result = sylmul(result, tmpbase, &tmperr);
+			result = snlmul(result, tmpbase, &tmperr);
 
 		tmpexp /= 2;
 
 		if (tmpexp == 0)
 			break;
 
-		tmpbase = sylmul(tmpbase, tmpbase, &tmperr);
+		tmpbase = snlmul(tmpbase, tmpbase, &tmperr);
 	}
 
 	if (x < 0 && y % 2 != 0)
-		result = sylmul(result, -1, &tmperr);
+		result = snlmul(result, -1, &tmperr);
 #else
 	result  = -1;
 	tmpbase = x;
@@ -318,25 +318,25 @@ long sy_lpow(long x, long y, enum sy_error *err)
 	}
 
 	if (x > 0 || y % 2 == 0)
-		result = sylmul(result, -1, &tmperr);
+		result = snlmul(result, -1, &tmperr);
 #endif
 
-	if (tmperr != SY_ERROR_NONE) {
+	if (tmperr != SN_ERROR_NONE) {
 		if (result > 0)
-			sy_eset(err, SY_ERROR_OVERFLOW);
+			sn_eset(err, SN_ERROR_OVERFLOW);
 		else
-			sy_eset(err, SY_ERROR_UNDERFLOW);
+			sn_eset(err, SN_ERROR_UNDERFLOW);
 	}
 
 	return result;
 }
 
-int sy_add_sticky(int x, int y, int bias)
+int sk_add(int x, int y, int bias)
 {
 	int max, min;
 
-	max = sy_max(x, y);
-	min = sy_min(x, y);
+	max = sn_max(x, y);
+	min = sn_min(x, y);
 
 	if (max == INT_MAX && min == INT_MIN)
 		return bias;
@@ -345,10 +345,10 @@ int sy_add_sticky(int x, int y, int bias)
 	else if (min == INT_MIN)
 		return INT_MIN;
 
-	return sy_add(max, min, NULL);
+	return sn_add(max, min, NULL);
 }
 
-int sy_sub_sticky(int x, int y, int bias)
+int sk_sub(int x, int y, int bias)
 {
 	if (x == INT_MAX && y == INT_MAX)
 		return bias;
@@ -359,15 +359,15 @@ int sy_sub_sticky(int x, int y, int bias)
 	else if (x == INT_MIN || y == INT_MAX)
 		return INT_MIN;
 
-	return sy_sub(x, y, NULL);
+	return sn_sub(x, y, NULL);
 }
 
-int sy_mul_sticky(int x, int y)
+int sk_mul(int x, int y)
 {
 	int max, min;
 
-	max = sy_max(x, y);
-	min = sy_min(x, y);
+	max = sn_max(x, y);
+	min = sn_min(x, y);
 
 #if INT_MAX + INT_MIN > 0
 	if (min == INT_MIN && max < 0)
@@ -377,10 +377,10 @@ int sy_mul_sticky(int x, int y)
 		return INT_MIN;
 #endif
 
-	return sy_mul(max, min, NULL);
+	return sn_mul(max, min, NULL);
 }
 
-int sy_div_sticky(int x, int y, int bias)
+int sk_div(int x, int y, int bias)
 {
 	if (y == 0) {
 		if (x > 0)
@@ -395,7 +395,7 @@ int sy_div_sticky(int x, int y, int bias)
 		if (y == INT_MAX)
 			return bias;
 		else if (y == INT_MIN)
-			return sy_mul_sticky(bias, -1);
+			return sk_mul(bias, -1);
 		else if (y > 0)
 			return INT_MAX;
 		else if (y < 0)
@@ -404,7 +404,7 @@ int sy_div_sticky(int x, int y, int bias)
 
 	if (x == INT_MIN) {
 		if (y == INT_MAX)
-			return sy_mul_sticky(bias, -1);
+			return sk_mul(bias, -1);
 		else if (y == INT_MIN)
 			return bias;
 		else if (y > 0)
@@ -421,62 +421,62 @@ int sy_div_sticky(int x, int y, int bias)
 		return 0;
 #endif
 
-	return sy_div(x, y, NULL);
+	return sn_div(x, y, NULL);
 }
 
-int sy_pow(int x, int y, enum sy_error *err)
+int sn_pow(int x, int y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	long tmpval;
 	int result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = sy_lpow(x, y, &tmperr);
-	result = sy_ltoi(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = sn_lpow(x, y, &tmperr);
+	result = sn_ltoi(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-size_t sy_zadd(size_t x, size_t y, enum sy_error *err)
+size_t sn_zadd(size_t x, size_t y, enum sn_error *err)
 {
 	if (~(size_t)0 - x < y) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return ~(size_t)0;
 	}
 
 	return x + y;
 }
 
-size_t sy_zsub(size_t x, size_t y, enum sy_error *err)
+size_t sn_zsub(size_t x, size_t y, enum sn_error *err)
 {
 	if (y > x) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
+		sn_eset(err, SN_ERROR_UNDERFLOW);
 		return 0;
 	}
 
 	return x - y;
 }
 
-size_t sy_zmul(size_t x, size_t y, enum sy_error *err)
+size_t sn_zmul(size_t x, size_t y, enum sn_error *err)
 {
 	if (x == 0)
 		return 0;
 
 	if (~(size_t)0 / x < y) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return ~(size_t)0;
 	}
 
 	return x * y;
 }
 
-size_t sy_zdiv(size_t x, size_t y, enum sy_error *err)
+size_t sn_zdiv(size_t x, size_t y, enum sn_error *err)
 {
 	if (y == 0) {
-		sy_eset(err, SY_ERROR_UNDEFINED);
+		sn_eset(err, SN_ERROR_UNDEFINED);
 
 		if (x == 0)
 			return 0;
@@ -487,17 +487,17 @@ size_t sy_zdiv(size_t x, size_t y, enum sy_error *err)
 	return x / y;
 }
 
-size_t sy_zmod(size_t x, size_t y, enum sy_error *err)
+size_t sn_zmod(size_t x, size_t y, enum sn_error *err)
 {
 	if (y == 0) {
-		sy_eset(err, SY_ERROR_UNDEFINED);
+		sn_eset(err, SN_ERROR_UNDEFINED);
 		return 0;
 	}
 
 	return x % y;
 }
 
-size_t sy_zgcd(size_t x, size_t y)
+size_t sn_zgcd(size_t x, size_t y)
 {
 	for (;;) {
 		if (x == 0)
@@ -512,12 +512,12 @@ size_t sy_zgcd(size_t x, size_t y)
 	}
 }
 
-size_t sy_zlcm(size_t x, size_t y, enum sy_error *err)
+size_t sn_zlcm(size_t x, size_t y, enum sn_error *err)
 {
 	size_t gcd, result;
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 
-	gcd = sy_zgcd(x, y);
+	gcd = sn_zgcd(x, y);
 
 	if (gcd == 0)
 		return 0;
@@ -525,26 +525,26 @@ size_t sy_zlcm(size_t x, size_t y, enum sy_error *err)
 	x /= gcd;
 	y /= gcd;
 
-	tmperr = SY_ERROR_NONE;
-	result = sy_zmul(x, y, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	result = sn_zmul(x, y, &tmperr);
 
-	if (tmperr == SY_ERROR_OVERFLOW) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+	if (tmperr == SN_ERROR_OVERFLOW) {
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return ~(size_t)0;
 	}
 
-	tmperr = SY_ERROR_NONE;
-	result = sy_zmul(result, gcd, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	result = sn_zmul(result, gcd, &tmperr);
 
-	if (tmperr == SY_ERROR_OVERFLOW) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+	if (tmperr == SN_ERROR_OVERFLOW) {
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return ~(size_t)0;
 	}
 
 	return result;
 }
 
-size_t sy_zmax(size_t x, size_t y)
+size_t sn_zmax(size_t x, size_t y)
 {
 	if (y > x)
 		return y;
@@ -552,7 +552,7 @@ size_t sy_zmax(size_t x, size_t y)
 		return x;
 }
 
-size_t sy_zmin(size_t x, size_t y)
+size_t sn_zmin(size_t x, size_t y)
 {
 	if (y < x)
 		return y;
@@ -560,17 +560,17 @@ size_t sy_zmin(size_t x, size_t y)
 		return x;
 }
 
-size_t sy_zadd_sticky(size_t x, size_t y)
+size_t sk_zadd(size_t x, size_t y)
 {
-	return sy_zadd(x, y, NULL);
+	return sn_zadd(x, y, NULL);
 }
 
-size_t sy_zmul_sticky(size_t x, size_t y)
+size_t sk_zmul(size_t x, size_t y)
 {
-	return sy_zmul(x, y, NULL);
+	return sn_zmul(x, y, NULL);
 }
 
-size_t sy_zdiv_sticky(size_t x, size_t y, size_t bias)
+size_t sk_zdiv(size_t x, size_t y, size_t bias)
 {
 	if (y == 0) {
 		if (x == 0)
@@ -589,71 +589,71 @@ size_t sy_zdiv_sticky(size_t x, size_t y, size_t bias)
 	return x / y;
 }
 
-size_t sy_zpow(size_t x, size_t y, enum sy_error *err)
+size_t sn_zpow(size_t x, size_t y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	size_t result, tmpbase, tmpexp;
 
-	tmperr  = SY_ERROR_NONE;
+	tmperr  = SN_ERROR_NONE;
 	result  = 1;
 	tmpbase = x;
 	tmpexp  = y;
 
 	while (1) {
 		if (tmpexp % 2 != 0)
-			result = sy_zmul(result, tmpbase, &tmperr);
+			result = sn_zmul(result, tmpbase, &tmperr);
 
 		tmpexp >>= 1;
 
 		if (tmpexp == 0)
 			break;
 
-		tmpbase = sy_zmul(tmpbase, tmpbase, &tmperr);
+		tmpbase = sn_zmul(tmpbase, tmpbase, &tmperr);
 	}
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, SY_ERROR_OVERFLOW);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, SN_ERROR_OVERFLOW);
 
 	return result;
 }
 
-unsigned long sy_uladd(unsigned long x, unsigned long y, enum sy_error *err)
+unsigned long sn_uladd(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (ULONG_MAX - x < y) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return ULONG_MAX;
 	}
 
 	return x + y;
 }
 
-unsigned long sy_ulsub(unsigned long x, unsigned long y, enum sy_error *err)
+unsigned long sn_ulsub(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (y > x) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
+		sn_eset(err, SN_ERROR_UNDERFLOW);
 		return 0;
 	}
 
 	return x - y;
 }
 
-unsigned long sy_ulmul(unsigned long x, unsigned long y, enum sy_error *err)
+unsigned long sn_ulmul(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (x == 0)
 		return 0;
 
 	if (ULONG_MAX / x < y) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return ULONG_MAX;
 	}
 
 	return x * y;
 }
 
-unsigned long sy_uldiv(unsigned long x, unsigned long y, enum sy_error *err)
+unsigned long sn_uldiv(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (y == 0) {
-		sy_eset(err, SY_ERROR_UNDEFINED);
+		sn_eset(err, SN_ERROR_UNDEFINED);
 
 		if (x == 0)
 			return 0;
@@ -664,17 +664,17 @@ unsigned long sy_uldiv(unsigned long x, unsigned long y, enum sy_error *err)
 	return x / y;
 }
 
-unsigned long sy_ulmod(unsigned long x, unsigned long y, enum sy_error *err)
+unsigned long sn_ulmod(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (y == 0) {
-		sy_eset(err, SY_ERROR_UNDEFINED);
+		sn_eset(err, SN_ERROR_UNDEFINED);
 		return 0;
 	}
 
 	return x % y;
 }
 
-unsigned long sy_ulgcd(unsigned long x, unsigned long y)
+unsigned long sn_ulgcd(unsigned long x, unsigned long y)
 {
 	for (;;) {
 		if (x == 0)
@@ -689,12 +689,12 @@ unsigned long sy_ulgcd(unsigned long x, unsigned long y)
 	}
 }
 
-unsigned long sy_ullcm(unsigned long x, unsigned long y, enum sy_error *err)
+unsigned long sn_ullcm(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	unsigned long gcd, result;
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 
-	gcd = sy_ulgcd(x, y);
+	gcd = sn_ulgcd(x, y);
 
 	if (gcd == 0)
 		return 0;
@@ -702,26 +702,26 @@ unsigned long sy_ullcm(unsigned long x, unsigned long y, enum sy_error *err)
 	x /= gcd;
 	y /= gcd;
 
-	tmperr = SY_ERROR_NONE;
-	result = sy_ulmul(x, y, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	result = sn_ulmul(x, y, &tmperr);
 
-	if (tmperr == SY_ERROR_OVERFLOW) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+	if (tmperr == SN_ERROR_OVERFLOW) {
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return ULONG_MAX;
 	}
 
-	tmperr = SY_ERROR_NONE;
-	result = sy_ulmul(result, gcd, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	result = sn_ulmul(result, gcd, &tmperr);
 
-	if (tmperr == SY_ERROR_OVERFLOW) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+	if (tmperr == SN_ERROR_OVERFLOW) {
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return ULONG_MAX;
 	}
 
 	return result;
 }
 
-unsigned long sy_ulmax(unsigned long x, unsigned long y)
+unsigned long sn_ulmax(unsigned long x, unsigned long y)
 {
 	if (y > x)
 		return y;
@@ -729,7 +729,7 @@ unsigned long sy_ulmax(unsigned long x, unsigned long y)
 		return x;
 }
 
-unsigned long sy_ulmin(unsigned long x, unsigned long y)
+unsigned long sn_ulmin(unsigned long x, unsigned long y)
 {
 	if (y < x)
 		return y;
@@ -737,18 +737,17 @@ unsigned long sy_ulmin(unsigned long x, unsigned long y)
 		return x;
 }
 
-unsigned long sy_uladd_sticky(unsigned long x, unsigned long y)
+unsigned long sk_uladd(unsigned long x, unsigned long y)
 {
-	return sy_uladd(x, y, NULL);
+	return sn_uladd(x, y, NULL);
 }
 
-unsigned long sy_ulmul_sticky(unsigned long x, unsigned long y)
+unsigned long sk_ulmul(unsigned long x, unsigned long y)
 {
-	return sy_ulmul(x, y, NULL);
+	return sn_ulmul(x, y, NULL);
 }
 
-unsigned long sy_uldiv_sticky(unsigned long x, unsigned long y,
-                              unsigned long bias)
+unsigned long sk_uldiv(unsigned long x, unsigned long y, unsigned long bias)
 {
 	if (y == 0) {
 		if (x == 0)
@@ -767,162 +766,162 @@ unsigned long sy_uldiv_sticky(unsigned long x, unsigned long y,
 	return x / y;
 }
 
-unsigned long sy_ulpow(unsigned long x, unsigned long y, enum sy_error *err)
+unsigned long sn_ulpow(unsigned long x, unsigned long y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	unsigned long result, tmpbase, tmpexp;
 
-	tmperr  = SY_ERROR_NONE;
+	tmperr  = SN_ERROR_NONE;
 	result  = 1;
 	tmpbase = x;
 	tmpexp  = y;
 
 	while (1) {
 		if (tmpexp % 2 != 0)
-			result = sy_ulmul(result, tmpbase, &tmperr);
+			result = sn_ulmul(result, tmpbase, &tmperr);
 
 		tmpexp >>= 1;
 
 		if (tmpexp == 0)
 			break;
 
-		tmpbase = sy_ulmul(tmpbase, tmpbase, &tmperr);
+		tmpbase = sn_ulmul(tmpbase, tmpbase, &tmperr);
 	}
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, SY_ERROR_OVERFLOW);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, SN_ERROR_OVERFLOW);
 
 	return result;
 }
 
-unsigned sy_uadd(unsigned x, unsigned y, enum sy_error *err)
+unsigned sn_uadd(unsigned x, unsigned y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	unsigned long tmpval;
 	unsigned result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = sy_uladd(x, y, &tmperr);
-	result = sy_ultou(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = sn_uladd(x, y, &tmperr);
+	result = sn_ultou(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-unsigned sy_usub(unsigned x, unsigned y, enum sy_error *err)
+unsigned sn_usub(unsigned x, unsigned y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	unsigned long tmpval;
 	unsigned result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = sy_ulsub(x, y, &tmperr);
-	result = sy_ultou(tmpval, NULL);
+	tmperr = SN_ERROR_NONE;
+	tmpval = sn_ulsub(x, y, &tmperr);
+	result = sn_ultou(tmpval, NULL);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-unsigned sy_umul(unsigned x, unsigned y, enum sy_error *err)
+unsigned sn_umul(unsigned x, unsigned y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	unsigned long tmpval;
 	unsigned result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = sy_ulmul(x, y, &tmperr);
-	result = sy_ultou(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = sn_ulmul(x, y, &tmperr);
+	result = sn_ultou(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-unsigned sy_udiv(unsigned x, unsigned y, enum sy_error *err)
+unsigned sn_udiv(unsigned x, unsigned y, enum sn_error *err)
 {
-	enum sy_error tmperr1, tmperr2;
+	enum sn_error tmperr1, tmperr2;
 	unsigned long tmpval;
 	unsigned result;
 
-	tmperr1 = SY_ERROR_NONE;
-	tmpval  = sy_uldiv(x, y, &tmperr1);
-	tmperr2 = SY_ERROR_NONE;
-	result  = sy_ultou(tmpval, &tmperr2);
+	tmperr1 = SN_ERROR_NONE;
+	tmpval  = sn_uldiv(x, y, &tmperr1);
+	tmperr2 = SN_ERROR_NONE;
+	result  = sn_ultou(tmpval, &tmperr2);
 
-	if (tmperr1 != SY_ERROR_NONE)
-		sy_eset(err, tmperr1);
-	else if (tmperr2 != SY_ERROR_NONE)
-		sy_eset(err, tmperr2);
+	if (tmperr1 != SN_ERROR_NONE)
+		sn_eset(err, tmperr1);
+	else if (tmperr2 != SN_ERROR_NONE)
+		sn_eset(err, tmperr2);
 
 	return result;
 }
 
-unsigned sy_umod(unsigned x, unsigned y, enum sy_error *err)
+unsigned sn_umod(unsigned x, unsigned y, enum sn_error *err)
 {
-	enum sy_error tmperr1, tmperr2;
+	enum sn_error tmperr1, tmperr2;
 	unsigned long tmpval;
 	unsigned result;
 
-	tmperr1 = SY_ERROR_NONE;
-	tmpval  = sy_ulmod(x, y, &tmperr1);
-	tmperr2 = SY_ERROR_NONE;
-	result  = sy_ultou(tmpval, &tmperr2);
+	tmperr1 = SN_ERROR_NONE;
+	tmpval  = sn_ulmod(x, y, &tmperr1);
+	tmperr2 = SN_ERROR_NONE;
+	result  = sn_ultou(tmpval, &tmperr2);
 
-	if (tmperr1 != SY_ERROR_NONE)
-		sy_eset(err, tmperr1);
-	else if (tmperr2 != SY_ERROR_NONE)
-		sy_eset(err, tmperr2);
+	if (tmperr1 != SN_ERROR_NONE)
+		sn_eset(err, tmperr1);
+	else if (tmperr2 != SN_ERROR_NONE)
+		sn_eset(err, tmperr2);
 
 	return result;
 }
 
-unsigned sy_ugcd(unsigned x, unsigned y)
+unsigned sn_ugcd(unsigned x, unsigned y)
 {
-	return sy_ultou(sy_ulgcd(x, y), NULL);
+	return sn_ultou(sn_ulgcd(x, y), NULL);
 }
 
-unsigned sy_ulcm(unsigned x, unsigned y, enum sy_error *err)
+unsigned sn_ulcm(unsigned x, unsigned y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	unsigned long tmpval;
 	unsigned result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = sy_ullcm(x, y, &tmperr);
-	result = sy_ultou(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = sn_ullcm(x, y, &tmperr);
+	result = sn_ultou(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-unsigned sy_umax(unsigned x, unsigned y)
+unsigned sn_umax(unsigned x, unsigned y)
 {
-	return sy_ultou(sy_ulmax(x, y), NULL);
+	return sn_ultou(sn_ulmax(x, y), NULL);
 }
 
-unsigned sy_umin(unsigned x, unsigned y)
+unsigned sn_umin(unsigned x, unsigned y)
 {
-	return sy_ultou(sy_ulmin(x, y), NULL);
+	return sn_ultou(sn_ulmin(x, y), NULL);
 }
 
-unsigned sy_uadd_sticky(unsigned x, unsigned y)
+unsigned sk_uadd(unsigned x, unsigned y)
 {
-	return sy_uadd(x, y, NULL);
+	return sn_uadd(x, y, NULL);
 }
 
-unsigned sy_umul_sticky(unsigned x, unsigned y)
+unsigned sk_umul(unsigned x, unsigned y)
 {
-	return sy_umul(x, y, NULL);
+	return sn_umul(x, y, NULL);
 }
 
-unsigned sy_udiv_sticky(unsigned x, unsigned y, unsigned bias)
+unsigned sk_udiv(unsigned x, unsigned y, unsigned bias)
 {
 	if (y == 0) {
 		if (x == 0)
@@ -941,24 +940,24 @@ unsigned sy_udiv_sticky(unsigned x, unsigned y, unsigned bias)
 	return x / y;
 }
 
-unsigned sy_upow(unsigned x, unsigned y, enum sy_error *err)
+unsigned sn_upow(unsigned x, unsigned y, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	unsigned long tmpval;
 	unsigned result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = sy_ulpow(x, y, &tmperr);
-	result = sy_ultou(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = sn_ulpow(x, y, &tmperr);
+	result = sn_ultou(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-size_t sy_token(int *last, const char src[], size_t srcsz,
-                int classify(char ch, int last), enum sy_error *err)
+size_t sn_token(int *last, const char src[], size_t srcsz,
+                int classify(char ch, int last), enum sn_error *err)
 {
 	int tmplast;
 	size_t idx;
@@ -967,7 +966,7 @@ size_t sy_token(int *last, const char src[], size_t srcsz,
 		return 0;
 
 	if (src == NULL || last == NULL || classify == NULL) {
-		sy_eset(err, SY_ERROR_NULL);
+		sn_eset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
@@ -987,19 +986,19 @@ size_t sy_token(int *last, const char src[], size_t srcsz,
 	return idx;
 }
 
-long sy_atol(const char src[], size_t srcsz, enum sy_error *err)
+long sn_atol(const char src[], size_t srcsz, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	long result, sign;
 	size_t idx;
 
 	if (srcsz == 0) {
-		sy_eset(err, SY_ERROR_PARSE);
+		sn_eset(err, SN_ERROR_PARSE);
 		return 0;
 	}
 
 	if (src == NULL) {
-		sy_eset(err, SY_ERROR_NULL);
+		sn_eset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
@@ -1012,51 +1011,51 @@ long sy_atol(const char src[], size_t srcsz, enum sy_error *err)
 	if (src[idx] == '+' || src[idx] == '-')
 		++idx;
 
-	tmperr = SY_ERROR_NONE;
+	tmperr = SN_ERROR_NONE;
 	result = 0;
 
 	for (; idx < srcsz; ++idx) {
 		long diff;
 
 		if (src[idx] < '0' || '9' < src[idx]) {
-			sy_eset(err, SY_ERROR_PARSE);
+			sn_eset(err, SN_ERROR_PARSE);
 			return 0;
 		}
 
 		diff   = sign * (src[idx] - '0');
-		result = sylmul(result, 10, &tmperr);
-		result = syladd(result, diff, &tmperr);
+		result = snlmul(result, 10, &tmperr);
+		result = snladd(result, diff, &tmperr);
 	}
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-int sy_atoi(const char src[], size_t srcsz, enum sy_error *err)
+int sn_atoi(const char src[], size_t srcsz, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	long tmpval;
 	int result;
 
-	tmperr = SY_ERROR_NONE;
-	tmpval = sy_atol(src, srcsz, &tmperr);
-	result = sy_ltoi(tmpval, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	tmpval = sn_atol(src, srcsz, &tmperr);
+	result = sn_ltoi(tmpval, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE)
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE)
+		sn_eset(err, tmperr);
 
 	return result;
 }
 
-char sy_uctoc(unsigned char x, enum sy_error *err)
+char sn_uctoc(unsigned char x, enum sn_error *err)
 {
 	if (x <= (unsigned char)CHAR_MAX)
 		return (char)x;
 
 	if (x < (unsigned char)CHAR_MIN) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
+		sn_eset(err, SN_ERROR_UNDERFLOW);
 		return CHAR_MIN;
 	}
 
@@ -1164,20 +1163,20 @@ static size_t quotesz(const char src[], size_t srcsz)
 	while (srcidx < srcsz) {
 		size_t diff;
 
-		diff = sy_token(&lastcls, src + srcidx, srcsz - srcidx,
+		diff = sn_token(&lastcls, src + srcidx, srcsz - srcidx,
 		                clsquote, NULL);
 		srcidx += diff;
 
 		switch (lastcls) {
 		case QUOTE_SPECIAL:
-			diff = sy_zmul_sticky(diff, 2);
+			diff = sk_zmul(diff, 2);
 			break;
 		case QUOTE_NUMERIC:
-			diff = sy_zmul_sticky(diff, 2 + hexdigits());
+			diff = sk_zmul(diff, 2 + hexdigits());
 			break;
 		}
 
-		destidx = sy_zadd_sticky(destidx, diff);
+		destidx = sk_zadd(destidx, diff);
 	}
 
 	return destidx;
@@ -1194,7 +1193,7 @@ static void quote(char dest[], const char src[], size_t srcsz)
 	while (srcidx < srcsz) {
 		size_t diff, srcmax;
 
-		diff = sy_token(&lastcls, src + srcidx, srcsz - srcidx,
+		diff = sn_token(&lastcls, src + srcidx, srcsz - srcidx,
 		                clsquote, NULL);
 
 		switch (lastcls) {
@@ -1228,44 +1227,44 @@ static void quote(char dest[], const char src[], size_t srcsz)
 	}
 }
 
-size_t sy_quote(char dest[], size_t destsz, const char src[],
-                size_t srcsz, enum sy_error *err)
+size_t sn_quote(char dest[], size_t destsz, const char src[],
+                size_t srcsz, enum sn_error *err)
 {
 	size_t result;
 
 	if (destsz == 0) {
-		sy_eset(err, SY_ERROR_OVERRUN);
+		sn_eset(err, SN_ERROR_OVERRUN);
 		return 0;
 	}
 
 	if (dest == NULL) {
-		sy_eset(err, SY_ERROR_NULL);
+		sn_eset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
 	result = 2;
 
 	if (srcsz > 0) {
-		enum sy_error tmperr;
+		enum sn_error tmperr;
 		size_t tmpsz;
 
 		if (src == NULL) {
-			sy_eset(err, SY_ERROR_NULL);
+			sn_eset(err, SN_ERROR_NULL);
 			return 0;
 		}
 
 		tmpsz  = quotesz(src, srcsz);
-		tmperr = SY_ERROR_NONE;
-		result = sy_zadd(result, tmpsz, &tmperr);
+		tmperr = SN_ERROR_NONE;
+		result = sn_zadd(result, tmpsz, &tmperr);
 
-		if (tmperr == SY_ERROR_OVERFLOW) {
-			sy_eset(err, SY_ERROR_OVERRUN);
+		if (tmperr == SN_ERROR_OVERFLOW) {
+			sn_eset(err, SN_ERROR_OVERRUN);
 			return 0;
 		}
 	}
 
 	if (result > destsz) {
-		sy_eset(err, SY_ERROR_OVERRUN);
+		sn_eset(err, SN_ERROR_OVERRUN);
 		return 0;
 	}
 
@@ -1366,7 +1365,7 @@ static unsigned hextoval(char ch)
 }
 
 static size_t unquotesz(size_t *pos, const char src[],
-                        size_t srcsz, enum sy_error *err)
+                        size_t srcsz, enum sn_error *err)
 {
 	size_t srcidx, result;
 	int lastcls;
@@ -1374,7 +1373,7 @@ static size_t unquotesz(size_t *pos, const char src[],
 	srcidx = *pos;
 
 	if (src[srcidx++] != '"') {
-		sy_eset(err, SY_ERROR_PARSE);
+		sn_eset(err, SN_ERROR_PARSE);
 		return 0;
 	}
 
@@ -1382,12 +1381,12 @@ static size_t unquotesz(size_t *pos, const char src[],
 	result  = 0;
 
 	while (srcidx < srcsz) {
-		enum sy_error tmperr;
+		enum sn_error tmperr;
 		size_t diff, idx;
 		unsigned val;
 		unsigned char ucval;
 
-		diff = sy_token(&lastcls, src + srcidx, srcsz - srcidx,
+		diff = sn_token(&lastcls, src + srcidx, srcsz - srcidx,
 		                clsunquote, NULL);
 
 		if (lastcls == UNQUOTE_OCTCHAR && diff > 3)
@@ -1407,66 +1406,66 @@ static size_t unquotesz(size_t *pos, const char src[],
 			diff = 0;
 			break;
 		case UNQUOTE_OCTCHAR:
-			tmperr = SY_ERROR_NONE;
+			tmperr = SN_ERROR_NONE;
 			val = 0;
 
 			for (idx = srcidx - diff; idx < srcidx; ++idx) {
-				val = sy_umul(val, 8, &tmperr);
-				val = sy_uadd(val, hextoval(src[idx]),
+				val = sn_umul(val, 8, &tmperr);
+				val = sn_uadd(val, hextoval(src[idx]),
 				              &tmperr);
 			}
 
-			ucval = sy_utouc(val, &tmperr);
+			ucval = sn_utouc(val, &tmperr);
 
-			if (tmperr == SY_ERROR_OVERFLOW) {
-				sy_eset(err, SY_ERROR_OVERFLOW);
+			if (tmperr == SN_ERROR_OVERFLOW) {
+				sn_eset(err, SN_ERROR_OVERFLOW);
 				return 0;
 			}
 
-			(void)sy_uctoc(ucval, &tmperr);
+			(void)sn_uctoc(ucval, &tmperr);
 
-			if (tmperr == SY_ERROR_UNDERFLOW) {
-				sy_eset(err, SY_ERROR_UNDERFLOW);
+			if (tmperr == SN_ERROR_UNDERFLOW) {
+				sn_eset(err, SN_ERROR_UNDERFLOW);
 				return 0;
 			}
 
 			diff = 1;
 			break;
 		case UNQUOTE_HEXCHAR:
-			tmperr = SY_ERROR_NONE;
+			tmperr = SN_ERROR_NONE;
 			val = 0;
 
 			for (idx = srcidx - diff; idx < srcidx; ++idx) {
-				val = sy_umul(val, 16, &tmperr);
-				val = sy_uadd(val, hextoval(src[idx]),
+				val = sn_umul(val, 16, &tmperr);
+				val = sn_uadd(val, hextoval(src[idx]),
 				              &tmperr);
 			}
 
-			ucval = sy_utouc(val, &tmperr);
+			ucval = sn_utouc(val, &tmperr);
 
-			if (tmperr == SY_ERROR_OVERFLOW) {
-				sy_eset(err, SY_ERROR_OVERFLOW);
+			if (tmperr == SN_ERROR_OVERFLOW) {
+				sn_eset(err, SN_ERROR_OVERFLOW);
 				return 0;
 			}
 
-			(void)sy_uctoc(ucval, &tmperr);
+			(void)sn_uctoc(ucval, &tmperr);
 
-			if (tmperr == SY_ERROR_UNDERFLOW) {
-				sy_eset(err, SY_ERROR_UNDERFLOW);
+			if (tmperr == SN_ERROR_UNDERFLOW) {
+				sn_eset(err, SN_ERROR_UNDERFLOW);
 				return 0;
 			}
 
 			diff = 1;
 			break;
 		case UNQUOTE_INVALID:
-			sy_eset(err, SY_ERROR_PARSE);
+			sn_eset(err, SN_ERROR_PARSE);
 			return 0;
 		}
 
 		result += diff;
 	}
 
-	sy_eset(err, SY_ERROR_PARSE);
+	sn_eset(err, SN_ERROR_PARSE);
 	return 0;
 }
 
@@ -1505,7 +1504,7 @@ static void unquote(char dest[], const char src[])
 		size_t diff, idx;
 		unsigned val;
 
-		diff = sy_token(&lastcls, src + srcidx, ~(size_t)0,
+		diff = sn_token(&lastcls, src + srcidx, ~(size_t)0,
 		                clsunquote, NULL);
 
 		if (lastcls == UNQUOTE_OCTCHAR && diff > 3)
@@ -1535,7 +1534,7 @@ static void unquote(char dest[], const char src[])
 			}
 
 			srcidx += diff;
-			dest[destidx++] = sy_uctoc(sy_utouc(val, NULL), NULL);
+			dest[destidx++] = sn_uctoc(sn_utouc(val, NULL), NULL);
 			break;
 		case UNQUOTE_HEXCHAR:
 			val = 0;
@@ -1546,7 +1545,7 @@ static void unquote(char dest[], const char src[])
 			}
 
 			srcidx += diff;
-			dest[destidx++] = sy_uctoc(sy_utouc(val, NULL), NULL);
+			dest[destidx++] = sn_uctoc(sn_utouc(val, NULL), NULL);
 			break;
 		case UNQUOTE_UNQUOTE:
 		case UNQUOTE_INVALID:
@@ -1556,34 +1555,34 @@ static void unquote(char dest[], const char src[])
 	}
 }
 
-size_t sy_unquote(char dest[], size_t destsz, size_t *pos,
-                  const char src[], size_t srcsz, enum sy_error *err)
+size_t sn_unquote(char dest[], size_t destsz, size_t *pos,
+                  const char src[], size_t srcsz, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	size_t srcidx1, srcidx2, result;
 
 	if (pos == NULL) {
-		sy_eset(err, SY_ERROR_NULL);
+		sn_eset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
 	srcidx2 = srcidx1 = *pos;
 
 	if (srcidx1 >= srcsz) {
-		sy_eset(err, SY_ERROR_PARSE);
+		sn_eset(err, SN_ERROR_PARSE);
 		return 0;
 	}
 
 	if (src == NULL) {
-		sy_eset(err, SY_ERROR_NULL);
+		sn_eset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
-	tmperr = SY_ERROR_NONE;
+	tmperr = SN_ERROR_NONE;
 	result = unquotesz(&srcidx1, src, srcsz, &tmperr);
 
-	if (tmperr != SY_ERROR_NONE) {
-		sy_eset(err, tmperr);
+	if (tmperr != SN_ERROR_NONE) {
+		sn_eset(err, tmperr);
 		return 0;
 	}
 
@@ -1593,12 +1592,12 @@ size_t sy_unquote(char dest[], size_t destsz, size_t *pos,
 	}
 
 	if (dest == NULL && destsz > 0) {
-		sy_eset(err, SY_ERROR_NULL);
+		sn_eset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
 	if (destsz < result) {
-		sy_eset(err, SY_ERROR_OVERRUN);
+		sn_eset(err, SN_ERROR_OVERRUN);
 		return 0;
 	}
 
@@ -1607,47 +1606,47 @@ size_t sy_unquote(char dest[], size_t destsz, size_t *pos,
 	return result;
 }
 
-int sy_ltoi(long x, enum sy_error *err)
+int sn_ltoi(long x, enum sn_error *err)
 {
 	if (x > INT_MAX) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return INT_MAX;
 	}
 
 	if (x < INT_MIN) {
-		sy_eset(err, SY_ERROR_UNDERFLOW);
+		sn_eset(err, SN_ERROR_UNDERFLOW);
 		return INT_MIN;
 	}
 
 	return (int)x;
 }
 
-unsigned sy_ultou(unsigned long x, enum sy_error *err)
+unsigned sn_ultou(unsigned long x, enum sn_error *err)
 {
 	if (x > UINT_MAX) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return UINT_MAX;
 	}
 
 	return (unsigned)x;
 }
 
-unsigned char sy_utouc(unsigned x, enum sy_error *err)
+unsigned char sn_utouc(unsigned x, enum sn_error *err)
 {
 	if (x > UCHAR_MAX) {
-		sy_eset(err, SY_ERROR_OVERFLOW);
+		sn_eset(err, SN_ERROR_OVERFLOW);
 		return UCHAR_MAX;
 	}
 
 	return (unsigned char)x;
 }
 
-void sy_rev(char buf[], size_t bufsz, enum sy_error *err)
+void sn_rev(char buf[], size_t bufsz, enum sn_error *err)
 {
 	size_t idx1;
 
 	if (buf == NULL && bufsz > 0) {
-		sy_eset(err, SY_ERROR_NULL);
+		sn_eset(err, SN_ERROR_NULL);
 		return;
 	}
 
@@ -1662,34 +1661,34 @@ void sy_rev(char buf[], size_t bufsz, enum sy_error *err)
 	}
 }
 
-size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
-                 size_t req, FILE *stream, enum sy_error *err)
+size_t sn_refill(char buf[], size_t bufsz, size_t *pos,
+                 size_t req, FILE *stream, enum sn_error *err)
 {
-	enum sy_error tmperr;
+	enum sn_error tmperr;
 	size_t oldpos, oldlen, needed, newlen;
 
 	if (pos == NULL) {
-		sy_eset(err, SY_ERROR_NULL);
+		sn_eset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
 	oldpos = *pos;
-	tmperr = SY_ERROR_NONE;
-	oldlen = sy_zsub(bufsz, oldpos, &tmperr);
+	tmperr = SN_ERROR_NONE;
+	oldlen = sn_zsub(bufsz, oldpos, &tmperr);
 
-	if (req <= oldlen && tmperr != SY_ERROR_UNDERFLOW)
+	if (req <= oldlen && tmperr != SN_ERROR_UNDERFLOW)
 		return oldlen;
 
-	oldpos = sy_zmin(oldpos, bufsz);
+	oldpos = sn_zmin(oldpos, bufsz);
 	needed = req - oldlen;
 
 	if ((oldpos > 0 || needed > 0) && (stream == NULL || buf == NULL)) {
-		sy_eset(err, SY_ERROR_NULL);
+		sn_eset(err, SN_ERROR_NULL);
 		return oldlen;
 	}
 
 	if (needed > oldpos) {
-		sy_eset(err, SY_ERROR_OVERRUN);
+		sn_eset(err, SN_ERROR_OVERRUN);
 		return oldlen;
 	}
 
@@ -1701,12 +1700,12 @@ size_t sy_refill(char buf[], size_t bufsz, size_t *pos,
 	newlen = fread(buf, sizeof(char), oldpos, stream);
 
 	if (newlen < oldpos && !feof(stream))
-		sy_eset(err, SY_ERROR_FILE);
+		sn_eset(err, SN_ERROR_FILE);
 
 	if (newlen > 0) {
-		sy_rev(buf, newlen, NULL);
-		sy_rev(buf + newlen, bufsz - newlen, NULL);
-		sy_rev(buf, bufsz, NULL);
+		sn_rev(buf, newlen, NULL);
+		sn_rev(buf + newlen, bufsz - newlen, NULL);
+		sn_rev(buf, bufsz, NULL);
 	}
 
 	*pos = oldpos - newlen;

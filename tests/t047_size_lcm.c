@@ -7,24 +7,24 @@ static const size_t ZMAX = ~(size_t)0;
 
 int main(void)
 {
-	enum sy_error err;
+	enum sn_error err;
 
-	assert(sy_zlcm(2, 0, NULL) == 0);
-	assert(sy_zlcm(0, 0, NULL) == 0);
+	assert(sn_zlcm(2, 0, NULL) == 0);
+	assert(sn_zlcm(0, 0, NULL) == 0);
 
-	assert(sy_zlcm(ZMAX, ZMAX - 1, NULL) == ZMAX);
+	assert(sn_zlcm(ZMAX, ZMAX - 1, NULL) == ZMAX);
 
-	err = SY_ERROR_NONE;
-	(void)sy_zlcm(2, 0, &err);
-	assert(err == SY_ERROR_NONE);
+	err = SN_ERROR_NONE;
+	(void)sn_zlcm(2, 0, &err);
+	assert(err == SN_ERROR_NONE);
 
-	err = SY_ERROR_NONE;
-	(void)sy_zlcm(0, 0, &err);
-	assert(err == SY_ERROR_NONE);
+	err = SN_ERROR_NONE;
+	(void)sn_zlcm(0, 0, &err);
+	assert(err == SN_ERROR_NONE);
 
-	err = SY_ERROR_NONE;
-	(void)sy_zlcm(ZMAX, ZMAX - 1u, &err);
-	assert(err == SY_ERROR_OVERFLOW);
+	err = SN_ERROR_NONE;
+	(void)sn_zlcm(ZMAX, ZMAX - 1u, &err);
+	assert(err == SN_ERROR_OVERFLOW);
 
 	return 0;
 }

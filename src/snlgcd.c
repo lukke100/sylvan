@@ -3,19 +3,19 @@
 #include <stdlib.h>
 #include "sylvan.h"
 
-long sylgcd(long x, long y, enum sy_error *err)
+long snlgcd(long x, long y, enum sn_error *err)
 {
 #if LONG_MAX + LONG_MIN < 0
 	long max1, min1;
 
-	max1 = sylmax(x, y);
-	min1 = sylmin(x, y);
+	max1 = snlmax(x, y);
+	min1 = snlmin(x, y);
 
 	while (min1 < -LONG_MAX) {
 		long max2, min2;
 
 		if (max1 == 0) {
-			sy_eset(err, SY_ERROR_OVERFLOW);
+			sn_eset(err, SN_ERROR_OVERFLOW);
 			return LONG_MAX;
 		}
 
@@ -24,8 +24,8 @@ long sylgcd(long x, long y, enum sy_error *err)
 		else
 			min1 -= max1;
 
-		max2 = sylmax(max1, min1);
-		min2 = sylmin(max1, min1);
+		max2 = snlmax(max1, min1);
+		min2 = snlmin(max1, min1);
 		max1 = max2;
 		min1 = min2;
 	}

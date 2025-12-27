@@ -6,14 +6,14 @@
 
 int main(void)
 {
-	assert(sy_mul_sticky(INT_MAX,  2) == INT_MAX);
-	assert(sy_mul_sticky(INT_MAX, -1) == INT_MIN);
-	assert(sy_mul_sticky(INT_MIN,  2) == INT_MIN);
-	assert(sy_mul_sticky(INT_MIN, -1) == INT_MAX);
+	assert(sk_mul(INT_MAX,  2) == INT_MAX);
+	assert(sk_mul(INT_MAX, -1) == INT_MIN);
+	assert(sk_mul(INT_MIN,  2) == INT_MIN);
+	assert(sk_mul(INT_MIN, -1) == INT_MAX);
 
-	assert(sy_mul_sticky(INT_MAX, INT_MAX) == INT_MAX);
-	assert(sy_mul_sticky(INT_MAX, INT_MIN) == INT_MIN);
-	assert(sy_mul_sticky(INT_MIN, INT_MIN) == INT_MAX);
+	assert(sk_mul(INT_MAX, INT_MAX) == INT_MAX);
+	assert(sk_mul(INT_MAX, INT_MIN) == INT_MIN);
+	assert(sk_mul(INT_MIN, INT_MIN) == INT_MAX);
 
 	return 0;
 }
