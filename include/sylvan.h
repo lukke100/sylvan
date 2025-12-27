@@ -27,16 +27,16 @@ long snllcm(long x, long y, enum sn_error *err);
 long snlmax(long x, long y);
 long snlmin(long x, long y);
 
-int sn_add(int x, int y, enum sn_error *err);
-int sn_sub(int x, int y, enum sn_error *err);
-int sn_mul(int x, int y, enum sn_error *err);
-int sn_div(int x, int y, enum sn_error *err);
-int sn_mod(int x, int y, enum sn_error *err);
+int snadd(int x, int y, enum sn_error *err);
+int snsub(int x, int y, enum sn_error *err);
+int snmul(int x, int y, enum sn_error *err);
+int sndiv(int x, int y, enum sn_error *err);
+int snmod(int x, int y, enum sn_error *err);
 
-int sn_gcd(int x, int y, enum sn_error *err);
-int sn_lcm(int x, int y, enum sn_error *err);
-int sn_max(int x, int y);
-int sn_min(int x, int y);
+int sngcd(int x, int y, enum sn_error *err);
+int snlcm(int x, int y, enum sn_error *err);
+int snmax(int x, int y);
+int snmin(int x, int y);
 
 long sk_ladd(long x, long y, long bias);
 long sk_lsub(long x, long y, long bias);

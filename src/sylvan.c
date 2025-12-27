@@ -13,134 +13,6 @@ void sn_eset(enum sn_error *err, enum sn_error val)
 	*err = val;
 }
 
-int sn_add(int x, int y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	long tmpval;
-	int result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snladd(x, y, &tmperr);
-	result = sn_ltoi(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-int sn_sub(int x, int y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	long tmpval;
-	int result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snlsub(x, y, &tmperr);
-	result = sn_ltoi(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-int sn_mul(int x, int y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	long tmpval;
-	int result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snlmul(x, y, &tmperr);
-	result = sn_ltoi(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-int sn_div(int x, int y, enum sn_error *err)
-{
-	enum sn_error tmperr1, tmperr2;
-	long tmpval;
-	int result;
-
-	tmperr1 = SN_ERROR_NONE;
-	tmpval  = snldiv(x, y, &tmperr1);
-	tmperr2 = SN_ERROR_NONE;
-	result  = sn_ltoi(tmpval, &tmperr2);
-
-	if (tmperr1 != SN_ERROR_NONE)
-		sn_eset(err, tmperr1);
-	else if (tmperr2 != SN_ERROR_NONE)
-		sn_eset(err, tmperr2);
-
-	return result;
-}
-
-int sn_mod(int x, int y, enum sn_error *err)
-{
-	enum sn_error tmperr1, tmperr2;
-	long tmpval;
-	int result;
-
-	tmperr1 = SN_ERROR_NONE;
-	tmpval  = snlmod(x, y, &tmperr1);
-	tmperr2 = SN_ERROR_NONE;
-	result  = sn_ltoi(tmpval, &tmperr2);
-
-	if (tmperr1 != SN_ERROR_NONE)
-		sn_eset(err, tmperr1);
-	else if (tmperr2 != SN_ERROR_NONE)
-		sn_eset(err, tmperr2);
-
-	return result;
-}
-
-int sn_gcd(int x, int y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	long tmpval;
-	int result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snlgcd(x, y, &tmperr);
-	result = sn_ltoi(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-int sn_lcm(int x, int y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	long tmpval;
-	int result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snllcm(x, y, &tmperr);
-	result = sn_ltoi(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-int sn_max(int x, int y)
-{
-	return sn_ltoi(snlmax(x, y), NULL);
-}
-
-int sn_min(int x, int y)
-{
-	return sn_ltoi(snlmin(x, y), NULL);
-}
-
 long sk_ladd(long x, long y, long bias)
 {
 	long max, min;
@@ -335,8 +207,8 @@ int sk_add(int x, int y, int bias)
 {
 	int max, min;
 
-	max = sn_max(x, y);
-	min = sn_min(x, y);
+	max = snmax(x, y);
+	min = snmin(x, y);
 
 	if (max == INT_MAX && min == INT_MIN)
 		return bias;
@@ -345,7 +217,7 @@ int sk_add(int x, int y, int bias)
 	else if (min == INT_MIN)
 		return INT_MIN;
 
-	return sn_add(max, min, NULL);
+	return snadd(max, min, NULL);
 }
 
 int sk_sub(int x, int y, int bias)
@@ -359,15 +231,15 @@ int sk_sub(int x, int y, int bias)
 	else if (x == INT_MIN || y == INT_MAX)
 		return INT_MIN;
 
-	return sn_sub(x, y, NULL);
+	return snsub(x, y, NULL);
 }
 
 int sk_mul(int x, int y)
 {
 	int max, min;
 
-	max = sn_max(x, y);
-	min = sn_min(x, y);
+	max = snmax(x, y);
+	min = snmin(x, y);
 
 #if INT_MAX + INT_MIN > 0
 	if (min == INT_MIN && max < 0)
@@ -377,7 +249,7 @@ int sk_mul(int x, int y)
 		return INT_MIN;
 #endif
 
-	return sn_mul(max, min, NULL);
+	return snmul(max, min, NULL);
 }
 
 int sk_div(int x, int y, int bias)
@@ -421,7 +293,7 @@ int sk_div(int x, int y, int bias)
 		return 0;
 #endif
 
-	return sn_div(x, y, NULL);
+	return sndiv(x, y, NULL);
 }
 
 int sn_pow(int x, int y, enum sn_error *err)

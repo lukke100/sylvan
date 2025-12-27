@@ -10,4 +10,13 @@ libsylvan_la_SOURCES = \
 	snllcm.c \
 	snlmax.c \
 	snlmin.c \
+	snadd.c \
+	snsub.c \
+	snmul.c \
+	sndiv.c \
+	snmod.c \
+	sngcd.c \
+	snlcm.c \
+	snmax.c \
+	snmin.c \
 	sylvan.c
