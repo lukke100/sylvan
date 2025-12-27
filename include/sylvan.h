@@ -103,8 +103,8 @@ unsigned skudiv(unsigned x, unsigned y, unsigned bias);
 
 unsigned snupow(unsigned x, unsigned y, enum sn_error *err);
 
-size_t sn_token(int *last, const char src[], size_t srcsz,
-                int classify(char ch, int last), enum sn_error *err);
+size_t sntok(int *last, const char src[], size_t srcsz,
+             int classify(char ch, int last), enum sn_error *err);
 
 long sn_atol(const char src[], size_t srcsz, enum sn_error *err);
 int  sn_atoi(const char src[], size_t srcsz, enum sn_error *err);

@@ -68,4 +68,5 @@ libsylvan_la_SOURCES = \
 	skumul.c \
 	skudiv.c \
 	snupow.c \
+	sntok.c \
 	sylvan.c

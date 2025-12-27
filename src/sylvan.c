@@ -13,36 +13,6 @@ void sn_eset(enum sn_error *err, enum sn_error val)
 	*err = val;
 }
 
-size_t sn_token(int *last, const char src[], size_t srcsz,
-                int classify(char ch, int last), enum sn_error *err)
-{
-	int tmplast;
-	size_t idx;
-
-	if (srcsz == 0)
-		return 0;
-
-	if (src == NULL || last == NULL || classify == NULL) {
-		sn_eset(err, SN_ERROR_NULL);
-		return 0;
-	}
-
-	tmplast = *last;
-
-	for (idx = 0; idx < srcsz; ++idx) {
-		int cls;
-
-		cls = classify(src[idx], tmplast);
-
-		if (idx == 0)
-			*last = tmplast = cls;
-		else if (cls != tmplast)
-			break;
-	}
-
-	return idx;
-}
-
 long sn_atol(const char src[], size_t srcsz, enum sn_error *err)
 {
 	enum sn_error tmperr;
@@ -220,8 +190,8 @@ static size_t quotesz(const char src[], size_t srcsz)
 	while (srcidx < srcsz) {
 		size_t diff;
 
-		diff = sn_token(&lastcls, src + srcidx, srcsz - srcidx,
-		                clsquote, NULL);
+		diff = sntok(&lastcls, src + srcidx, srcsz - srcidx,
+		             clsquote, NULL);
 		srcidx += diff;
 
 		switch (lastcls) {
@@ -250,8 +220,8 @@ static void quote(char dest[], const char src[], size_t srcsz)
 	while (srcidx < srcsz) {
 		size_t diff, srcmax;
 
-		diff = sn_token(&lastcls, src + srcidx, srcsz - srcidx,
-		                clsquote, NULL);
+		diff = sntok(&lastcls, src + srcidx, srcsz - srcidx,
+		             clsquote, NULL);
 
 		switch (lastcls) {
 		case QUOTE_LITERAL:
@@ -443,8 +413,8 @@ static size_t unquotesz(size_t *pos, const char src[],
 		unsigned val;
 		unsigned char ucval;
 
-		diff = sn_token(&lastcls, src + srcidx, srcsz - srcidx,
-		                clsunquote, NULL);
+		diff = sntok(&lastcls, src + srcidx, srcsz - srcidx,
+		             clsunquote, NULL);
 
 		if (lastcls == UNQUOTE_OCTCHAR && diff > 3)
 			diff = 3;
@@ -559,8 +529,8 @@ static void unquote(char dest[], const char src[])
 		size_t diff, idx;
 		unsigned val;
 
-		diff = sn_token(&lastcls, src + srcidx, ~(size_t)0,
-		                clsunquote, NULL);
+		diff = sntok(&lastcls, src + srcidx, ~(size_t)0,
+		             clsunquote, NULL);
 
 		if (lastcls == UNQUOTE_OCTCHAR && diff > 3)
 			diff = 3;
