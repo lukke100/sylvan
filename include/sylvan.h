@@ -52,22 +52,22 @@ int skdiv(int x, int y, int bias);
 
 int snpow(int x, int y, enum sn_error *err);
 
-size_t sn_zadd(size_t x, size_t y, enum sn_error *err);
-size_t sn_zsub(size_t x, size_t y, enum sn_error *err);
-size_t sn_zmul(size_t x, size_t y, enum sn_error *err);
-size_t sn_zdiv(size_t x, size_t y, enum sn_error *err);
-size_t sn_zmod(size_t x, size_t y, enum sn_error *err);
+size_t snzadd(size_t x, size_t y, enum sn_error *err);
+size_t snzsub(size_t x, size_t y, enum sn_error *err);
+size_t snzmul(size_t x, size_t y, enum sn_error *err);
+size_t snzdiv(size_t x, size_t y, enum sn_error *err);
+size_t snzmod(size_t x, size_t y, enum sn_error *err);
 
-size_t sn_zgcd(size_t x, size_t y);
-size_t sn_zlcm(size_t x, size_t y, enum sn_error *err);
-size_t sn_zmax(size_t x, size_t y);
-size_t sn_zmin(size_t x, size_t y);
+size_t snzgcd(size_t x, size_t y);
+size_t snzlcm(size_t x, size_t y, enum sn_error *err);
+size_t snzmax(size_t x, size_t y);
+size_t snzmin(size_t x, size_t y);
 
-size_t sk_zadd(size_t x, size_t y);
-size_t sk_zmul(size_t x, size_t y);
-size_t sk_zdiv(size_t x, size_t y, size_t bias);
+size_t skzadd(size_t x, size_t y);
+size_t skzmul(size_t x, size_t y);
+size_t skzdiv(size_t x, size_t y, size_t bias);
 
-size_t sn_zpow(size_t x, size_t y, enum sn_error *err);
+size_t snzpow(size_t x, size_t y, enum sn_error *err);
 
 unsigned long sn_uladd(unsigned long x, unsigned long y, enum sn_error *err);
 unsigned long sn_ulsub(unsigned long x, unsigned long y, enum sn_error *err);

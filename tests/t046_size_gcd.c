@@ -5,8 +5,8 @@
 
 int main(void)
 {
-	assert(sn_zgcd(2, 0) == 2);
-	assert(sn_zgcd(0, 0) == 0);
+	assert(snzgcd(2, 0) == 2);
+	assert(snzgcd(0, 0) == 0);
 
 	return 0;
 }

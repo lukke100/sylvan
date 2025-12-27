@@ -13,183 +13,6 @@ void sn_eset(enum sn_error *err, enum sn_error val)
 	*err = val;
 }
 
-size_t sn_zadd(size_t x, size_t y, enum sn_error *err)
-{
-	if (~(size_t)0 - x < y) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return ~(size_t)0;
-	}
-
-	return x + y;
-}
-
-size_t sn_zsub(size_t x, size_t y, enum sn_error *err)
-{
-	if (y > x) {
-		sn_eset(err, SN_ERROR_UNDERFLOW);
-		return 0;
-	}
-
-	return x - y;
-}
-
-size_t sn_zmul(size_t x, size_t y, enum sn_error *err)
-{
-	if (x == 0)
-		return 0;
-
-	if (~(size_t)0 / x < y) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return ~(size_t)0;
-	}
-
-	return x * y;
-}
-
-size_t sn_zdiv(size_t x, size_t y, enum sn_error *err)
-{
-	if (y == 0) {
-		sn_eset(err, SN_ERROR_UNDEFINED);
-
-		if (x == 0)
-			return 0;
-		else
-			return ~(size_t)0;
-	}
-
-	return x / y;
-}
-
-size_t sn_zmod(size_t x, size_t y, enum sn_error *err)
-{
-	if (y == 0) {
-		sn_eset(err, SN_ERROR_UNDEFINED);
-		return 0;
-	}
-
-	return x % y;
-}
-
-size_t sn_zgcd(size_t x, size_t y)
-{
-	for (;;) {
-		if (x == 0)
-			return y;
-
-		y %= x;
-
-		if (y == 0)
-			return x;
-
-		x %= y;
-	}
-}
-
-size_t sn_zlcm(size_t x, size_t y, enum sn_error *err)
-{
-	size_t gcd, result;
-	enum sn_error tmperr;
-
-	gcd = sn_zgcd(x, y);
-
-	if (gcd == 0)
-		return 0;
-
-	x /= gcd;
-	y /= gcd;
-
-	tmperr = SN_ERROR_NONE;
-	result = sn_zmul(x, y, &tmperr);
-
-	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return ~(size_t)0;
-	}
-
-	tmperr = SN_ERROR_NONE;
-	result = sn_zmul(result, gcd, &tmperr);
-
-	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return ~(size_t)0;
-	}
-
-	return result;
-}
-
-size_t sn_zmax(size_t x, size_t y)
-{
-	if (y > x)
-		return y;
-	else
-		return x;
-}
-
-size_t sn_zmin(size_t x, size_t y)
-{
-	if (y < x)
-		return y;
-	else
-		return x;
-}
-
-size_t sk_zadd(size_t x, size_t y)
-{
-	return sn_zadd(x, y, NULL);
-}
-
-size_t sk_zmul(size_t x, size_t y)
-{
-	return sn_zmul(x, y, NULL);
-}
-
-size_t sk_zdiv(size_t x, size_t y, size_t bias)
-{
-	if (y == 0) {
-		if (x == 0)
-			return bias;
-		else
-			return ~(size_t)0;
-	}
-
-	if (x == ~(size_t)0) {
-		if (y == ~(size_t)0)
-			return bias;
-		else
-			return ~(size_t)0;
-	}
-
-	return x / y;
-}
-
-size_t sn_zpow(size_t x, size_t y, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	size_t result, tmpbase, tmpexp;
-
-	tmperr  = SN_ERROR_NONE;
-	result  = 1;
-	tmpbase = x;
-	tmpexp  = y;
-
-	while (1) {
-		if (tmpexp % 2 != 0)
-			result = sn_zmul(result, tmpbase, &tmperr);
-
-		tmpexp >>= 1;
-
-		if (tmpexp == 0)
-			break;
-
-		tmpbase = sn_zmul(tmpbase, tmpbase, &tmperr);
-	}
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, SN_ERROR_OVERFLOW);
-
-	return result;
-}
-
 unsigned long sn_uladd(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (ULONG_MAX - x < y) {
@@ -742,14 +565,14 @@ static size_t quotesz(const char src[], size_t srcsz)
 
 		switch (lastcls) {
 		case QUOTE_SPECIAL:
-			diff = sk_zmul(diff, 2);
+			diff = skzmul(diff, 2);
 			break;
 		case QUOTE_NUMERIC:
-			diff = sk_zmul(diff, 2 + hexdigits());
+			diff = skzmul(diff, 2 + hexdigits());
 			break;
 		}
 
-		destidx = sk_zadd(destidx, diff);
+		destidx = skzadd(destidx, diff);
 	}
 
 	return destidx;
@@ -828,7 +651,7 @@ size_t sn_quote(char dest[], size_t destsz, const char src[],
 
 		tmpsz  = quotesz(src, srcsz);
 		tmperr = SN_ERROR_NONE;
-		result = sn_zadd(result, tmpsz, &tmperr);
+		result = snzadd(result, tmpsz, &tmperr);
 
 		if (tmperr == SN_ERROR_OVERFLOW) {
 			sn_eset(err, SN_ERROR_OVERRUN);
@@ -1247,12 +1070,12 @@ size_t sn_refill(char buf[], size_t bufsz, size_t *pos,
 
 	oldpos = *pos;
 	tmperr = SN_ERROR_NONE;
-	oldlen = sn_zsub(bufsz, oldpos, &tmperr);
+	oldlen = snzsub(bufsz, oldpos, &tmperr);
 
 	if (req <= oldlen && tmperr != SN_ERROR_UNDERFLOW)
 		return oldlen;
 
-	oldpos = sn_zmin(oldpos, bufsz);
+	oldpos = snzmin(oldpos, bufsz);
 	needed = req - oldlen;
 
 	if ((oldpos > 0 || needed > 0) && (stream == NULL || buf == NULL)) {

@@ -9,15 +9,15 @@ int main(void)
 {
 	enum sn_error err;
 
-	assert(sn_zmul(ZMAX,    2, NULL) == ZMAX);
-	assert(sn_zmul(ZMAX, ZMAX, NULL) == ZMAX);
+	assert(snzmul(ZMAX,    2, NULL) == ZMAX);
+	assert(snzmul(ZMAX, ZMAX, NULL) == ZMAX);
 
 	err = SN_ERROR_NONE;
-	(void)sn_zmul(ZMAX, 2, &err);
+	(void)snzmul(ZMAX, 2, &err);
 	assert(err == SN_ERROR_OVERFLOW);
 
 	err = SN_ERROR_NONE;
-	(void)sn_zmul(ZMAX, ZMAX, &err);
+	(void)snzmul(ZMAX, ZMAX, &err);
 	assert(err == SN_ERROR_OVERFLOW);
 
 	return 0;

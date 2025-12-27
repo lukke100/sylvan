@@ -9,21 +9,21 @@ int main(void)
 {
 	enum sn_error err;
 
-	assert(sn_zlcm(2, 0, NULL) == 0);
-	assert(sn_zlcm(0, 0, NULL) == 0);
+	assert(snzlcm(2, 0, NULL) == 0);
+	assert(snzlcm(0, 0, NULL) == 0);
 
-	assert(sn_zlcm(ZMAX, ZMAX - 1, NULL) == ZMAX);
+	assert(snzlcm(ZMAX, ZMAX - 1, NULL) == ZMAX);
 
 	err = SN_ERROR_NONE;
-	(void)sn_zlcm(2, 0, &err);
+	(void)snzlcm(2, 0, &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	(void)sn_zlcm(0, 0, &err);
+	(void)snzlcm(0, 0, &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	(void)sn_zlcm(ZMAX, ZMAX - 1u, &err);
+	(void)snzlcm(ZMAX, ZMAX - 1u, &err);
 	assert(err == SN_ERROR_OVERFLOW);
 
 	return 0;

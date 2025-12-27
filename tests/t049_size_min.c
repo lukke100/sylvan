@@ -4,7 +4,7 @@
 
 int main(void)
 {
-	assert(sn_zmin(1, 0) == 0);
-	assert(sn_zmin(0, 1) == 0);
+	assert(snzmin(1, 0) == 0);
+	assert(snzmin(0, 1) == 0);
 	return 0;
 }

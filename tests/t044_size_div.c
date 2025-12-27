@@ -9,20 +9,20 @@ int main(void)
 {
 	enum sn_error err;
 
-	assert(sn_zdiv(1, 1, NULL) == 1);
-	assert(sn_zdiv(0, 0, NULL) == 0);
-	assert(sn_zdiv(1, 0, NULL) == ZMAX);
+	assert(snzdiv(1, 1, NULL) == 1);
+	assert(snzdiv(0, 0, NULL) == 0);
+	assert(snzdiv(1, 0, NULL) == ZMAX);
 
 	err = SN_ERROR_NONE;
-	(void)sn_zdiv(1, 1, &err);
+	(void)snzdiv(1, 1, &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	(void)sn_zdiv(0, 0, &err);
+	(void)snzdiv(0, 0, &err);
 	assert(err == SN_ERROR_UNDEFINED);
 
 	err = SN_ERROR_NONE;
-	(void)sn_zdiv(1, 0, &err);
+	(void)snzdiv(1, 0, &err);
 	assert(err == SN_ERROR_UNDEFINED);
 
 	return 0;
