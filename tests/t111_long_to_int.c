@@ -10,18 +10,18 @@ int main(void)
 	enum sn_error err;
 #endif
 
-	assert(sn_ltoi(LONG_MAX, NULL) == INT_MAX);
-	assert(sn_ltoi(LONG_MIN, NULL) == INT_MIN);
+	assert(snl2i(LONG_MAX, NULL) == INT_MAX);
+	assert(snl2i(LONG_MIN, NULL) == INT_MIN);
 
 #if LONG_MAX > INT_MAX
 	err = SN_ERROR_NONE;
-	sn_ltoi(LONG_MAX, &err);
+	snl2i(LONG_MAX, &err);
 	assert(err == SN_ERROR_OVERFLOW);
 #endif
 
 #if LONG_MIN < INT_MIN
 	err = SN_ERROR_NONE;
-	sn_ltoi(LONG_MIN, &err);
+	snl2i(LONG_MIN, &err);
 	assert(err == SN_ERROR_UNDERFLOW);
 #endif
 

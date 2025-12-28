@@ -4,5 +4,5 @@
 
 unsigned snugcd(unsigned x, unsigned y)
 {
-	return sn_ultou(snulgcd(x, y), NULL);
+	return snul2u(snulgcd(x, y), NULL);
 }

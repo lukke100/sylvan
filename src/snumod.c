@@ -10,7 +10,7 @@ unsigned snumod(unsigned x, unsigned y, enum sn_error *err)
 	tmperr1 = SN_ERROR_NONE;
 	tmpval  = snulmod(x, y, &tmperr1);
 	tmperr2 = SN_ERROR_NONE;
-	result  = sn_ultou(tmpval, &tmperr2);
+	result  = snul2u(tmpval, &tmperr2);
 
 	if (tmperr1 != SN_ERROR_NONE)
 		sn_eset(err, tmperr1);

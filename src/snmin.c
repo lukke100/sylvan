@@ -4,5 +4,5 @@
 
 int snmin(int x, int y)
 {
-	return sn_ltoi(snlmin(x, y), NULL);
+	return snl2i(snlmin(x, y), NULL);
 }

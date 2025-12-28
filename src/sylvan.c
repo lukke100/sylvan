@@ -13,82 +13,6 @@ void sn_eset(enum sn_error *err, enum sn_error val)
 	*err = val;
 }
 
-long sn_atol(const char src[], size_t srcsz, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	long result, sign;
-	size_t idx;
-
-	if (srcsz == 0) {
-		sn_eset(err, SN_ERROR_PARSE);
-		return 0;
-	}
-
-	if (src == NULL) {
-		sn_eset(err, SN_ERROR_NULL);
-		return 0;
-	}
-
-	idx  = 0;
-	sign = 1;
-
-	if (src[idx] == '-')
-		sign = -1;
-
-	if (src[idx] == '+' || src[idx] == '-')
-		++idx;
-
-	tmperr = SN_ERROR_NONE;
-	result = 0;
-
-	for (; idx < srcsz; ++idx) {
-		long diff;
-
-		if (src[idx] < '0' || '9' < src[idx]) {
-			sn_eset(err, SN_ERROR_PARSE);
-			return 0;
-		}
-
-		diff   = sign * (src[idx] - '0');
-		result = snlmul(result, 10, &tmperr);
-		result = snladd(result, diff, &tmperr);
-	}
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-int sn_atoi(const char src[], size_t srcsz, enum sn_error *err)
-{
-	enum sn_error tmperr;
-	long tmpval;
-	int result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = sn_atol(src, srcsz, &tmperr);
-	result = sn_ltoi(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
-
-	return result;
-}
-
-char sn_uctoc(unsigned char x, enum sn_error *err)
-{
-	if (x <= (unsigned char)CHAR_MAX)
-		return (char)x;
-
-	if (x < (unsigned char)CHAR_MIN) {
-		sn_eset(err, SN_ERROR_UNDERFLOW);
-		return CHAR_MIN;
-	}
-
-	return -(char)~x - 1;
-}
-
 enum {
 	QUOTE_LITERAL = 1,
 	QUOTE_SPECIAL = 2,
@@ -441,14 +365,14 @@ static size_t unquotesz(size_t *pos, const char src[],
 				val = snuadd(val, hextoval(src[idx]), &tmperr);
 			}
 
-			ucval = sn_utouc(val, &tmperr);
+			ucval = snu2uc(val, &tmperr);
 
 			if (tmperr == SN_ERROR_OVERFLOW) {
 				sn_eset(err, SN_ERROR_OVERFLOW);
 				return 0;
 			}
 
-			(void)sn_uctoc(ucval, &tmperr);
+			(void)snuc2c(ucval, &tmperr);
 
 			if (tmperr == SN_ERROR_UNDERFLOW) {
 				sn_eset(err, SN_ERROR_UNDERFLOW);
@@ -466,14 +390,14 @@ static size_t unquotesz(size_t *pos, const char src[],
 				val = snuadd(val, hextoval(src[idx]), &tmperr);
 			}
 
-			ucval = sn_utouc(val, &tmperr);
+			ucval = snu2uc(val, &tmperr);
 
 			if (tmperr == SN_ERROR_OVERFLOW) {
 				sn_eset(err, SN_ERROR_OVERFLOW);
 				return 0;
 			}
 
-			(void)sn_uctoc(ucval, &tmperr);
+			(void)snuc2c(ucval, &tmperr);
 
 			if (tmperr == SN_ERROR_UNDERFLOW) {
 				sn_eset(err, SN_ERROR_UNDERFLOW);
@@ -559,7 +483,7 @@ static void unquote(char dest[], const char src[])
 			}
 
 			srcidx += diff;
-			dest[destidx++] = sn_uctoc(sn_utouc(val, NULL), NULL);
+			dest[destidx++] = snuc2c(snu2uc(val, NULL), NULL);
 			break;
 		case UNQUOTE_HEXCHAR:
 			val = 0;
@@ -570,7 +494,7 @@ static void unquote(char dest[], const char src[])
 			}
 
 			srcidx += diff;
-			dest[destidx++] = sn_uctoc(sn_utouc(val, NULL), NULL);
+			dest[destidx++] = snuc2c(snu2uc(val, NULL), NULL);
 			break;
 		case UNQUOTE_UNQUOTE:
 		case UNQUOTE_INVALID:
@@ -629,41 +553,6 @@ size_t sn_unquote(char dest[], size_t destsz, size_t *pos,
 	unquote(dest, src + srcidx2);
 	*pos = srcidx1;
 	return result;
-}
-
-int sn_ltoi(long x, enum sn_error *err)
-{
-	if (x > INT_MAX) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return INT_MAX;
-	}
-
-	if (x < INT_MIN) {
-		sn_eset(err, SN_ERROR_UNDERFLOW);
-		return INT_MIN;
-	}
-
-	return (int)x;
-}
-
-unsigned sn_ultou(unsigned long x, enum sn_error *err)
-{
-	if (x > UINT_MAX) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return UINT_MAX;
-	}
-
-	return (unsigned)x;
-}
-
-unsigned char sn_utouc(unsigned x, enum sn_error *err)
-{
-	if (x > UCHAR_MAX) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
-		return UCHAR_MAX;
-	}
-
-	return (unsigned char)x;
 }
 
 void sn_rev(char buf[], size_t bufsz, enum sn_error *err)

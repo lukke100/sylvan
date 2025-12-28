@@ -4,5 +4,5 @@
 
 int snmax(int x, int y)
 {
-	return sn_ltoi(snlmax(x, y), NULL);
+	return snl2i(snlmax(x, y), NULL);
 }

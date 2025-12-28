@@ -106,10 +106,10 @@ unsigned snupow(unsigned x, unsigned y, enum sn_error *err);
 size_t sntok(int *last, const char src[], size_t srcsz,
              int classify(char ch, int last), enum sn_error *err);
 
-long sn_atol(const char src[], size_t srcsz, enum sn_error *err);
-int  sn_atoi(const char src[], size_t srcsz, enum sn_error *err);
+long sna2l(const char src[], size_t srcsz, enum sn_error *err);
+int  sna2i(const char src[], size_t srcsz, enum sn_error *err);
 
-char sn_uctoc(unsigned char x, enum sn_error *err);
+char snuc2c(unsigned char x, enum sn_error *err);
 
 size_t sn_quote(char dest[], size_t destsz, const char src[],
                 size_t srcsz, enum sn_error *err);
@@ -117,9 +117,9 @@ size_t sn_quote(char dest[], size_t destsz, const char src[],
 size_t sn_unquote(char dest[], size_t destsz, size_t *pos,
                   const char src[], size_t srcsz, enum sn_error *err);
 
-int sn_ltoi(long x, enum sn_error *err);
-unsigned sn_ultou(unsigned long x, enum sn_error *err);
-unsigned char sn_utouc(unsigned x, enum sn_error *err);
+int snl2i(long x, enum sn_error *err);
+unsigned snul2u(unsigned long x, enum sn_error *err);
+unsigned char snu2uc(unsigned x, enum sn_error *err);
 
 void sn_rev(char buf[], size_t bufsz, enum sn_error *err);
 

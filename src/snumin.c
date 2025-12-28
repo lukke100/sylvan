@@ -4,5 +4,5 @@
 
 unsigned snumin(unsigned x, unsigned y)
 {
-	return sn_ultou(snulmin(x, y), NULL);
+	return snul2u(snulmin(x, y), NULL);
 }

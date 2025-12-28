@@ -4,5 +4,5 @@
 
 unsigned snumax(unsigned x, unsigned y)
 {
-	return sn_ultou(snulmax(x, y), NULL);
+	return snul2u(snulmax(x, y), NULL);
 }

@@ -9,7 +9,7 @@ unsigned snuadd(unsigned x, unsigned y, enum sn_error *err)
 
 	tmperr = SN_ERROR_NONE;
 	tmpval = snuladd(x, y, &tmperr);
-	result = sn_ultou(tmpval, &tmperr);
+	result = snul2u(tmpval, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE)
 		sn_eset(err, tmperr);

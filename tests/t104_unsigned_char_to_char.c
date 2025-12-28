@@ -7,29 +7,29 @@ int main(void)
 {
 	enum sn_error err;
 
-	assert(sn_uctoc((unsigned char)'\0', NULL) == '\0');
-	assert(sn_uctoc((unsigned char)CHAR_MAX, NULL) == CHAR_MAX);
+	assert(snuc2c((unsigned char)'\0', NULL) == '\0');
+	assert(snuc2c((unsigned char)CHAR_MAX, NULL) == CHAR_MAX);
 
 #if CHAR_MIN < 0
-	assert(sn_uctoc((unsigned char)-127, NULL) == -127);
-	assert(sn_uctoc(UCHAR_MAX, NULL) == -1);
+	assert(snuc2c((unsigned char)-127, NULL) == -127);
+	assert(snuc2c(UCHAR_MAX, NULL) == -1);
 #endif
 
 	err = SN_ERROR_NONE;
-	(void)sn_uctoc('\0', &err);
+	(void)snuc2c('\0', &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	(void)sn_uctoc((unsigned char)CHAR_MAX, &err);
+	(void)snuc2c((unsigned char)CHAR_MAX, &err);
 	assert(err == SN_ERROR_NONE);
 
 #if CHAR_MIN < 0
 	err = SN_ERROR_NONE;
-	(void)sn_uctoc((unsigned char)-127, &err);
+	(void)snuc2c((unsigned char)-127, &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	(void)sn_uctoc(UCHAR_MAX, &err);
+	(void)snuc2c(UCHAR_MAX, &err);
 	assert(err == SN_ERROR_NONE);
 #endif
 

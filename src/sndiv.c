@@ -10,7 +10,7 @@ int sndiv(int x, int y, enum sn_error *err)
 	tmperr1 = SN_ERROR_NONE;
 	tmpval  = snldiv(x, y, &tmperr1);
 	tmperr2 = SN_ERROR_NONE;
-	result  = sn_ltoi(tmpval, &tmperr2);
+	result  = snl2i(tmpval, &tmperr2);
 
 	if (tmperr1 != SN_ERROR_NONE)
 		sn_eset(err, tmperr1);

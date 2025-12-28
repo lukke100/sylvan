@@ -69,4 +69,10 @@ libsylvan_la_SOURCES = \
 	skudiv.c \
 	snupow.c \
 	sntok.c \
+	sna2l.c \
+	sna2i.c \
+	snuc2c.c \
+	snl2i.c \
+	snul2u.c \
+	snu2uc.c \
 	sylvan.c
