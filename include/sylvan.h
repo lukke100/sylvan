@@ -111,8 +111,8 @@ int  sna2i(const char src[], size_t srcsz, enum sn_error *err);
 
 char snuc2c(unsigned char x, enum sn_error *err);
 
-size_t sn_quote(char dest[], size_t destsz, const char src[],
-                size_t srcsz, enum sn_error *err);
+size_t snqt(char dest[], size_t destsz, const char src[],
+            size_t srcsz, enum sn_error *err);
 
 size_t sn_unquote(char dest[], size_t destsz, size_t *pos,
                   const char src[], size_t srcsz, enum sn_error *err);
