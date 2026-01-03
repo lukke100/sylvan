@@ -13,26 +13,6 @@ void sn_eset(enum sn_error *err, enum sn_error val)
 	*err = val;
 }
 
-void sn_rev(char buf[], size_t bufsz, enum sn_error *err)
-{
-	size_t idx1;
-
-	if (buf == NULL && bufsz > 0) {
-		sn_eset(err, SN_ERROR_NULL);
-		return;
-	}
-
-	for (idx1 = 0; idx1 < bufsz / 2; ++idx1) {
-		size_t idx2;
-		char tmp;
-
-		idx2 = bufsz - idx1 - 1;
-		tmp  = buf[idx1];
-		buf[idx1] = buf[idx2];
-		buf[idx2] = tmp;
-	}
-}
-
 size_t sn_refill(char buf[], size_t bufsz, size_t *pos,
                  size_t req, FILE *stream, enum sn_error *err)
 {
@@ -75,9 +55,9 @@ size_t sn_refill(char buf[], size_t bufsz, size_t *pos,
 		sn_eset(err, SN_ERROR_FILE);
 
 	if (newlen > 0) {
-		sn_rev(buf, newlen, NULL);
-		sn_rev(buf + newlen, bufsz - newlen, NULL);
-		sn_rev(buf, bufsz, NULL);
+		snrev(buf, newlen, NULL);
+		snrev(buf + newlen, bufsz - newlen, NULL);
+		snrev(buf, bufsz, NULL);
 	}
 
 	*pos = oldpos - newlen;

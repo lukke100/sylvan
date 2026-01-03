@@ -29,4 +29,5 @@ libsylvan_la_SOURCES = \
 	snul2u.c \
 	snu2uc.c \
 	snqt.c snunqt.c \
+	snrev.c \
 	sylvan.c

@@ -121,7 +121,7 @@ int snl2i(long x, enum sn_error *err);
 unsigned snul2u(unsigned long x, enum sn_error *err);
 unsigned char snu2uc(unsigned x, enum sn_error *err);
 
-void sn_rev(char buf[], size_t bufsz, enum sn_error *err);
+void snrev(char buf[], size_t bufsz, enum sn_error *err);
 
 size_t sn_refill(char buf[], size_t bufsz, size_t *pos,
                  size_t req, FILE *stream, enum sn_error *err);
