@@ -8,7 +8,7 @@ char snuc2c(unsigned char x, enum sn_error *err)
 		return (char)x;
 
 	if (x < (unsigned char)CHAR_MIN) {
-		sn_eset(err, SN_ERROR_UNDERFLOW);
+		sneset(err, SN_ERROR_UNDERFLOW);
 		return CHAR_MIN;
 	}
 

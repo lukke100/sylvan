@@ -9,7 +9,7 @@ size_t snget(char buf[], size_t bufsz, size_t *pos,
 	size_t oldpos, oldlen, needed, newlen;
 
 	if (pos == NULL) {
-		sn_eset(err, SN_ERROR_NULL);
+		sneset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
@@ -24,12 +24,12 @@ size_t snget(char buf[], size_t bufsz, size_t *pos,
 	needed = req - oldlen;
 
 	if ((oldpos > 0 || needed > 0) && (stream == NULL || buf == NULL)) {
-		sn_eset(err, SN_ERROR_NULL);
+		sneset(err, SN_ERROR_NULL);
 		return oldlen;
 	}
 
 	if (needed > oldpos) {
-		sn_eset(err, SN_ERROR_OVERRUN);
+		sneset(err, SN_ERROR_OVERRUN);
 		return oldlen;
 	}
 
@@ -41,7 +41,7 @@ size_t snget(char buf[], size_t bufsz, size_t *pos,
 	newlen = fread(buf, sizeof(char), oldpos, stream);
 
 	if (newlen < oldpos && !feof(stream))
-		sn_eset(err, SN_ERROR_FILE);
+		sneset(err, SN_ERROR_FILE);
 
 	if (newlen > 0) {
 		snrev(buf, newlen, NULL);

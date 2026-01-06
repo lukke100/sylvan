@@ -25,7 +25,7 @@ size_t snzpow(size_t x, size_t y, enum sn_error *err)
 	}
 
 	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, SN_ERROR_OVERFLOW);
+		sneset(err, SN_ERROR_OVERFLOW);
 
 	return result;
 }

@@ -13,9 +13,9 @@ int sndiv(int x, int y, enum sn_error *err)
 	result  = snl2i(tmpval, &tmperr2);
 
 	if (tmperr1 != SN_ERROR_NONE)
-		sn_eset(err, tmperr1);
+		sneset(err, tmperr1);
 	else if (tmperr2 != SN_ERROR_NONE)
-		sn_eset(err, tmperr2);
+		sneset(err, tmperr2);
 
 	return result;
 }

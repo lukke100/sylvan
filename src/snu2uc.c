@@ -5,7 +5,7 @@
 unsigned char snu2uc(unsigned x, enum sn_error *err)
 {
 	if (x > UCHAR_MAX) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
+		sneset(err, SN_ERROR_OVERFLOW);
 		return UCHAR_MAX;
 	}
 

@@ -19,7 +19,7 @@ size_t snzlcm(size_t x, size_t y, enum sn_error *err)
 	result = snzmul(x, y, &tmperr);
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
+		sneset(err, SN_ERROR_OVERFLOW);
 		return ~(size_t)0;
 	}
 
@@ -27,7 +27,7 @@ size_t snzlcm(size_t x, size_t y, enum sn_error *err)
 	result = snzmul(result, gcd, &tmperr);
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
+		sneset(err, SN_ERROR_OVERFLOW);
 		return ~(size_t)0;
 	}
 

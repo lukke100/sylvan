@@ -9,12 +9,12 @@ long sna2l(const char src[], size_t srcsz, enum sn_error *err)
 	size_t idx;
 
 	if (srcsz == 0) {
-		sn_eset(err, SN_ERROR_PARSE);
+		sneset(err, SN_ERROR_PARSE);
 		return 0;
 	}
 
 	if (src == NULL) {
-		sn_eset(err, SN_ERROR_NULL);
+		sneset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
@@ -34,7 +34,7 @@ long sna2l(const char src[], size_t srcsz, enum sn_error *err)
 		long diff;
 
 		if (src[idx] < '0' || '9' < src[idx]) {
-			sn_eset(err, SN_ERROR_PARSE);
+			sneset(err, SN_ERROR_PARSE);
 			return 0;
 		}
 
@@ -44,7 +44,7 @@ long sna2l(const char src[], size_t srcsz, enum sn_error *err)
 	}
 
 	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
+		sneset(err, tmperr);
 
 	return result;
 }

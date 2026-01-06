@@ -11,7 +11,7 @@ long snllcm(long x, long y, enum sn_error *err)
 	gcd = snlgcd(x, y, &tmperr);
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
+		sneset(err, SN_ERROR_OVERFLOW);
 		return LONG_MAX;
 	}
 
@@ -25,7 +25,7 @@ long snllcm(long x, long y, enum sn_error *err)
 	result = snlmul(x, y, &tmperr);
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
+		sneset(err, SN_ERROR_OVERFLOW);
 		return LONG_MAX;
 	}
 
@@ -33,7 +33,7 @@ long snllcm(long x, long y, enum sn_error *err)
 	result = snlmul(result, gcd, &tmperr);
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
+		sneset(err, SN_ERROR_OVERFLOW);
 		return LONG_MAX;
 	}
 

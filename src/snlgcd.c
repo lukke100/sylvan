@@ -15,7 +15,7 @@ long snlgcd(long x, long y, enum sn_error *err)
 		long max2, min2;
 
 		if (max1 == 0) {
-			sn_eset(err, SN_ERROR_OVERFLOW);
+			sneset(err, SN_ERROR_OVERFLOW);
 			return LONG_MAX;
 		}
 

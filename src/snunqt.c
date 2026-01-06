@@ -102,7 +102,7 @@ static size_t unquotesz(size_t *pos, const char src[],
 	srcidx = *pos;
 
 	if (src[srcidx++] != '"') {
-		sn_eset(err, SN_ERROR_PARSE);
+		sneset(err, SN_ERROR_PARSE);
 		return 0;
 	}
 
@@ -146,14 +146,14 @@ static size_t unquotesz(size_t *pos, const char src[],
 			ucval = snu2uc(val, &tmperr);
 
 			if (tmperr == SN_ERROR_OVERFLOW) {
-				sn_eset(err, SN_ERROR_OVERFLOW);
+				sneset(err, SN_ERROR_OVERFLOW);
 				return 0;
 			}
 
 			(void)snuc2c(ucval, &tmperr);
 
 			if (tmperr == SN_ERROR_UNDERFLOW) {
-				sn_eset(err, SN_ERROR_UNDERFLOW);
+				sneset(err, SN_ERROR_UNDERFLOW);
 				return 0;
 			}
 
@@ -171,28 +171,28 @@ static size_t unquotesz(size_t *pos, const char src[],
 			ucval = snu2uc(val, &tmperr);
 
 			if (tmperr == SN_ERROR_OVERFLOW) {
-				sn_eset(err, SN_ERROR_OVERFLOW);
+				sneset(err, SN_ERROR_OVERFLOW);
 				return 0;
 			}
 
 			(void)snuc2c(ucval, &tmperr);
 
 			if (tmperr == SN_ERROR_UNDERFLOW) {
-				sn_eset(err, SN_ERROR_UNDERFLOW);
+				sneset(err, SN_ERROR_UNDERFLOW);
 				return 0;
 			}
 
 			diff = 1;
 			break;
 		case UNQUOTE_INVALID:
-			sn_eset(err, SN_ERROR_PARSE);
+			sneset(err, SN_ERROR_PARSE);
 			return 0;
 		}
 
 		result += diff;
 	}
 
-	sn_eset(err, SN_ERROR_PARSE);
+	sneset(err, SN_ERROR_PARSE);
 	return 0;
 }
 
@@ -289,19 +289,19 @@ size_t snunqt(char dest[], size_t destsz, size_t *pos,
 	size_t srcidx1, srcidx2, result;
 
 	if (pos == NULL) {
-		sn_eset(err, SN_ERROR_NULL);
+		sneset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
 	srcidx2 = srcidx1 = *pos;
 
 	if (srcidx1 >= srcsz) {
-		sn_eset(err, SN_ERROR_PARSE);
+		sneset(err, SN_ERROR_PARSE);
 		return 0;
 	}
 
 	if (src == NULL) {
-		sn_eset(err, SN_ERROR_NULL);
+		sneset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
@@ -309,7 +309,7 @@ size_t snunqt(char dest[], size_t destsz, size_t *pos,
 	result = unquotesz(&srcidx1, src, srcsz, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE) {
-		sn_eset(err, tmperr);
+		sneset(err, tmperr);
 		return 0;
 	}
 
@@ -319,12 +319,12 @@ size_t snunqt(char dest[], size_t destsz, size_t *pos,
 	}
 
 	if (dest == NULL && destsz > 0) {
-		sn_eset(err, SN_ERROR_NULL);
+		sneset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
 	if (destsz < result) {
-		sn_eset(err, SN_ERROR_OVERRUN);
+		sneset(err, SN_ERROR_OVERRUN);
 		return 0;
 	}
 

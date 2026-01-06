@@ -175,12 +175,12 @@ size_t snqt(char dest[], size_t destsz, const char src[],
 	size_t result;
 
 	if (destsz == 0) {
-		sn_eset(err, SN_ERROR_OVERRUN);
+		sneset(err, SN_ERROR_OVERRUN);
 		return 0;
 	}
 
 	if (dest == NULL) {
-		sn_eset(err, SN_ERROR_NULL);
+		sneset(err, SN_ERROR_NULL);
 		return 0;
 	}
 
@@ -191,7 +191,7 @@ size_t snqt(char dest[], size_t destsz, const char src[],
 		size_t tmpsz;
 
 		if (src == NULL) {
-			sn_eset(err, SN_ERROR_NULL);
+			sneset(err, SN_ERROR_NULL);
 			return 0;
 		}
 
@@ -200,13 +200,13 @@ size_t snqt(char dest[], size_t destsz, const char src[],
 		result = snzadd(result, tmpsz, &tmperr);
 
 		if (tmperr == SN_ERROR_OVERFLOW) {
-			sn_eset(err, SN_ERROR_OVERRUN);
+			sneset(err, SN_ERROR_OVERRUN);
 			return 0;
 		}
 	}
 
 	if (result > destsz) {
-		sn_eset(err, SN_ERROR_OVERRUN);
+		sneset(err, SN_ERROR_OVERRUN);
 		return 0;
 	}
 

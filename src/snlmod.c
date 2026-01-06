@@ -8,7 +8,7 @@ long snlmod(long x, long y, enum sn_error *err)
 	long result;
 
 	if (y == 0) {
-		sn_eset(err, SN_ERROR_UNDEFINED);
+		sneset(err, SN_ERROR_UNDEFINED);
 		return 0;
 	}
 

@@ -19,7 +19,7 @@ unsigned long snullcm(unsigned long x, unsigned long y, enum sn_error *err)
 	result = snulmul(x, y, &tmperr);
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
+		sneset(err, SN_ERROR_OVERFLOW);
 		return ULONG_MAX;
 	}
 
@@ -27,7 +27,7 @@ unsigned long snullcm(unsigned long x, unsigned long y, enum sn_error *err)
 	result = snulmul(result, gcd, &tmperr);
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
-		sn_eset(err, SN_ERROR_OVERFLOW);
+		sneset(err, SN_ERROR_OVERFLOW);
 		return ULONG_MAX;
 	}
 

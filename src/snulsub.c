@@ -5,7 +5,7 @@
 unsigned long snulsub(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (y > x) {
-		sn_eset(err, SN_ERROR_UNDERFLOW);
+		sneset(err, SN_ERROR_UNDERFLOW);
 		return 0;
 	}
 

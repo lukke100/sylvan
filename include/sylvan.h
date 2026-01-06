@@ -14,7 +14,7 @@ enum sn_error {
 	SN_ERROR_FILE
 };
 
-void sn_eset(enum sn_error *err, enum sn_error val);
+void sneset(enum sn_error *err, enum sn_error val);
 
 long snladd(long x, long y, enum sn_error *err);
 long snlsub(long x, long y, enum sn_error *err);

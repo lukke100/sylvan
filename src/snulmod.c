@@ -5,7 +5,7 @@
 unsigned long snulmod(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (y == 0) {
-		sn_eset(err, SN_ERROR_UNDEFINED);
+		sneset(err, SN_ERROR_UNDEFINED);
 		return 0;
 	}
 

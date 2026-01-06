@@ -79,6 +79,7 @@ check_PROGRAMS = \
 	t112_unsigned_long_to_unsigned \
 	t113_unsigned_to_unsigned_char \
 	t121_reverse \
+	t191_eset \
 	t201_refill
 
 TESTS = $(check_PROGRAMS)

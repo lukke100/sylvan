@@ -12,7 +12,7 @@ size_t sntok(int *last, const char src[], size_t srcsz,
 		return 0;
 
 	if (src == NULL || last == NULL || classify == NULL) {
-		sn_eset(err, SN_ERROR_NULL);
+		sneset(err, SN_ERROR_NULL);
 		return 0;
 	}
 

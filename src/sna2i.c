@@ -13,7 +13,7 @@ int sna2i(const char src[], size_t srcsz, enum sn_error *err)
 	result = snl2i(tmpval, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
+		sneset(err, tmperr);
 
 	return result;
 }

@@ -29,7 +29,7 @@ static long lnegmul(long x, long y, enum sn_error *err)
 	result = snladd(result, tmpval, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE) {
-		sn_eset(err, SN_ERROR_UNDERFLOW);
+		sneset(err, SN_ERROR_UNDERFLOW);
 		return LONG_MIN;
 	}
 
@@ -43,7 +43,7 @@ long snlpow(long x, long y, enum sn_error *err)
 	long result, tmpbase, tmpexp;
 
 	if ((x > 1 || x < -1) && y < 0) {
-		sn_eset(err, SN_ERROR_UNDEFINED);
+		sneset(err, SN_ERROR_UNDEFINED);
 		return 0;
 	}
 
@@ -91,9 +91,9 @@ long snlpow(long x, long y, enum sn_error *err)
 
 	if (tmperr != SN_ERROR_NONE) {
 		if (result > 0)
-			sn_eset(err, SN_ERROR_OVERFLOW);
+			sneset(err, SN_ERROR_OVERFLOW);
 		else
-			sn_eset(err, SN_ERROR_UNDERFLOW);
+			sneset(err, SN_ERROR_UNDERFLOW);
 	}
 
 	return result;

@@ -7,7 +7,7 @@ void snrev(char buf[], size_t bufsz, enum sn_error *err)
 	size_t idx1;
 
 	if (buf == NULL && bufsz > 0) {
-		sn_eset(err, SN_ERROR_NULL);
+		sneset(err, SN_ERROR_NULL);
 		return;
 	}
 

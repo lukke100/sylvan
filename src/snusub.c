@@ -13,7 +13,7 @@ unsigned snusub(unsigned x, unsigned y, enum sn_error *err)
 	result = snul2u(tmpval, NULL);
 
 	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
+		sneset(err, tmperr);
 
 	return result;
 }

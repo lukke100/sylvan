@@ -12,7 +12,7 @@ int snsub(int x, int y, enum sn_error *err)
 	result = snl2i(tmpval, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE)
-		sn_eset(err, tmperr);
+		sneset(err, tmperr);
 
 	return result;
 }
