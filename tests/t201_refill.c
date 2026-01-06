@@ -13,35 +13,35 @@ int main(void)
 	int ioresult;
 	char buf[10];
 
-	assert(sn_refill(NULL, 0, NULL, 0, NULL, NULL) == 0);
+	assert(snget(NULL, 0, NULL, 0, NULL, NULL) == 0);
 
 	pos = 0;
-	assert(sn_refill(NULL, 0, &pos, 0, NULL, NULL) == 0);
+	assert(snget(NULL, 0, &pos, 0, NULL, NULL) == 0);
 	assert(pos == 0);
 
 	pos = 1;
-	assert(sn_refill(NULL, 0, &pos, 0, NULL, NULL) == 0);
+	assert(snget(NULL, 0, &pos, 0, NULL, NULL) == 0);
 	assert(pos == 0);
 
 	pos = 5;
-	assert(sn_refill(NULL, 3, &pos, 0, NULL, NULL) == 0);
+	assert(snget(NULL, 3, &pos, 0, NULL, NULL) == 0);
 	assert(pos == 5);
 
 	pos = 0;
-	assert(sn_refill(NULL, 0, &pos, 3, NULL, NULL) == 0);
+	assert(snget(NULL, 0, &pos, 3, NULL, NULL) == 0);
 	assert(pos == 0);
 
 	pos = 5;
-	assert(sn_refill(NULL, 7, &pos, 3, NULL, NULL) == 2);
+	assert(snget(NULL, 7, &pos, 3, NULL, NULL) == 2);
 	assert(pos == 5);
 
 	pos = 5;
-	assert(sn_refill(NULL, 5, &pos, 3, stdin, NULL) == 0);
+	assert(snget(NULL, 5, &pos, 3, stdin, NULL) == 0);
 	assert(pos == 5);
 
 	memcpy(buf, "0123456789", 10);
 	pos = 7;
-	assert(sn_refill(buf, 10, &pos, 5, NULL, NULL) == 3);
+	assert(snget(buf, 10, &pos, 5, NULL, NULL) == 3);
 	assert(strncmp(buf, "0123456789", 10) == 0);
 	assert(pos == 7);
 
@@ -53,7 +53,7 @@ int main(void)
 	assert(ioresult == 0);
 	memcpy(buf, "0123456789", 10);
 	pos = 5;
-	assert(sn_refill(buf, 7, &pos, 10, tmpf, NULL) == 2);
+	assert(snget(buf, 7, &pos, 10, tmpf, NULL) == 2);
 	assert(ftell(tmpf) == 0);
 	assert(strncmp(buf, "0123456789", 10) == 0);
 	assert(pos == 5);
@@ -68,7 +68,7 @@ int main(void)
 	assert(ioresult == 0);
 	memcpy(buf, "0123456789", 10);
 	pos = 5;
-	assert(sn_refill(buf, 10, &pos, 10, tmpf, NULL) == 10);
+	assert(snget(buf, 10, &pos, 10, tmpf, NULL) == 10);
 	assert(strncmp(buf, "56789abcde", 10) == 0);
 	assert(pos == 0);
 	ioresult = fclose(tmpf);
@@ -82,7 +82,7 @@ int main(void)
 	assert(ioresult == 0);
 	memcpy(buf, "0123456789", 10);
 	pos = 11;
-	assert(sn_refill(buf, 10, &pos, 10, tmpf, NULL) == 10);
+	assert(snget(buf, 10, &pos, 10, tmpf, NULL) == 10);
 	assert(strncmp(buf, "abcdefghij", 10) == 0);
 	assert(pos == 0);
 	ioresult = fclose(tmpf);
@@ -96,7 +96,7 @@ int main(void)
 	assert(ioresult == 0);
 	memcpy(buf, "0123456789", 10);
 	pos = 7;
-	assert(sn_refill(buf, 10, &pos, 7, tmpf, NULL) == 5);
+	assert(snget(buf, 10, &pos, 7, tmpf, NULL) == 5);
 	assert(strncmp(buf, "23456789ab", 10) == 0);
 	assert(pos == 5);
 	assert(feof(tmpf));
@@ -104,43 +104,43 @@ int main(void)
 	assert(ioresult == 0);
 
 	err = SN_ERROR_NONE;
-	(void)sn_refill(NULL, 0, NULL, 0, NULL, &err);
+	(void)snget(NULL, 0, NULL, 0, NULL, &err);
 	assert(err == SN_ERROR_NULL);
 
 	pos = 0;
 	err = SN_ERROR_NONE;
-	(void)sn_refill(NULL, 0, &pos, 0, NULL, &err);
+	(void)snget(NULL, 0, &pos, 0, NULL, &err);
 	assert(err == SN_ERROR_NONE);
 
 	pos = 1;
 	err = SN_ERROR_NONE;
-	(void)sn_refill(NULL, 0, &pos, 0, NULL, &err);
+	(void)snget(NULL, 0, &pos, 0, NULL, &err);
 	assert(err == SN_ERROR_NONE);
 
 	pos = 5;
 	err = SN_ERROR_NONE;
-	(void)sn_refill(NULL, 3, &pos, 0, NULL, &err);
+	(void)snget(NULL, 3, &pos, 0, NULL, &err);
 	assert(err == SN_ERROR_NULL);
 
 	pos = 0;
 	err = SN_ERROR_NONE;
-	(void)sn_refill(NULL, 0, &pos, 3, NULL, &err);
+	(void)snget(NULL, 0, &pos, 3, NULL, &err);
 	assert(err == SN_ERROR_NULL);
 
 	pos = 5;
 	err = SN_ERROR_NONE;
-	(void)sn_refill(NULL, 7, &pos, 3, NULL, &err);
+	(void)snget(NULL, 7, &pos, 3, NULL, &err);
 	assert(err == SN_ERROR_NULL);
 
 	pos = 5;
 	err = SN_ERROR_NONE;
-	(void)sn_refill(NULL, 5, &pos, 3, stdin, &err);
+	(void)snget(NULL, 5, &pos, 3, stdin, &err);
 	assert(err == SN_ERROR_NULL);
 
 	memcpy(buf, "0123456789", 10);
 	pos = 7;
 	err = SN_ERROR_NONE;
-	(void)sn_refill(buf, 10, &pos, 5, NULL, &err);
+	(void)snget(buf, 10, &pos, 5, NULL, &err);
 	assert(err == SN_ERROR_NULL);
 
 	tmpf = tmpfile();
@@ -152,7 +152,7 @@ int main(void)
 	memcpy(buf, "0123456789", 10);
 	pos = 5;
 	err = SN_ERROR_NONE;
-	(void)sn_refill(buf, 7, &pos, 10, tmpf, &err);
+	(void)snget(buf, 7, &pos, 10, tmpf, &err);
 	assert(err == SN_ERROR_OVERRUN);
 	ioresult = fclose(tmpf);
 	assert(ioresult == 0);
@@ -166,7 +166,7 @@ int main(void)
 	memcpy(buf, "0123456789", 10);
 	pos = 5;
 	err = SN_ERROR_NONE;
-	(void)sn_refill(buf, 10, &pos, 10, tmpf, &err);
+	(void)snget(buf, 10, &pos, 10, tmpf, &err);
 	assert(err == SN_ERROR_NONE);
 	ioresult = fclose(tmpf);
 	assert(ioresult == 0);
@@ -179,7 +179,7 @@ int main(void)
 	assert(ioresult == 0);
 	memcpy(buf, "0123456789", 10);
 	pos = 11;
-	(void)sn_refill(buf, 10, &pos, 10, tmpf, &err);
+	(void)snget(buf, 10, &pos, 10, tmpf, &err);
 	assert(err == SN_ERROR_NONE);
 	ioresult = fclose(tmpf);
 	assert(ioresult == 0);
@@ -192,7 +192,7 @@ int main(void)
 	assert(ioresult == 0);
 	memcpy(buf, "0123456789", 10);
 	pos = 7;
-	(void)sn_refill(buf, 10, &pos, 7, tmpf, &err);
+	(void)snget(buf, 10, &pos, 7, tmpf, &err);
 	assert(err == SN_ERROR_NONE);
 	assert(feof(tmpf));
 	ioresult = fclose(tmpf);
