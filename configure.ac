@@ -22,6 +22,22 @@ CHECK_OVERFLOW_BUILTIN([__builtin_add_overflow], [long])
 CHECK_OVERFLOW_BUILTIN([__builtin_sub_overflow], [long])
 CHECK_OVERFLOW_BUILTIN([__builtin_mul_overflow], [long])
 
+CHECK_OVERFLOW_BUILTIN([__builtin_add_overflow], [int])
+CHECK_OVERFLOW_BUILTIN([__builtin_sub_overflow], [int])
+CHECK_OVERFLOW_BUILTIN([__builtin_mul_overflow], [int])
+
+CHECK_OVERFLOW_BUILTIN([__builtin_add_overflow], [size_t])
+CHECK_OVERFLOW_BUILTIN([__builtin_sub_overflow], [size_t])
+CHECK_OVERFLOW_BUILTIN([__builtin_mul_overflow], [size_t])
+
+CHECK_OVERFLOW_BUILTIN([__builtin_add_overflow], [unsigned long])
+CHECK_OVERFLOW_BUILTIN([__builtin_sub_overflow], [unsigned long])
+CHECK_OVERFLOW_BUILTIN([__builtin_mul_overflow], [unsigned long])
+
+CHECK_OVERFLOW_BUILTIN([__builtin_add_overflow], [unsigned])
+CHECK_OVERFLOW_BUILTIN([__builtin_sub_overflow], [unsigned])
+CHECK_OVERFLOW_BUILTIN([__builtin_mul_overflow], [unsigned])
+
 # Checks for library functions.
 AC_CHECK_FUNCS([memcpy])
 

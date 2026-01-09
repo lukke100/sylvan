@@ -2,6 +2,18 @@
 #include <limits.h>
 #include "sylvan.h"
 
+#ifdef HAVE___BUILTIN_SUB_OVERFLOW_UNSIGNED_LONG
+unsigned long snulsub(unsigned long x, unsigned long y, enum sn_error *err)
+{
+	unsigned long result;
+
+	if (!__builtin_sub_overflow(x, y, &result))
+		return result;
+
+	sneset(err, SN_ERROR_UNDERFLOW);
+	return 0;
+}
+#else
 unsigned long snulsub(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (y > x) {
@@ -11,3 +23,4 @@ unsigned long snulsub(unsigned long x, unsigned long y, enum sn_error *err)
 
 	return x - y;
 }
+#endif

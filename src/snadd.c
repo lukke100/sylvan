@@ -1,6 +1,24 @@
 #include "config.h"
+#include <limits.h>
 #include "sylvan.h"
 
+#ifdef HAVE___BUILTIN_ADD_OVERFLOW_INT
+int snadd(int x, int y, enum sn_error *err)
+{
+	int result;
+
+	if (!__builtin_add_overflow(x, y, &result))
+		return result;
+
+	if (x > 0) {
+		sneset(err, SN_ERROR_OVERFLOW);
+		return INT_MAX;
+	} else {
+		sneset(err, SN_ERROR_UNDERFLOW);
+		return INT_MIN;
+	}
+}
+#else
 int snadd(int x, int y, enum sn_error *err)
 {
 	enum sn_error tmperr;
@@ -16,3 +34,4 @@ int snadd(int x, int y, enum sn_error *err)
 
 	return result;
 }
+#endif

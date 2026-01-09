@@ -2,7 +2,9 @@ AC_DEFUN([CHECK_OVERFLOW_BUILTIN], [
 	AC_REQUIRE([AC_PROG_CC])
 	AC_MSG_CHECKING([for $1 on $2])
 
-	m4_pushdef([TEST_PROG], [AC_LANG_PROGRAM([], [[
+	m4_pushdef([TEST_PROG], [AC_LANG_PROGRAM([[
+		#include <stddef.h>
+	]], [[
 		volatile $2 result;
 		(void)$1(($2)1, ($2)1, &result);
 		return 0;

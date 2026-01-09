@@ -1,6 +1,19 @@
 #include "config.h"
+#include <limits.h>
 #include "sylvan.h"
 
+#ifdef HAVE___BUILTIN_ADD_OVERFLOW_UNSIGNED
+unsigned snuadd(unsigned x, unsigned y, enum sn_error *err)
+{
+	unsigned result;
+
+	if (!__builtin_add_overflow(x, y, &result))
+		return result;
+
+	sneset(err, SN_ERROR_OVERFLOW);
+	return UINT_MAX;
+}
+#else
 unsigned snuadd(unsigned x, unsigned y, enum sn_error *err)
 {
 	enum sn_error tmperr;
@@ -16,3 +29,4 @@ unsigned snuadd(unsigned x, unsigned y, enum sn_error *err)
 
 	return result;
 }
+#endif

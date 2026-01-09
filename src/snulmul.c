@@ -2,6 +2,18 @@
 #include <limits.h>
 #include "sylvan.h"
 
+#ifdef HAVE___BUILTIN_MUL_OVERFLOW_UNSIGNED_LONG
+unsigned long snulmul(unsigned long x, unsigned long y, enum sn_error *err)
+{
+	unsigned long result;
+
+	if (!__builtin_mul_overflow(x, y, &result))
+		return result;
+
+	sneset(err, SN_ERROR_OVERFLOW);
+	return ULONG_MAX;
+}
+#else
 unsigned long snulmul(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (x == 0)
@@ -14,3 +26,4 @@ unsigned long snulmul(unsigned long x, unsigned long y, enum sn_error *err)
 
 	return x * y;
 }
+#endif
