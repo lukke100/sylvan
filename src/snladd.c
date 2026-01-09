@@ -2,7 +2,7 @@
 #include <limits.h>
 #include "sylvan.h"
 
-#ifdef HAVE___BUILTIN_ADD_OVERFLOW
+#ifdef HAVE___BUILTIN_ADD_OVERFLOW_ADD
 long snladd(long x, long y, enum sn_error *err)
 {
 	long result;

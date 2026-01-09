@@ -18,9 +18,9 @@ AC_CHECK_HEADERS([limits.h])
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
 
-CHECK_OVERFLOW_BUILTIN([__builtin_add_overflow])
-CHECK_OVERFLOW_BUILTIN([__builtin_sub_overflow])
-CHECK_OVERFLOW_BUILTIN([__builtin_mul_overflow])
+CHECK_OVERFLOW_BUILTIN([__builtin_add_overflow], [long])
+CHECK_OVERFLOW_BUILTIN([__builtin_sub_overflow], [long])
+CHECK_OVERFLOW_BUILTIN([__builtin_mul_overflow], [long])
 
 # Checks for library functions.
 AC_CHECK_FUNCS([memcpy])
