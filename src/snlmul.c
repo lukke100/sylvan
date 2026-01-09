@@ -3,6 +3,23 @@
 #include <stdlib.h>
 #include "sylvan.h"
 
+#ifdef HAVE___BUILTIN_MUL_OVERFLOW_LONG
+long snlmul(long x, long y, enum sn_error *err)
+{
+	long result;
+
+	if (!__builtin_mul_overflow(x, y, &result))
+		return result;
+
+	if ((x < 0) == (y < 0)) {
+		sneset(err, SN_ERROR_OVERFLOW);
+		return LONG_MAX;
+	} else {
+		sneset(err, SN_ERROR_UNDERFLOW);
+		return LONG_MIN;
+	}
+}
+#else
 long snlmul(long x, long y, enum sn_error *err)
 {
 	long max, min;
@@ -34,3 +51,4 @@ long snlmul(long x, long y, enum sn_error *err)
 
 	return max * min;
 }
+#endif
