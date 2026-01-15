@@ -5,7 +5,7 @@ AC_DEFUN([CHECK_OVERFLOW_BUILTIN], [
 	m4_pushdef([TEST_PROG], [AC_LANG_PROGRAM([[
 		#include <stddef.h>
 	]], [[
-		volatile $2 result;
+		$2 result;
 		(void)$1(($2)1, ($2)1, &result);
 		return 0;
 	]])])

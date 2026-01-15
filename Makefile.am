@@ -1,2 +1,2 @@
-SUBDIRS = bench include src tests
+SUBDIRS = include src tests bench
 ACLOCAL_AMFLAGS = -I m4

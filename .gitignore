@@ -2,6 +2,10 @@
 *.lo
 *.o
 
+bench/*
+!bench/Makefile.am
+!bench/*.c
+
 tests/*
 !tests/Makefile.am
 !tests/*.c

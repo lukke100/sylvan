@@ -32,3 +32,6 @@ libsylvan_la_SOURCES = \
 	snrev.c \
 	snget.c \
 	sneset.c
+
+.PHONY: bench-local
+bench-local: $(lib_LTLIBRARIES)
