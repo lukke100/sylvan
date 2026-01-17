@@ -2,82 +2,31 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 LDADD = $(top_builddir)/src/libsylvan.la
 
 check_PROGRAMS = \
-	t001_snladd \
-	t002_snlsub \
-	t003_snlmul \
-	t004_snldiv \
-	t005_snlmod \
-	t006_snlgcd \
-	t007_snllcm \
-	t008_snlmax \
-	t009_snlmin \
-	t011_snadd \
-	t012_snsub \
-	t013_snmul \
-	t014_sndiv \
-	t015_snmod \
-	t016_sngcd \
-	t017_snlcm \
-	t018_snmax \
-	t019_snmin \
-	t021_skladd \
-	t022_sklsub \
-	t023_sklmul \
-	t024_skldiv \
+	t001_snladd t002_snlsub t003_snlmul t004_snldiv t005_snlmod \
+	t006_snlgcd t007_snllcm t008_snlmax t009_snlmin \
+	t011_snadd t012_snsub t013_snmul t014_sndiv t015_snmod \
+	t016_sngcd t017_snlcm t018_snmax t019_snmin \
+	t021_skladd t022_sklsub t023_sklmul t024_skldiv \
 	t025_snlpow \
-	t031_skadd \
-	t032_sksub \
-	t033_skmul \
-	t034_skdiv \
+	t031_skadd t032_sksub t033_skmul t034_skdiv \
 	t035_snpow \
-	t041_snzadd \
-	t042_snzsub \
-	t043_snzmul \
-	t044_snzdiv \
-	t045_snzmod \
-	t046_snzgcd \
-	t047_snzlcm \
-	t048_snzmax \
-	t049_snzmin \
-	t051_skzadd \
-	t053_skzmul \
-	t054_skzdiv \
+	t041_snzadd t042_snzsub t043_snzmul t044_snzdiv t045_snzmod \
+	t046_snzgcd t047_snzlcm t048_snzmax t049_snzmin \
+	t051_skzadd t053_skzmul t054_skzdiv \
 	t055_snzpow \
-	t061_snuladd \
-	t062_snulsub \
-	t063_snulmul \
-	t064_snuldiv \
-	t065_snulmod \
-	t066_snulgcd \
-	t067_snullcm \
-	t068_snulmax \
-	t069_snulmin \
-	t071_skuladd \
-	t073_skulmul \
-	t074_skuldiv \
+	t061_snuladd t062_snulsub t063_snulmul t064_snuldiv t065_snulmod \
+	t066_snulgcd t067_snullcm t068_snulmax t069_snulmin \
+	t071_skuladd t073_skulmul t074_skuldiv \
 	t075_snulpow \
-	t081_snuadd \
-	t082_snusub \
-	t083_snumul \
-	t084_snudiv \
-	t085_snumod \
-	t086_snugcd \
-	t087_snulcm \
-	t088_snumax \
-	t089_snumin \
-	t091_skuadd \
-	t093_skumul \
-	t094_skudiv \
+	t081_snuadd t082_snusub t083_snumul t084_snudiv t085_snumod \
+	t086_snugcd t087_snulcm t088_snumax t089_snumin \
+	t091_skuadd t093_skumul t094_skudiv \
 	t095_snupow \
 	t101_sntok \
-	t102_sna2l \
-	t103_sna2i \
+	t102_sna2l t103_sna2i \
 	t104_snuc2c \
-	t108_snqt \
-	t109_snunqt \
-	t111_snl2i \
-	t112_snul2u \
-	t113_snu2uc \
+	t108_snqt t109_snunqt \
+	t111_snl2i t112_snul2u t113_snu2uc \
 	t121_snrev \
 	t191_sneset \
 	t201_snget
