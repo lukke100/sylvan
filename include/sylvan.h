@@ -45,12 +45,18 @@ long skldiv(long x, long y, long bias);
 
 long snlpow(long x, long y, enum sn_error *err);
 
+long snlabs(long x, enum sn_error *err);
+long snlsgn(long x);
+
 int skadd(int x, int y, int bias);
 int sksub(int x, int y, int bias);
 int skmul(int x, int y);
 int skdiv(int x, int y, int bias);
 
 int snpow(int x, int y, enum sn_error *err);
+
+int snabs(int x, enum sn_error *err);
+int snsgn(int x);
 
 size_t snzadd(size_t x, size_t y, enum sn_error *err);
 size_t snzsub(size_t x, size_t y, enum sn_error *err);
@@ -69,6 +75,8 @@ size_t skzdiv(size_t x, size_t y, size_t bias);
 
 size_t snzpow(size_t x, size_t y, enum sn_error *err);
 
+size_t snzsgn(size_t x);
+
 unsigned long snuladd(unsigned long x, unsigned long y, enum sn_error *err);
 unsigned long snulsub(unsigned long x, unsigned long y, enum sn_error *err);
 unsigned long snulmul(unsigned long x, unsigned long y, enum sn_error *err);
@@ -86,6 +94,8 @@ unsigned long skuldiv(unsigned long x, unsigned long y, unsigned long bias);
 
 unsigned long snulpow(unsigned long x, unsigned long y, enum sn_error *err);
 
+unsigned long snulsgn(unsigned long x);
+
 unsigned snuadd(unsigned x, unsigned y, enum sn_error *err);
 unsigned snusub(unsigned x, unsigned y, enum sn_error *err);
 unsigned snumul(unsigned x, unsigned y, enum sn_error *err);
@@ -102,6 +112,8 @@ unsigned skumul(unsigned x, unsigned y);
 unsigned skudiv(unsigned x, unsigned y, unsigned bias);
 
 unsigned snupow(unsigned x, unsigned y, enum sn_error *err);
+
+unsigned snusgn(unsigned x);
 
 size_t sntok(int *last, const char src[], size_t srcsz,
              int classify(char ch, int last), enum sn_error *err);
