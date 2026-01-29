@@ -8,20 +8,14 @@ size_t snzpow(size_t x, size_t y, enum sn_error *err)
 	size_t result, tmpbase, tmpexp;
 
 	tmperr  = SN_ERROR_NONE;
-	result  = 1;
 	tmpbase = x;
-	tmpexp  = y;
+	result  = 1;
 
-	while (1) {
+	for (tmpexp = y; tmpexp > 0; tmpexp >>= 1) {
 		if (tmpexp % 2 != 0)
 			result = snzmul(result, tmpbase, &tmperr);
 
-		tmpexp >>= 1;
-
-		if (tmpexp == 0)
-			break;
-
-		tmpbase = snzmul(tmpbase, tmpbase, &tmperr);
+		tmpbase = snzmul(tmpbase, tmpbase, NULL);
 	}
 
 	if (tmperr != SN_ERROR_NONE)
