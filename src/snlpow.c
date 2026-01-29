@@ -19,7 +19,7 @@ long snlpow(long x, long y, enum sn_error *err)
 	tmpbase = labs(x);
 	result  = 1;
 
-	for (tmpexp = y; tmpexp != 0; tmpexp /= 2) {
+	for (tmpexp = y; tmpexp != 0; tmpexp = ldiv(tmpexp, 2).quot) {
 		if (tmpexp % 2 != 0)
 			result = snlmul(result, tmpbase, &tmperr);
 
@@ -32,7 +32,7 @@ long snlpow(long x, long y, enum sn_error *err)
 	tmpbase = -snlsgn(x) * x;
 	result  = -1;
 
-	for (tmpexp = y; tmpexp != 0; tmpexp /= 2) {
+	for (tmpexp = y; tmpexp != 0; tmpexp = ldiv(tmpexp, 2).quot) {
 		if (tmpexp % 2 != 0)
 			result = snlnml(result, tmpbase, &tmperr);
 
