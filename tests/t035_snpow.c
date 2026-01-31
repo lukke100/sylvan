@@ -44,8 +44,8 @@ int main(void)
 	assert(snpow(INT_MIN,      1, NULL) == INT_MIN);
 	assert(snpow(INT_MIN,     -1, NULL) == 0);
 	assert(snpow(INT_MIN, -32766, NULL) == 0);
-	assert(snpow(INT_MIN, -32767, NULL) == 0);
 	assert(snpow(INT_MIN,  32767, NULL) == INT_MIN);
+	assert(snpow(INT_MIN, -32767, NULL) == 0);
 
 #if INT_MAX + INT_MIN <= 0
 	assert(snpow(INT_MIN, 32766, NULL) == INT_MAX);

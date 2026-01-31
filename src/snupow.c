@@ -1,7 +1,7 @@
 #include "config.h"
 #include "sylvan.h"
 
-unsigned snupow(unsigned x, unsigned y, enum sn_error *err)
+unsigned snupow(unsigned x, int y, enum sn_error *err)
 {
 	enum sn_error tmperr;
 	unsigned long tmpval;

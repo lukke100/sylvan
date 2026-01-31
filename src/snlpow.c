@@ -3,10 +3,11 @@
 #include <stdlib.h>
 #include "sylvan.h"
 
-long snlpow(long x, long y, enum sn_error *err)
+long snlpow(long x, int y, enum sn_error *err)
 {
 	enum sn_error tmperr;
-	long result, tmpbase, tmpexp;
+	long result, tmpbase;
+	int tmpexp;
 
 	if ((x > 1 || x < -1) && y < 0) {
 		sneset(err, SN_ERROR_UNDEFINED);
@@ -19,7 +20,7 @@ long snlpow(long x, long y, enum sn_error *err)
 	tmpbase = labs(x);
 	result  = 1;
 
-	for (tmpexp = y; tmpexp != 0; tmpexp = ldiv(tmpexp, 2).quot) {
+	for (tmpexp = y; tmpexp != 0; tmpexp = div(tmpexp, 2).quot) {
 		if (tmpexp % 2 != 0)
 			result = snlmul(result, tmpbase, &tmperr);
 
@@ -32,7 +33,7 @@ long snlpow(long x, long y, enum sn_error *err)
 	tmpbase = -snlsgn(x) * x;
 	result  = -1;
 
-	for (tmpexp = y; tmpexp != 0; tmpexp = ldiv(tmpexp, 2).quot) {
+	for (tmpexp = y; tmpexp != 0; tmpexp = div(tmpexp, 2).quot) {
 		if (tmpexp % 2 != 0)
 			result = snlnml(result, tmpbase, &tmperr);
 

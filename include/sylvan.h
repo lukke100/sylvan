@@ -43,7 +43,7 @@ long sklsub(long x, long y, long bias);
 long sklmul(long x, long y);
 long skldiv(long x, long y, long bias);
 
-long snlpow(long x, long y, enum sn_error *err);
+long snlpow(long x, int y, enum sn_error *err);
 
 long snlabs(long x, enum sn_error *err);
 long snlsgn(long x);
@@ -73,7 +73,7 @@ size_t skzadd(size_t x, size_t y);
 size_t skzmul(size_t x, size_t y);
 size_t skzdiv(size_t x, size_t y, size_t bias);
 
-size_t snzpow(size_t x, size_t y, enum sn_error *err);
+size_t snzpow(size_t x, int y, enum sn_error *err);
 
 size_t snzsgn(size_t x);
 
@@ -92,7 +92,7 @@ unsigned long skqadd(unsigned long x, unsigned long y);
 unsigned long skqmul(unsigned long x, unsigned long y);
 unsigned long skqdiv(unsigned long x, unsigned long y, unsigned long bias);
 
-unsigned long snqpow(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqpow(unsigned long x, int y, enum sn_error *err);
 
 unsigned long snqsgn(unsigned long x);
 
@@ -111,7 +111,7 @@ unsigned skuadd(unsigned x, unsigned y);
 unsigned skumul(unsigned x, unsigned y);
 unsigned skudiv(unsigned x, unsigned y, unsigned bias);
 
-unsigned snupow(unsigned x, unsigned y, enum sn_error *err);
+unsigned snupow(unsigned x, int y, enum sn_error *err);
 
 unsigned snusgn(unsigned x);
 
