@@ -17,11 +17,11 @@ check_PROGRAMS = \
 	t051_skzadd t053_skzmul t054_skzdiv \
 	t055_snzpow \
 	t059_snzsgn \
-	t061_snuladd t062_snulsub t063_snulmul t064_snuldiv t065_snulmod \
-	t066_snulgcd t067_snullcm t068_snulmax t069_snulmin \
-	t071_skuladd t073_skulmul t074_skuldiv \
-	t075_snulpow \
-	t079_snulsgn \
+	t061_snqadd t062_snqsub t063_snqmul t064_snqdiv t065_snqmod \
+	t066_snqgcd t067_snqlcm t068_snqmax t069_snqmin \
+	t071_skqadd t073_skqmul t074_skqdiv \
+	t075_snqpow \
+	t079_snqsgn \
 	t081_snuadd t082_snusub t083_snumul t084_snudiv t085_snumod \
 	t086_snugcd t087_snulcm t088_snumax t089_snumin \
 	t091_skuadd t093_skumul t094_skudiv \
@@ -31,7 +31,7 @@ check_PROGRAMS = \
 	t102_sna2l t103_sna2i \
 	t104_snuc2c \
 	t108_snqt t109_snunqt \
-	t111_snl2i t112_snul2u t113_snu2uc \
+	t111_snl2i t112_snq2u t113_snu2uc \
 	t121_snrev \
 	t133_snlnml \
 	t191_sneset \

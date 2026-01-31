@@ -1,7 +1,7 @@
 #include "config.h"
 #include "sylvan.h"
 
-unsigned long snulmax(unsigned long x, unsigned long y)
+unsigned long snqmax(unsigned long x, unsigned long y)
 {
 	if (y > x)
 		return y;

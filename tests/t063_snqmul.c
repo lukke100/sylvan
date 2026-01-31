@@ -8,15 +8,15 @@ int main(void)
 {
 	enum sn_error err;
 
-	assert(snuladd(ULONG_MAX, 0, NULL) == ULONG_MAX);
-	assert(snuladd(ULONG_MAX, 1, NULL) == ULONG_MAX);
+	assert(snqmul(ULONG_MAX,         2, NULL) == ULONG_MAX);
+	assert(snqmul(ULONG_MAX, ULONG_MAX, NULL) == ULONG_MAX);
 
 	err = SN_ERROR_NONE;
-	snuladd(ULONG_MAX, 0, &err);
-	assert(err == SN_ERROR_NONE);
+	snqmul(ULONG_MAX, 2, &err);
+	assert(err == SN_ERROR_OVERFLOW);
 
 	err = SN_ERROR_NONE;
-	snuladd(ULONG_MAX, 1, &err);
+	snqmul(ULONG_MAX, ULONG_MAX, &err);
 	assert(err == SN_ERROR_OVERFLOW);
 
 	return 0;

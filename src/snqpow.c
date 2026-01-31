@@ -1,7 +1,7 @@
 #include "config.h"
 #include "sylvan.h"
 
-unsigned long snulpow(unsigned long x, unsigned long y, enum sn_error *err)
+unsigned long snqpow(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	enum sn_error tmperr;
 	unsigned long result, tmpbase, tmpexp;
@@ -12,9 +12,9 @@ unsigned long snulpow(unsigned long x, unsigned long y, enum sn_error *err)
 
 	for (tmpexp = y; tmpexp > 0; tmpexp >>= 1) {
 		if (tmpexp % 2 != 0)
-			result = snulmul(result, tmpbase, &tmperr);
+			result = snqmul(result, tmpbase, &tmperr);
 
-		tmpbase = snulmul(tmpbase, tmpbase, NULL);
+		tmpbase = snqmul(tmpbase, tmpbase, NULL);
 	}
 
 	if (tmperr != SN_ERROR_NONE)

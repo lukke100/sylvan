@@ -1,7 +1,7 @@
 #include "config.h"
 #include "sylvan.h"
 
-unsigned long snulgcd(unsigned long x, unsigned long y)
+unsigned long snqgcd(unsigned long x, unsigned long y)
 {
 	for (;;) {
 		if (x == 0)

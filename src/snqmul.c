@@ -3,7 +3,7 @@
 #include "sylvan.h"
 
 #ifdef HAVE___BUILTIN_MUL_OVERFLOW_UNSIGNED_LONG
-unsigned long snulmul(unsigned long x, unsigned long y, enum sn_error *err)
+unsigned long snqmul(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	unsigned long result;
 
@@ -14,7 +14,7 @@ unsigned long snulmul(unsigned long x, unsigned long y, enum sn_error *err)
 	return ULONG_MAX;
 }
 #else
-unsigned long snulmul(unsigned long x, unsigned long y, enum sn_error *err)
+unsigned long snqmul(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (x == 0)
 		return 0;

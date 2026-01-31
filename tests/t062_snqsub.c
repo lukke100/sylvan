@@ -7,15 +7,15 @@ int main(void)
 {
 	enum sn_error err;
 
-	assert(snulsub(1, 1, NULL) == 0);
-	assert(snulsub(0, 1, NULL) == 0);
+	assert(snqsub(1, 1, NULL) == 0);
+	assert(snqsub(0, 1, NULL) == 0);
 
 	err = SN_ERROR_NONE;
-	snulsub(1, 1, &err);
+	snqsub(1, 1, &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	snulsub(0, 1, &err);
+	snqsub(0, 1, &err);
 	assert(err == SN_ERROR_UNDERFLOW);
 
 	return 0;

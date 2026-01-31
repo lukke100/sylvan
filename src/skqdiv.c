@@ -2,7 +2,7 @@
 #include <limits.h>
 #include "sylvan.h"
 
-unsigned long skuldiv(unsigned long x, unsigned long y, unsigned long bias)
+unsigned long skqdiv(unsigned long x, unsigned long y, unsigned long bias)
 {
 	if (y == 0) {
 		if (x == 0)

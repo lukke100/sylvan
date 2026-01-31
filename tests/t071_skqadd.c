@@ -5,7 +5,7 @@
 
 int main(void)
 {
-	assert(skuladd(ULONG_MAX, 1) == ULONG_MAX);
+	assert(skqadd(ULONG_MAX, 1) == ULONG_MAX);
 
 	return 0;
 }

@@ -2,7 +2,7 @@
 #include <limits.h>
 #include "sylvan.h"
 
-unsigned long snuldiv(unsigned long x, unsigned long y, enum sn_error *err)
+unsigned long snqdiv(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (y == 0) {
 		sneset(err, SN_ERROR_UNDEFINED);

@@ -5,8 +5,8 @@
 
 int main(void)
 {
-	assert(skulmul(ULONG_MAX,         2) == ULONG_MAX);
-	assert(skulmul(ULONG_MAX, ULONG_MAX) == ULONG_MAX);
+	assert(skqmul(ULONG_MAX,         2) == ULONG_MAX);
+	assert(skqmul(ULONG_MAX, ULONG_MAX) == ULONG_MAX);
 
 	return 0;
 }

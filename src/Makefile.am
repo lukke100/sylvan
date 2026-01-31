@@ -16,11 +16,11 @@ libsylvan_la_SOURCES = \
 	skzadd.c skzmul.c skzdiv.c \
 	snzpow.c \
 	snzsgn.c \
-	snuladd.c snulsub.c snulmul.c snuldiv.c snulmod.c \
-	snulgcd.c snullcm.c snulmax.c snulmin.c \
-	skuladd.c skulmul.c skuldiv.c \
-	snulpow.c \
-	snulsgn.c \
+	snqadd.c snqsub.c snqmul.c snqdiv.c snqmod.c \
+	snqgcd.c snqlcm.c snqmax.c snqmin.c \
+	skqadd.c skqmul.c skqdiv.c \
+	snqpow.c \
+	snqsgn.c \
 	snuadd.c snusub.c snumul.c snudiv.c snumod.c \
 	snugcd.c snulcm.c snumax.c snumin.c \
 	skuadd.c skumul.c skudiv.c \
@@ -31,7 +31,7 @@ libsylvan_la_SOURCES = \
 	sna2i.c \
 	snuc2c.c \
 	snl2i.c \
-	snul2u.c \
+	snq2u.c \
 	snu2uc.c \
 	snqt.c snunqt.c \
 	snrev.c \

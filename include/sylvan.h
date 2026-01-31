@@ -77,24 +77,24 @@ size_t snzpow(size_t x, size_t y, enum sn_error *err);
 
 size_t snzsgn(size_t x);
 
-unsigned long snuladd(unsigned long x, unsigned long y, enum sn_error *err);
-unsigned long snulsub(unsigned long x, unsigned long y, enum sn_error *err);
-unsigned long snulmul(unsigned long x, unsigned long y, enum sn_error *err);
-unsigned long snuldiv(unsigned long x, unsigned long y, enum sn_error *err);
-unsigned long snulmod(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqadd(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqsub(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqmul(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqdiv(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqmod(unsigned long x, unsigned long y, enum sn_error *err);
 
-unsigned long snulgcd(unsigned long x, unsigned long y);
-unsigned long snullcm(unsigned long x, unsigned long y, enum sn_error *err);
-unsigned long snulmax(unsigned long x, unsigned long y);
-unsigned long snulmin(unsigned long x, unsigned long y);
+unsigned long snqgcd(unsigned long x, unsigned long y);
+unsigned long snqlcm(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqmax(unsigned long x, unsigned long y);
+unsigned long snqmin(unsigned long x, unsigned long y);
 
-unsigned long skuladd(unsigned long x, unsigned long y);
-unsigned long skulmul(unsigned long x, unsigned long y);
-unsigned long skuldiv(unsigned long x, unsigned long y, unsigned long bias);
+unsigned long skqadd(unsigned long x, unsigned long y);
+unsigned long skqmul(unsigned long x, unsigned long y);
+unsigned long skqdiv(unsigned long x, unsigned long y, unsigned long bias);
 
-unsigned long snulpow(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqpow(unsigned long x, unsigned long y, enum sn_error *err);
 
-unsigned long snulsgn(unsigned long x);
+unsigned long snqsgn(unsigned long x);
 
 unsigned snuadd(unsigned x, unsigned y, enum sn_error *err);
 unsigned snusub(unsigned x, unsigned y, enum sn_error *err);
@@ -130,7 +130,7 @@ size_t snunqt(char dest[], size_t destsz, size_t *pos,
               const char src[], size_t srcsz, enum sn_error *err);
 
 int snl2i(long x, enum sn_error *err);
-unsigned snul2u(unsigned long x, enum sn_error *err);
+unsigned snq2u(unsigned long x, enum sn_error *err);
 unsigned char snu2uc(unsigned x, enum sn_error *err);
 
 void snrev(char buf[], size_t bufsz, enum sn_error *err);

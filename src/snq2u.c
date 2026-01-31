@@ -2,7 +2,7 @@
 #include <limits.h>
 #include "sylvan.h"
 
-unsigned snul2u(unsigned long x, enum sn_error *err)
+unsigned snq2u(unsigned long x, enum sn_error *err)
 {
 	if (x > UINT_MAX) {
 		sneset(err, SN_ERROR_OVERFLOW);

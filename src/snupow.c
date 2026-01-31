@@ -8,8 +8,8 @@ unsigned snupow(unsigned x, unsigned y, enum sn_error *err)
 	unsigned result;
 
 	tmperr = SN_ERROR_NONE;
-	tmpval = snulpow(x, y, &tmperr);
-	result = snul2u(tmpval, &tmperr);
+	tmpval = snqpow(x, y, &tmperr);
+	result = snq2u(tmpval, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE)
 		sneset(err, tmperr);

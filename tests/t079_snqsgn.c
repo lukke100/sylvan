@@ -5,8 +5,8 @@
 
 int main(void)
 {
-	assert(snulsgn(0)         == 0);
-	assert(snulsgn(ULONG_MAX) == 1);
+	assert(snqsgn(0)         == 0);
+	assert(snqsgn(ULONG_MAX) == 1);
 
 	return 0;
 }

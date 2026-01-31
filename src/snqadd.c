@@ -3,7 +3,7 @@
 #include "sylvan.h"
 
 #ifdef HAVE___BUILTIN_ADD_OVERFLOW_UNSIGNED_LONG
-unsigned long snuladd(unsigned long x, unsigned long y, enum sn_error *err)
+unsigned long snqadd(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	unsigned long result;
 
@@ -14,7 +14,7 @@ unsigned long snuladd(unsigned long x, unsigned long y, enum sn_error *err)
 	return ULONG_MAX;
 }
 #else
-unsigned long snuladd(unsigned long x, unsigned long y, enum sn_error *err)
+unsigned long snqadd(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (ULONG_MAX - x < y) {
 		sneset(err, SN_ERROR_OVERFLOW);

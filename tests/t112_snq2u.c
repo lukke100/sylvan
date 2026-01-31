@@ -10,11 +10,11 @@ int main(void)
 	enum sn_error err;
 #endif
 
-	assert(snul2u(ULONG_MAX, NULL) == UINT_MAX);
+	assert(snq2u(ULONG_MAX, NULL) == UINT_MAX);
 
 #if LONG_MAX > INT_MAX
 	err = SN_ERROR_NONE;
-	snul2u(ULONG_MAX, &err);
+	snq2u(ULONG_MAX, &err);
 	assert(err == SN_ERROR_OVERFLOW);
 #endif
 

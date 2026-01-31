@@ -2,12 +2,12 @@
 #include <limits.h>
 #include "sylvan.h"
 
-unsigned long snullcm(unsigned long x, unsigned long y, enum sn_error *err)
+unsigned long snqlcm(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	unsigned long gcd, result;
 	enum sn_error tmperr;
 
-	gcd = snulgcd(x, y);
+	gcd = snqgcd(x, y);
 
 	if (gcd == 0)
 		return 0;
@@ -16,7 +16,7 @@ unsigned long snullcm(unsigned long x, unsigned long y, enum sn_error *err)
 	y /= gcd;
 
 	tmperr = SN_ERROR_NONE;
-	result = snulmul(x, y, &tmperr);
+	result = snqmul(x, y, &tmperr);
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
 		sneset(err, SN_ERROR_OVERFLOW);
@@ -24,7 +24,7 @@ unsigned long snullcm(unsigned long x, unsigned long y, enum sn_error *err)
 	}
 
 	tmperr = SN_ERROR_NONE;
-	result = snulmul(result, gcd, &tmperr);
+	result = snqmul(result, gcd, &tmperr);
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
 		sneset(err, SN_ERROR_OVERFLOW);

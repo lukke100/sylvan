@@ -4,8 +4,7 @@
 
 int main(void)
 {
-	assert(snulgcd(2, 0) == 2);
-	assert(snulgcd(0, 0) == 0);
-
+	assert(snqmax(1, 0) == 1);
+	assert(snqmax(0, 1) == 1);
 	return 0;
 }

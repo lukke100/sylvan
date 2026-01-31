@@ -8,9 +8,9 @@ unsigned snudiv(unsigned x, unsigned y, enum sn_error *err)
 	unsigned result;
 
 	tmperr1 = SN_ERROR_NONE;
-	tmpval  = snuldiv(x, y, &tmperr1);
+	tmpval  = snqdiv(x, y, &tmperr1);
 	tmperr2 = SN_ERROR_NONE;
-	result  = snul2u(tmpval, &tmperr2);
+	result  = snq2u(tmpval, &tmperr2);
 
 	if (tmperr1 != SN_ERROR_NONE)
 		sneset(err, tmperr1);

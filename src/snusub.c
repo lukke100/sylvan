@@ -21,8 +21,8 @@ unsigned snusub(unsigned x, unsigned y, enum sn_error *err)
 	unsigned result;
 
 	tmperr = SN_ERROR_NONE;
-	tmpval = snulsub(x, y, &tmperr);
-	result = snul2u(tmpval, NULL);
+	tmpval = snqsub(x, y, &tmperr);
+	result = snq2u(tmpval, NULL);
 
 	if (tmperr != SN_ERROR_NONE)
 		sneset(err, tmperr);

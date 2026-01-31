@@ -3,7 +3,7 @@
 #include "sylvan.h"
 
 #ifdef HAVE___BUILTIN_SUB_OVERFLOW_UNSIGNED_LONG
-unsigned long snulsub(unsigned long x, unsigned long y, enum sn_error *err)
+unsigned long snqsub(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	unsigned long result;
 
@@ -14,7 +14,7 @@ unsigned long snulsub(unsigned long x, unsigned long y, enum sn_error *err)
 	return 0;
 }
 #else
-unsigned long snulsub(unsigned long x, unsigned long y, enum sn_error *err)
+unsigned long snqsub(unsigned long x, unsigned long y, enum sn_error *err)
 {
 	if (y > x) {
 		sneset(err, SN_ERROR_UNDERFLOW);
