@@ -137,6 +137,8 @@ void snrev(char buf[], size_t bufsz, enum sn_error *err);
 
 long snlnml(long x, long y, enum sn_error *err);
 
+int snnml(int x, int y, enum sn_error *err);
+
 size_t snget(char buf[], size_t bufsz, size_t *pos,
              size_t req, FILE *stream, enum sn_error *err);
 #endif
