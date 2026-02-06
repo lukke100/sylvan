@@ -18,7 +18,17 @@ int main(void)
 	assert(snldiv(LONG_MIN, -1, NULL) == LONG_MAX);
 #endif
 
-	assert(snldiv(0, 1, NULL) == 0);
+	assert(snldiv( 0,  1, NULL) ==  0);
+
+	assert(snldiv( 6,  3, NULL) ==  2);
+	assert(snldiv(-6,  3, NULL) == -2);
+	assert(snldiv( 6, -3, NULL) == -2);
+	assert(snldiv(-6, -3, NULL) ==  2);
+
+	assert(snldiv( 7,  3, NULL) ==  2);
+	assert(snldiv(-7,  3, NULL) == -3);
+	assert(snldiv( 7, -3, NULL) == -2);
+	assert(snldiv(-7, -3, NULL) ==  3);
 
 	err = SN_ERROR_NONE;
 	(void)snldiv(0, 0, &err);
@@ -44,6 +54,38 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snldiv(0, 1, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snldiv(6, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snldiv(-6, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snldiv(6, -3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snldiv(-6, -3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snldiv(7, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snldiv(-7, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snldiv(7, -3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snldiv(-7, -3, &err);
 	assert(err == SN_ERROR_NONE);
 
 	return 0;

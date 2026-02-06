@@ -20,6 +20,16 @@ int main(void)
 
 	assert(sndiv(0, 1, NULL) == 0);
 
+	assert(sndiv( 6,  3, NULL) ==  2);
+	assert(sndiv(-6,  3, NULL) == -2);
+	assert(sndiv( 6, -3, NULL) == -2);
+	assert(sndiv(-6, -3, NULL) ==  2);
+
+	assert(sndiv( 7,  3, NULL) ==  2);
+	assert(sndiv(-7,  3, NULL) == -3);
+	assert(sndiv( 7, -3, NULL) == -2);
+	assert(sndiv(-7, -3, NULL) ==  3);
+
 	err = SN_ERROR_NONE;
 	sndiv(0, 0, &err);
 	assert(err == SN_ERROR_UNDEFINED);
@@ -44,6 +54,38 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	sndiv(0, 1, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)sndiv(6, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)sndiv(-6, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)sndiv(6, -3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)sndiv(-6, -3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)sndiv(7, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)sndiv(-7, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)sndiv(7, -3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)sndiv(-7, -3, &err);
 	assert(err == SN_ERROR_NONE);
 
 	return 0;

@@ -5,6 +5,8 @@
 
 long snldiv(long x, long y, enum sn_error *err)
 {
+	ldiv_t tmp;
+
 	if (y == 0) {
 		sneset(err, SN_ERROR_UNDEFINED);
 
@@ -17,22 +19,21 @@ long snldiv(long x, long y, enum sn_error *err)
 	}
 
 #if LONG_MAX + LONG_MIN > 0
-	if (y > 0 || y < ldiv(LONG_MAX, LONG_MIN).quot)
-		return ldiv(x, y).quot;
-
-	if (x > y * LONG_MIN) {
+	if (y < 0 && x > snlmul(y, LONG_MIN, NULL)) {
 		sneset(err, SN_ERROR_UNDERFLOW);
 		return LONG_MIN;
 	}
 #elif LONG_MAX + LONG_MIN < 0
-	if (y > 0 || y < ldiv(LONG_MIN, LONG_MAX).quot)
-		return ldiv(x, y).quot;
-
-	if (x < y * LONG_MAX) {
+	if (y < 0 && x < snlmul(y, LONG_MAX, NULL)) {
 		sneset(err, SN_ERROR_OVERFLOW);
 		return LONG_MAX;
 	}
 #endif
 
-	return ldiv(x, y).quot;
+	tmp = ldiv(x, y);
+
+	if (tmp.rem < 0)
+		tmp.quot -= snlsgn(y);
+
+	return tmp.quot;
 }
