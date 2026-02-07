@@ -3,29 +3,23 @@
 #include <stddef.h>
 #include "sylvan.h"
 
+static const int SN_LONG_BIT = sizeof(long) * CHAR_BIT;
+
 long snlshl(long x, int y, enum sn_error *err)
 {
 	enum sn_error tmperr;
 
-	if (y <= snlnml(sizeof(x), CHAR_BIT, NULL)) {
-		if (x < 0)
-			return -1;
+	if (snabs(y, NULL) >= SN_LONG_BIT) {
+		x = snldiv(snlsgn(x), y < 0, NULL);
 
-		return 0;
-	}
-
-	if (y >= snmul(sizeof(x), CHAR_BIT, NULL)) {
-		if (x > 0) {
+		if (x == LONG_MAX)
 			sneset(err, SN_ERROR_OVERFLOW);
-			return LONG_MAX;
-		}
-
-		if (x < 0) {
+		else if (x == LONG_MIN)
 			sneset(err, SN_ERROR_UNDERFLOW);
-			return LONG_MIN;
-		}
+		else if (x == 1)
+			--x;
 
-		return 0;
+		return x;
 	}
 
 	while (y < 0) {
