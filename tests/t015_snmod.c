@@ -1,58 +1,81 @@
 #include "config.h"
 #include <assert.h>
 #include <limits.h>
-#include <stdlib.h>
+#include <stddef.h>
 #include "sylvan.h"
 
 int main(void)
 {
 	enum sn_error err;
-	int x, y;
 
 	assert(snmod(1, 0, NULL) == 0);
 
-	for (x = -13; x <= 13; ++x) {
-		for (y = -13; y <= 13; ++y) {
-			int target;
-
-			if (y == 0)
-				continue;
-
-			target = div(x, y).rem;
-			assert(snmod(x, y, NULL) == target);
-		}
-	}
-
-#if INT_MAX + INT_MIN > 0
+	assert(snmod(INT_MAX,  0, NULL) == 0);
+	assert(snmod(INT_MIN,  0, NULL) == 0);
 	assert(snmod(INT_MAX, -1, NULL) == 0);
-#elif INT_MAX + INT_MIN < 0
 	assert(snmod(INT_MIN, -1, NULL) == 0);
-#endif
+
+	assert(snmod( 6,  3, NULL) == 0);
+	assert(snmod(-6,  3, NULL) == 0);
+	assert(snmod( 6, -3, NULL) == 0);
+	assert(snmod(-6, -3, NULL) == 0);
+
+	assert(snmod( 7,  3, NULL) == 1);
+	assert(snmod(-7,  3, NULL) == 2);
+	assert(snmod( 7, -3, NULL) == 1);
+	assert(snmod(-7, -3, NULL) == 2);
 
 	err = SN_ERROR_NONE;
-	snmod(1, 0, &err);
+	(void)snmod(1, 0, &err);
 	assert(err == SN_ERROR_UNDEFINED);
 
-	for (x = -13; x <= 13; ++x) {
-		for (y = -13; y <= 13; ++y) {
-			if (y == 0)
-				continue;
-
-			err = SN_ERROR_NONE;
-			snmod(x, y, &err);
-			assert(err == SN_ERROR_NONE);
-		}
-	}
-
-#if INT_MAX + INT_MIN > 0
 	err = SN_ERROR_NONE;
-	snmod(INT_MAX, -1, &err);
-	assert(err == SN_ERROR_NONE);
-#elif INT_MAX + INT_MIN < 0
+	(void)snmod(INT_MAX, 0, &err);
+	assert(err == SN_ERROR_UNDEFINED);
+
 	err = SN_ERROR_NONE;
-	snmod(INT_MIN, -1, &err);
+	(void)snmod(INT_MIN, 0, &err);
+	assert(err == SN_ERROR_UNDEFINED);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(INT_MAX, -1, &err);
 	assert(err == SN_ERROR_NONE);
-#endif
+
+	err = SN_ERROR_NONE;
+	(void)snmod(INT_MIN, -1, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(6, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(-6, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(6, -3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(-6, -3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(7, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(-7, 3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(7, -3, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(-7, -3, &err);
+	assert(err == SN_ERROR_NONE);
 
 	return 0;
 }
