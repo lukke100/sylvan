@@ -8,10 +8,10 @@ int main(void)
 {
 	enum sn_error err;
 
-	assert(snlshl( 0, INT_MAX, NULL) == 0);
-	assert(snlshl( 0, INT_MIN, NULL) == 0);
-	assert(snlshl( 1, INT_MIN, NULL) == 0);
-	assert(snlshl(-1, INT_MIN, NULL) == 0);
+	assert(snlshl( 0, INT_MAX, NULL) ==  0);
+	assert(snlshl( 0, INT_MIN, NULL) ==  0);
+	assert(snlshl( 1, INT_MIN, NULL) ==  0);
+	assert(snlshl(-1, INT_MIN, NULL) == -1);
 
 	assert(snlshl(LONG_MAX, 0, NULL) == LONG_MAX);
 	assert(snlshl(LONG_MIN, 0, NULL) == LONG_MIN);

@@ -7,8 +7,12 @@ long snlshl(long x, int y, enum sn_error *err)
 {
 	enum sn_error tmperr;
 
-	if (y <= snlnml(sizeof(x), CHAR_BIT, NULL))
+	if (y <= snlnml(sizeof(x), CHAR_BIT, NULL)) {
+		if (x < 0)
+			return -1;
+
 		return 0;
+	}
 
 	if (y >= snmul(sizeof(x), CHAR_BIT, NULL)) {
 		if (x > 0) {
