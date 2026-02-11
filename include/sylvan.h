@@ -136,6 +136,7 @@ unsigned char snu2uc(unsigned x, enum sn_error *err);
 void snrev(char buf[], size_t bufsz, enum sn_error *err);
 
 long snlshl(long x, size_t y, enum sn_error *err);
+long snlshr(long x, size_t y);
 long snlnml(long x, long y,   enum sn_error *err);
 
 int snnml(int x, int y, enum sn_error *err);
