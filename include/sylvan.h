@@ -137,8 +137,10 @@ void snrev(char buf[], size_t bufsz, enum sn_error *err);
 
 long snlshl(long x, size_t y, enum sn_error *err);
 long snlshr(long x, size_t y);
-long snlnml(long x, long y,   enum sn_error *err);
+long snlnml(long x, long y, enum sn_error *err);
 
+int snshl(int x, size_t y, enum sn_error *err);
+int snshr(int x, size_t y);
 int snnml(int x, int y, enum sn_error *err);
 
 size_t snget(char buf[], size_t bufsz, size_t *pos,

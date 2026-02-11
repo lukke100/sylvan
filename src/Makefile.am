@@ -36,7 +36,7 @@ libsylvan_la_SOURCES = \
 	snqt.c snunqt.c \
 	snrev.c \
 	snlshl.c snlshr.c snlnml.c \
-	snnml.c \
+	snshl.c snshr.c snnml.c \
 	snget.c \
 	sneset.c
 

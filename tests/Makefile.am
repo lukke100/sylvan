@@ -34,7 +34,7 @@ check_PROGRAMS = \
 	t111_snl2i t112_snq2u t113_snu2uc \
 	t121_snrev \
 	t131_snlshl t132_snlshr t133_snlnml \
-	t143_snnml \
+	t141_snshl t142_snshr t143_snnml \
 	t191_sneset \
 	t201_snget
 
