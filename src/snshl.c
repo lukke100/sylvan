@@ -1,4 +1,5 @@
 #include "config.h"
+#include <stddef.h>
 #include "sylvan.h"
 
 int snshl(int x, size_t y, enum sn_error *err)
