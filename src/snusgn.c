@@ -1,7 +1,7 @@
 #include "config.h"
 #include "sylvan.h"
 
-unsigned snusgn(unsigned x)
+int snusgn(unsigned x)
 {
 	return x > 0;
 }
