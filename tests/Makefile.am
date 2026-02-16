@@ -8,10 +8,10 @@ check_PROGRAMS = \
 	t016_sngcd t017_snlcm t018_snmax t019_snmin \
 	t021_skladd t022_sklsub t023_sklmul t024_skldiv \
 	t025_snlpow \
-	t028_snlabs t029_snlsgn \
+	t027_snlabs t029_snlsgn \
 	t031_skadd t032_sksub t033_skmul t034_skdiv \
 	t035_snpow \
-	t038_snabs t039_snsgn \
+	t037_snabs t039_snsgn \
 	t041_snzadd t042_snzsub t043_snzmul t044_snzdiv t045_snzmod \
 	t046_snzgcd t047_snzlcm t048_snzmax t049_snzmin \
 	t051_skzadd t053_skzmul t054_skzdiv \
