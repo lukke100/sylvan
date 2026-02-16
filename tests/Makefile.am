@@ -8,25 +8,25 @@ check_PROGRAMS = \
 	t016_sngcd t017_snlcm t018_snmax t019_snmin \
 	t021_skladd t022_sklsub t023_sklmul t024_skldiv \
 	t025_snlpow \
-	t027_snlabs t029_snlsgn \
+	t027_snlabs t028_snlcmp t029_snlsgn \
 	t031_skadd t032_sksub t033_skmul t034_skdiv \
 	t035_snpow \
-	t037_snabs t039_snsgn \
+	t037_snabs t038_sncmp t039_snsgn \
 	t041_snzadd t042_snzsub t043_snzmul t044_snzdiv t045_snzmod \
 	t046_snzgcd t047_snzlcm t048_snzmax t049_snzmin \
 	t051_skzadd t053_skzmul t054_skzdiv \
 	t055_snzpow \
-	t059_snzsgn \
+	t058_snzcmp t059_snzsgn \
 	t061_snqadd t062_snqsub t063_snqmul t064_snqdiv t065_snqmod \
 	t066_snqgcd t067_snqlcm t068_snqmax t069_snqmin \
 	t071_skqadd t073_skqmul t074_skqdiv \
 	t075_snqpow \
-	t079_snqsgn \
+	t078_snqcmp t079_snqsgn \
 	t081_snuadd t082_snusub t083_snumul t084_snudiv t085_snumod \
 	t086_snugcd t087_snulcm t088_snumax t089_snumin \
 	t091_skuadd t093_skumul t094_skudiv \
 	t095_snupow \
-	t099_snusgn \
+	t098_snucmp t099_snusgn \
 	t101_sntok \
 	t102_sna2l t103_sna2i \
 	t104_snuc2c \
