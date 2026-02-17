@@ -38,7 +38,7 @@ check_PROGRAMS = \
 	t151_snzshl t152_snzshr \
 	t161_snqshl t162_snqshr \
 	t171_snushl t172_snushr \
-	t191_sneset \
+	t191_sneset t199_snrbts \
 	t201_snget
 
 TESTS = $(check_PROGRAMS)

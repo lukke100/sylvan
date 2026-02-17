@@ -40,8 +40,9 @@ libsylvan_la_SOURCES = \
 	snzshl.c snzshr.c \
 	snqshl.c snqshr.c \
 	snushl.c snushr.c \
-	snget.c \
-	sneset.c
+	sneset.c \
+	snrbts.c \
+	snget.c
 
 .PHONY: bench-local
 bench-local: $(lib_LTLIBRARIES)

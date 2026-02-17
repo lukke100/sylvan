@@ -157,6 +157,8 @@ unsigned long snqshr(unsigned long x, size_t y);
 unsigned snushl(unsigned x, size_t y, enum sn_error *err);
 unsigned snushr(unsigned x, size_t y);
 
+int snrbts(size_t *bits, int r(void), int rmax, enum sn_error *err);
+
 size_t snget(char buf[], size_t bufsz, size_t *pos,
              size_t req, FILE *stream, enum sn_error *err);
 #endif
