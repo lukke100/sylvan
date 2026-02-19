@@ -14,6 +14,8 @@ enum {
 	UNQUOTE_INVALID = 8
 };
 
+static const size_t ZMAX = -1;
+
 static int clsunquote(char ch, int last)
 {
 	switch (last) {
@@ -231,8 +233,7 @@ static void unquote(char dest[], const char src[])
 		size_t diff, idx;
 		unsigned val;
 
-		diff = sntok(&lastcls, src + srcidx, ~(size_t)0,
-		             clsunquote, NULL);
+		diff = sntok(&lastcls, src + srcidx, ZMAX, clsunquote, NULL);
 
 		if (lastcls == UNQUOTE_OCTCHAR && diff > 3)
 			diff = 3;

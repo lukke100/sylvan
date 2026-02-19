@@ -2,20 +2,22 @@
 #include <stddef.h>
 #include "sylvan.h"
 
+static const size_t ZMAX = -1;
+
 size_t skzdiv(size_t x, size_t y, size_t bias)
 {
 	if (y == 0) {
 		if (x == 0)
 			return bias;
 		else
-			return ~(size_t)0;
+			return ZMAX;
 	}
 
-	if (x == ~(size_t)0) {
-		if (y == ~(size_t)0)
+	if (x == ZMAX) {
+		if (y == ZMAX)
 			return bias;
 		else
-			return ~(size_t)0;
+			return ZMAX;
 	}
 
 	return x / y;

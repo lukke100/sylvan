@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include "sylvan.h"
 
-static const size_t ZMAX = ~(size_t)0;
+static const size_t ZMAX = -1;
 
 size_t snzshl(size_t x, size_t y, enum sn_error *err)
 {

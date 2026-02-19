@@ -2,6 +2,8 @@
 #include <stddef.h>
 #include "sylvan.h"
 
+static const size_t ZMAX = -1;
+
 size_t snzlcm(size_t x, size_t y, enum sn_error *err)
 {
 	size_t gcd, result;
@@ -20,7 +22,7 @@ size_t snzlcm(size_t x, size_t y, enum sn_error *err)
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
 		sneset(err, SN_ERROR_OVERFLOW);
-		return ~(size_t)0;
+		return ZMAX;
 	}
 
 	tmperr = SN_ERROR_NONE;
@@ -28,7 +30,7 @@ size_t snzlcm(size_t x, size_t y, enum sn_error *err)
 
 	if (tmperr == SN_ERROR_OVERFLOW) {
 		sneset(err, SN_ERROR_OVERFLOW);
-		return ~(size_t)0;
+		return ZMAX;
 	}
 
 	return result;

@@ -2,6 +2,8 @@
 #include <stddef.h>
 #include "sylvan.h"
 
+static const size_t ZMAX = -1;
+
 size_t snzdiv(size_t x, size_t y, enum sn_error *err)
 {
 	if (y == 0) {
@@ -10,7 +12,7 @@ size_t snzdiv(size_t x, size_t y, enum sn_error *err)
 		if (x == 0)
 			return 0;
 		else
-			return ~(size_t)0;
+			return ZMAX;
 	}
 
 	return x / y;
