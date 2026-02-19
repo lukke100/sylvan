@@ -1,5 +1,5 @@
 #include "config.h"
-#include <stdlib.h>
+#include <stddef.h>
 #include "sylvan.h"
 
 static int mersennetrunc(size_t *bits, int x)
@@ -8,19 +8,18 @@ static int mersennetrunc(size_t *bits, int x)
 	size_t nbits;
 
 	hadgap = 0;
-	result = 0;
+	result = -(x < 0);
 	nbits  = 0;
 
-	while (x != 0) {
-		if (hadgap || snmod(x, 2, NULL) == 1) {
-			result *= 2;
-			result += snsgn(x);
-			++nbits;
-		} else {
+	for (; x != snshr(x, 1); x = snshr(x, 1)) {
+		if (!hadgap && snmod(x, 2, NULL) == x < 0) {
 			hadgap = 1;
+			continue;
 		}
 
-		x = div(x, 2).quot;
+		result *= 2;
+		result += x >= 0;
+		++nbits;
 	}
 
 	*bits = nbits;
@@ -34,22 +33,24 @@ int snrbts(size_t *bits, int r(void), int rmax, enum sn_error *err)
 	size_t nbits;
 
 	tmperr = SN_ERROR_NONE;
-	result = -snsgn(rmax);
 	nbits  = 0;
 
-	if (rmax == 0)
-		goto end_check_bits;
+	if (rmax == 0 || rmax == -1) {
+		result = rmax;
+		goto end_check_out;
+	}
 
 	if (r == NULL) {
-		tmperr = SN_ERROR_NULL;
-		goto end_known_error;
+		sneset(err, SN_ERROR_NULL);
+		result = -(rmax >= 0);
+		goto end_known_err;
 	}
 
 	result = r();
 
-	if (result > snmax(rmax, 0) || result < snmin(rmax, 0)) {
-		tmperr = SN_ERROR_UNDEFINED;
-		goto end_known_error;
+	if (result < snmin(rmax, 0) || result > snmax(rmax, -1)) {
+		sneset(err, SN_ERROR_UNDEFINED);
+		goto end_known_err;
 	}
 
 	tmpmax = rmax;
@@ -60,17 +61,18 @@ int snrbts(size_t *bits, int r(void), int rmax, enum sn_error *err)
 		trunc = mersennetrunc(&nbits, tmpmax);
 
 		if (sncmp(result, trunc) * snsgn(rmax) < 1)
-			goto end_check_bits;
+			goto end_check_out;
 
-		result -= trunc + snsgn(rmax);
-		tmpmax -= trunc + snsgn(rmax);
+		trunc  += rmax >= 0;
+		result -= trunc;
+		tmpmax -= trunc;
 	}
 
-end_check_bits:
+end_check_out:
 	if (bits == NULL)
 		tmperr = SN_ERROR_NULL;
 
-end_known_error:
+end_known_err:
 	if (tmperr != SN_ERROR_NONE)
 		sneset(err, tmperr);
 
