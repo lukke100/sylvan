@@ -143,13 +143,16 @@ void snrev(char buf[], size_t bufsz, enum sn_error *err);
 long snlshl(long x, size_t y, enum sn_error *err);
 long snlshr(long x, size_t y);
 long snlnml(long x, long y, enum sn_error *err);
+long snlnot(long x, enum sn_error *err);
 
 int snshl(int x, size_t y, enum sn_error *err);
 int snshr(int x, size_t y);
 int snnml(int x, int y, enum sn_error *err);
+int snnot(int x, enum sn_error *err);
 
 size_t snzshl(size_t x, size_t y, enum sn_error *err);
 size_t snzshr(size_t x, size_t y);
+size_t snznot(size_t x);
 
 unsigned long snqshl(unsigned long x, size_t y, enum sn_error *err);
 unsigned long snqshr(unsigned long x, size_t y);
