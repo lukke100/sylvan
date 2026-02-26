@@ -152,6 +152,8 @@ int snshr(int x, size_t y);
 int snnml(int x, int y, enum sn_error *err);
 int snnot(int x, enum sn_error *err);
 
+size_t snmsb(int x, enum sn_error *err);
+
 size_t snzshl(size_t x, size_t y, enum sn_error *err);
 size_t snzshr(size_t x, size_t y);
 size_t snznot(size_t x);
