@@ -1,4 +1,4 @@
-AC_DEFUN([CHECK_OVERFLOW_BUILTIN], [
+AC_DEFUN([CHECK_BUILTIN_OVERFLOW], [
 	AC_REQUIRE([AC_PROG_CC])
 	AC_MSG_CHECKING([for $1 on $2])
 
@@ -7,12 +7,12 @@ AC_DEFUN([CHECK_OVERFLOW_BUILTIN], [
 	]], [[
 		$2 result;
 		(void)$1(($2)1, ($2)1, &result);
-		return 0;
+		(void)result;
 	]])])
 
 	m4_pushdef([LINK_PASS], [
 		AC_MSG_RESULT([yes])
-		AC_DEFINE(AS_TR_CPP([HAVE_$1_$2]), [1], [$1 works on $2])
+		AC_DEFINE(AS_TR_CPP([HAVE_$1_$2]), [1], [$1 takes $2])
 	])
 
 	m4_pushdef([LINK_FAIL], [AC_MSG_RESULT([no])])

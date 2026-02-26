@@ -34,9 +34,9 @@ AC_CHECK_HEADERS([limits.h])
 AC_TYPE_SIZE_T
 
 m4_foreach([type], [[long], [int], [size_t], [unsigned long], [unsigned]], [
-	CHECK_OVERFLOW_BUILTIN([__builtin_add_overflow], type)
-	CHECK_OVERFLOW_BUILTIN([__builtin_sub_overflow], type)
-	CHECK_OVERFLOW_BUILTIN([__builtin_mul_overflow], type)
+	CHECK_BUILTIN_OVERFLOW([__builtin_add_overflow], type)
+	CHECK_BUILTIN_OVERFLOW([__builtin_sub_overflow], type)
+	CHECK_BUILTIN_OVERFLOW([__builtin_mul_overflow], type)
 ])
 
 # Checks for library functions.
