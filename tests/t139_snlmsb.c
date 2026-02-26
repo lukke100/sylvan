@@ -14,8 +14,8 @@ int main(void)
 	assert(snlmsb( 1, NULL) ==    0);
 	assert(snlmsb(-2, NULL) ==    0);
 
-	assert(snlmsb( 2147483647, NULL) == 30);
-	assert(snlmsb(-1073741823, NULL) == 29);
+	assert(snlmsb( 2147483647L, NULL) == 30);
+	assert(snlmsb(-1073741823L, NULL) == 29);
 
 	err = SN_ERROR_NONE;
 	snlmsb(0, &err);
@@ -34,11 +34,11 @@ int main(void)
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	snlmsb(2147483647, &err);
+	snlmsb(2147483647L, &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
-	snlmsb(-1073741823, &err);
+	snlmsb(-1073741823L, &err);
 	assert(err == SN_ERROR_NONE);
 
 	return 0;
