@@ -158,6 +158,8 @@ size_t snzshl(size_t x, size_t y, enum sn_error *err);
 size_t snzshr(size_t x, size_t y);
 size_t snznot(size_t x);
 
+size_t snzmsb(size_t x, enum sn_error *err);
+
 unsigned long snqshl(unsigned long x, size_t y, enum sn_error *err);
 unsigned long snqshr(unsigned long x, size_t y);
 
