@@ -5,7 +5,7 @@
 
 long snlshr(long x, size_t y)
 {
-	if (y >= sizeof(long) * CHAR_BIT)
+	if (y / CHAR_BIT >= sizeof(long))
 		return snldiv(snlsgn(x), 2, NULL);
 
 	while (y > 0) {

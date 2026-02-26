@@ -7,7 +7,7 @@ unsigned long snqshl(unsigned long x, size_t y, enum sn_error *err)
 {
 	enum sn_error tmperr;
 
-	if (y >= sizeof(unsigned long) * CHAR_BIT) {
+	if (y / CHAR_BIT >= sizeof(unsigned long)) {
 		x = snqdiv(x, 0, NULL);
 
 		if (x == ULONG_MAX)

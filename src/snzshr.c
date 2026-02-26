@@ -5,7 +5,7 @@
 
 size_t snzshr(size_t x, size_t y)
 {
-	if (y >= sizeof(size_t) * CHAR_BIT)
+	if (y / CHAR_BIT >= sizeof(size_t))
 		return 0;
 
 	while (y > 0) {

@@ -7,7 +7,7 @@ long snlshl(long x, size_t y, enum sn_error *err)
 {
 	enum sn_error tmperr;
 
-	if (y >= sizeof(long) * CHAR_BIT) {
+	if (y / CHAR_BIT >= sizeof(long)) {
 		x = snldiv(x, 0, NULL);
 
 		if (x == LONG_MAX)

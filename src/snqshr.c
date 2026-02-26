@@ -5,7 +5,7 @@
 
 unsigned long snqshr(unsigned long x, size_t y)
 {
-	if (y >= sizeof(unsigned long) * CHAR_BIT)
+	if (y / CHAR_BIT >= sizeof(unsigned long))
 		return 0;
 
 	while (y > 0) {

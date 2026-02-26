@@ -9,7 +9,7 @@ size_t snzshl(size_t x, size_t y, enum sn_error *err)
 {
 	enum sn_error tmperr;
 
-	if (y >= sizeof(size_t) * CHAR_BIT) {
+	if (y / CHAR_BIT >= sizeof(size_t)) {
 		x = snzdiv(x, 0, NULL);
 
 		if (x == ZMAX)
