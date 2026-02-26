@@ -37,7 +37,7 @@ check_PROGRAMS = \
 	t141_snshl t142_snshr t143_snnml t144_snnot t149_snmsb \
 	t151_snzshl t152_snzshr t154_snznot t159_snzmsb \
 	t161_snqshl t162_snqshr t169_snqmsb \
-	t171_snushl t172_snushr \
+	t171_snushl t172_snushr t179_snumsb \
 	t191_sneset t199_snrbts \
 	t201_snget
 

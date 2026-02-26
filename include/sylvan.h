@@ -168,6 +168,8 @@ size_t snqmsb(unsigned long x, enum sn_error *err);
 unsigned snushl(unsigned x, size_t y, enum sn_error *err);
 unsigned snushr(unsigned x, size_t y);
 
+size_t snumsb(unsigned x, enum sn_error *err);
+
 int snrbts(size_t *bits, int r(void), int rmax, enum sn_error *err);
 
 size_t snget(char buf[], size_t bufsz, size_t *pos,
