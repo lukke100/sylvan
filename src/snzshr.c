@@ -1,20 +1,13 @@
 #include "config.h"
-#include <limits.h>
 #include <stddef.h>
 #include "sylvan.h"
 
+static const size_t ZMAX = -1;
+
 size_t snzshr(size_t x, size_t y)
 {
-	if (y / CHAR_BIT >= sizeof(size_t))
+	if (y > snzmsb(ZMAX, NULL))
 		return 0;
 
-	while (y > 0) {
-		size_t e;
-
-		e   = snzmin(y, 14);
-		x >>= e;
-		y  -= e;
-	}
-
-	return x;
+	return x >> y;
 }

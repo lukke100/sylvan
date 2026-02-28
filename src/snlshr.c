@@ -5,16 +5,8 @@
 
 long snlshr(long x, size_t y)
 {
-	if (y / CHAR_BIT >= sizeof(long))
+	if (y > snzmax(snlmsb(LONG_MAX, NULL), snlmsb(LONG_MIN, NULL)))
 		return snldiv(snlsgn(x), 2, NULL);
 
-	while (y > 0) {
-		size_t e;
-
-		e  = snzmin(y, 14);
-		x  = snldiv(x, 1L << e, NULL);
-		y -= e;
-	}
-
-	return x;
+	return snldiv(x, 1L << y, NULL);
 }
