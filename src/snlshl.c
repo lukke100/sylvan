@@ -7,7 +7,7 @@ long snlshl(long x, size_t y, enum sn_error *err)
 {
 	enum sn_error tmperr;
 
-	if (y / CHAR_BIT >= sizeof(long)) {
+	if (y > snzmax(snlmsb(LONG_MAX, NULL), snlmsb(LONG_MIN, NULL))) {
 		x = snldiv(x, 0, NULL);
 
 		if (x == LONG_MAX)
@@ -19,14 +19,7 @@ long snlshl(long x, size_t y, enum sn_error *err)
 	}
 
 	tmperr = SN_ERROR_NONE;
-
-	while (y > 0) {
-		size_t e;
-
-		e  = snzmin(y, 14);
-		x  = snlmul(x, 1L << e, &tmperr);
-		y -= e;
-	}
+	x = snlmul(x, 1L << y, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE)
 		sneset(err, tmperr);
