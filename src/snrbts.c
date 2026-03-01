@@ -4,25 +4,29 @@
 
 static int mersennetrunc(size_t *bits, int x)
 {
-	int hadgap, result;
-	size_t nbits;
+	enum sn_error tmperr;
+	int result, tmpval;
+	size_t tmpbts;
 
-	hadgap = 0;
-	result = -(x < 0);
-	nbits  = 0;
+	tmperr = SN_ERROR_NONE;
+	tmpbts = snmsb(x, &tmperr);
 
-	for (; x != snshr(x, 1); x = snshr(x, 1)) {
-		if (!hadgap && snmod(x, 2, NULL) == x < 0) {
-			hadgap = 1;
-			continue;
-		}
-
-		result *= 2;
-		result += x >= 0;
-		++nbits;
+	if (tmperr != SN_ERROR_NONE) {
+		*bits = 0;
+		return -(x < 0);
 	}
 
-	*bits = nbits;
+	result  = snshl(snsgn(x), tmpbts, NULL);
+	result -= x >= 0;
+	tmpval  = snshl(result, 1, &tmperr);
+	tmpval  = snadd(tmpval, x >= 0, &tmperr);
+
+	if (tmpval == x && tmperr == SN_ERROR_NONE) {
+		++tmpbts;
+		result = tmpval;
+	}
+
+	*bits = tmpbts;
 	return result;
 }
 
