@@ -14,9 +14,8 @@ int main(void)
 
 	assert(snlcm(INT_MAX, INT_MAX - 1, NULL) == INT_MAX);
 
-#if INT_MAX + INT_MIN < 0
-	assert(snlcm(INT_MIN, INT_MIN, NULL) == INT_MAX);
-#endif
+	if (INT_MAX + INT_MIN < 0)
+		assert(snlcm(INT_MIN, INT_MIN, NULL) == INT_MAX);
 
 	err = SN_ERROR_NONE;
 	snlcm(2, 0, &err);
@@ -30,11 +29,11 @@ int main(void)
 	snlcm(0, 0, &err);
 	assert(err == SN_ERROR_NONE);
 
-#if INT_MAX + INT_MIN < 0
-	err = SN_ERROR_NONE;
-	snlcm(INT_MIN, INT_MIN, &err);
-	assert(err == SN_ERROR_OVERFLOW);
-#endif
+	if (INT_MAX + INT_MIN < 0) {
+		err = SN_ERROR_NONE;
+		snlcm(INT_MIN, INT_MIN, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	}
 
 	return 0;
 }

@@ -36,13 +36,13 @@ int skdiv(int x, int y, int bias)
 			return INT_MAX;
 	}
 
-#if INT_MAX + INT_MIN > 0
-	if (y == INT_MIN)
-		return 0;
-#elif INT_MAX + INT_MIN < 0
-	if (y == INT_MAX)
-		return 0;
-#endif
+	if (INT_MAX + INT_MIN > 0) {
+		if (y == INT_MIN)
+			return 0;
+	} else if (INT_MAX + INT_MIN < 0) {
+		if (y == INT_MAX)
+			return 0;
+	}
 
 	return sndiv(x, y, NULL);
 }

@@ -5,12 +5,12 @@
 
 int snabs(int x, enum sn_error *err)
 {
-#if INT_MAX + INT_MIN < 0
-	if (x < -INT_MAX) {
-		sneset(err, SN_ERROR_OVERFLOW);
-		return INT_MAX;
+	if (INT_MAX + INT_MIN < 0) {
+		if (x < -INT_MAX) {
+			sneset(err, SN_ERROR_OVERFLOW);
+			return INT_MAX;
+		}
 	}
-#endif
 
 	return abs(x);
 }

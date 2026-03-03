@@ -47,11 +47,10 @@ int main(void)
 	assert(skdiv(0, 0, -1) == -1);
 	assert(skdiv(0, 0, INT_MIN) == INT_MIN);
 
-#if INT_MAX + INT_MIN > 0
-	assert(skdiv(INT_MAX - 1, INT_MIN, 0) == 0);
-#elif INT_MAX + INT_MIN < 0
-	assert(skdiv(INT_MIN + 1, INT_MAX, 0) == 0);
-#endif
+	if (INT_MAX + INT_MIN > 0)
+		assert(skdiv(INT_MAX - 1, INT_MIN, 0) == 0);
+	else if (INT_MAX + INT_MIN < 0)
+		assert(skdiv(INT_MIN + 1, INT_MAX, 0) == 0);
 
 	return 0;
 }

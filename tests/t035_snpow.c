@@ -47,9 +47,8 @@ int main(void)
 	assert(snpow(INT_MIN,  32767, NULL) == INT_MIN);
 	assert(snpow(INT_MIN, -32767, NULL) == 0);
 
-#if INT_MAX + INT_MIN <= 0
-	assert(snpow(INT_MIN, 32766, NULL) == INT_MAX);
-#endif
+	if (INT_MAX + INT_MIN <= 0)
+		assert(snpow(INT_MIN, 32766, NULL) == INT_MAX);
 
 	assert(snpow(179, 2, NULL) == 32041);
 	assert(snpow( 31, 3, NULL) == 29791);
@@ -188,11 +187,11 @@ int main(void)
 	(void)snpow(INT_MIN, -1, &err);
 	assert(err == SN_ERROR_UNDEFINED);
 
-#if INT_MAX + INT_MIN <= 0
-	err = SN_ERROR_NONE;
-	(void)snpow(INT_MIN, 32766, &err);
-	assert(err == SN_ERROR_OVERFLOW);
-#endif
+	if (INT_MAX + INT_MIN <= 0) {
+		err = SN_ERROR_NONE;
+		(void)snpow(INT_MIN, 32766, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	}
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MIN, -32766, &err);

@@ -13,11 +13,10 @@ int main(void)
 	assert(snabs(     -1, NULL) ==       1);
 	assert(snabs(INT_MAX, NULL) == INT_MAX);
 
-#if INT_MAX + INT_MIN < 0
-	assert(snabs(INT_MIN, NULL) == INT_MAX);
-#else
-	assert(snabs(INT_MIN, NULL) == -INT_MIN);
-#endif
+	if (INT_MAX + INT_MIN < 0)
+		assert(snabs(INT_MIN, NULL) == INT_MAX);
+	else
+		assert(snabs(INT_MIN, NULL) == -INT_MIN);
 
 	err = SN_ERROR_NONE;
 	(void)snabs(0, &err);
@@ -38,11 +37,10 @@ int main(void)
 	err = SN_ERROR_NONE;
 	(void)snabs(INT_MIN, &err);
 
-#if INT_MAX + INT_MIN < 0
-	assert(err == SN_ERROR_OVERFLOW);
-#else
-	assert(err == SN_ERROR_NONE);
-#endif
+	if (INT_MAX + INT_MIN < 0)
+		assert(err == SN_ERROR_OVERFLOW);
+	else
+		assert(err == SN_ERROR_NONE);
 
 	return 0;
 }

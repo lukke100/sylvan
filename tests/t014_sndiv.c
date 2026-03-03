@@ -12,11 +12,10 @@ int main(void)
 	assert(sndiv( 1, 0, NULL) == INT_MAX);
 	assert(sndiv(-1, 0, NULL) == INT_MIN);
 
-#if INT_MAX + INT_MIN > 0
-	assert(sndiv(INT_MAX, -1, NULL) == INT_MIN);
-#elif INT_MAX + INT_MIN < 0
-	assert(sndiv(INT_MIN, -1, NULL) == INT_MAX);
-#endif
+	if (INT_MAX + INT_MIN > 0)
+		assert(sndiv(INT_MAX, -1, NULL) == INT_MIN);
+	else if (INT_MAX + INT_MIN < 0)
+		assert(sndiv(INT_MIN, -1, NULL) == INT_MAX);
 
 	assert(sndiv(0, 1, NULL) == 0);
 
@@ -42,15 +41,15 @@ int main(void)
 	sndiv(-1, 0, &err);
 	assert(err == SN_ERROR_UNDEFINED);
 
-#if INT_MAX + INT_MIN > 0
-	err = SN_ERROR_NONE;
-	sndiv(INT_MAX, -1, &err);
-	assert(err == SN_ERROR_UNDERFLOW);
-#elif INT_MAX + INT_MIN < 0
-	err = SN_ERROR_NONE;
-	sndiv(INT_MIN, -1, &err);
-	assert(err == SN_ERROR_OVERFLOW);
-#endif
+	if (INT_MAX + INT_MIN > 0) {
+		err = SN_ERROR_NONE;
+		sndiv(INT_MAX, -1, &err);
+		assert(err == SN_ERROR_UNDERFLOW);
+	} else if (INT_MAX + INT_MIN < 0) {
+		err = SN_ERROR_NONE;
+		sndiv(INT_MIN, -1, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	}
 
 	err = SN_ERROR_NONE;
 	sndiv(0, 1, &err);
