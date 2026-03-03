@@ -9,29 +9,27 @@ size_t snlmsb(long x, enum sn_error *err)
 {
 	size_t result;
 
-#if LONG_MAX + LONG_MIN >= -1
-	if (x < 0)
-		x = -1L - x;
-
 	result = ZMAX;
 
-	if (x == 0)
-		sneset(err, SN_ERROR_UNDEFINED);
+	if (LONG_MAX + LONG_MIN >= -1) {
+		if (x < 0)
+			x = -1L - x;
 
-	for (; x > 0; x >>= 1)
-		++result;
-#else
-	if (x > -1)
-		x = -1L - x;
+		if (x == 0)
+			sneset(err, SN_ERROR_UNDEFINED);
 
-	result = ZMAX;
+		for (; x > 0; x >>= 1)
+			++result;
+	} else {
+		if (x > -1)
+			x = -1L - x;
 
-	if (x == -1)
-		sneset(err, SN_ERROR_UNDEFINED);
+		if (x == -1)
+			sneset(err, SN_ERROR_UNDEFINED);
 
-	for (; x < -1; x = snldiv(x, 2, NULL))
-		++result;
-#endif
+		for (; x < -1; x = snldiv(x, 2, NULL))
+			++result;
+	}
 
 	return result;
 }

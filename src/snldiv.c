@@ -18,17 +18,17 @@ long snldiv(long x, long y, enum sn_error *err)
 			return 0;
 	}
 
-#if LONG_MAX + LONG_MIN > 0
-	if (y < 0 && x > snlmul(y, LONG_MIN, NULL)) {
-		sneset(err, SN_ERROR_UNDERFLOW);
-		return LONG_MIN;
+	if (LONG_MAX + LONG_MIN > 0) {
+		if (y < 0 && x > snlmul(y, LONG_MIN, NULL)) {
+			sneset(err, SN_ERROR_UNDERFLOW);
+			return LONG_MIN;
+		}
+	} else if (LONG_MAX + LONG_MIN < 0) {
+		if (y < 0 && x < snlmul(y, LONG_MAX, NULL)) {
+			sneset(err, SN_ERROR_OVERFLOW);
+			return LONG_MAX;
+		}
 	}
-#elif LONG_MAX + LONG_MIN < 0
-	if (y < 0 && x < snlmul(y, LONG_MAX, NULL)) {
-		sneset(err, SN_ERROR_OVERFLOW);
-		return LONG_MAX;
-	}
-#endif
 
 	tmp = ldiv(x, y);
 

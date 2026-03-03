@@ -36,13 +36,13 @@ long skldiv(long x, long y, long bias)
 			return LONG_MAX;
 	}
 
-#if LONG_MAX + LONG_MIN > 0
-	if (y == LONG_MIN)
-		return 0;
-#elif LONG_MAX + LONG_MIN < 0
-	if (y == LONG_MAX)
-		return 0;
-#endif
+	if (LONG_MAX + LONG_MIN > 0) {
+		if (y == LONG_MIN)
+			return 0;
+	} else if (LONG_MAX + LONG_MIN < 0) {
+		if (y == LONG_MAX)
+			return 0;
+	}
 
 	return snldiv(x, y, NULL);
 }

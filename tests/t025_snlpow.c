@@ -47,9 +47,8 @@ int main(void)
 	assert(snlpow(LONG_MIN,  32767, NULL) == LONG_MIN);
 	assert(snlpow(LONG_MIN, -32767, NULL) == 0);
 
-#if LONG_MAX + LONG_MIN <= 0
-	assert(snlpow(LONG_MIN, 32766, NULL) == LONG_MAX);
-#endif
+	if (LONG_MAX + LONG_MIN <= 0)
+		assert(snlpow(LONG_MIN, 32766, NULL) == LONG_MAX);
 
 	assert(snlpow(46340L, 2, NULL) == 2147395600L);
 	assert(snlpow( 1290L, 3, NULL) == 2146689000L);
@@ -189,11 +188,11 @@ int main(void)
 	(void)snlpow(LONG_MIN, -1, &err);
 	assert(err == SN_ERROR_UNDEFINED);
 
-#if LONG_MAX + LONG_MIN <= 0
-	err = SN_ERROR_NONE;
-	(void)snlpow(LONG_MIN, 32766, &err);
-	assert(err == SN_ERROR_OVERFLOW);
-#endif
+	if (LONG_MAX + LONG_MIN <= 0) {
+		err = SN_ERROR_NONE;
+		(void)snlpow(LONG_MIN, 32766, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	}
 
 	err = SN_ERROR_NONE;
 	(void)snlpow(LONG_MIN, -32766, &err);

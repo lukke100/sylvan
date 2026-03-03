@@ -11,11 +11,10 @@ int main(void)
 	assert(snlmul(LONG_MAX, 2, NULL) == LONG_MAX);
 	assert(snlmul(LONG_MIN, 2, NULL) == LONG_MIN);
 
-#if LONG_MAX + LONG_MIN > 0
-	assert(snlmul(LONG_MAX, -1, NULL) == LONG_MIN);
-#elif LONG_MAX + LONG_MIN < 0
-	assert(snlmul(LONG_MIN, -1, NULL) == LONG_MAX);
-#endif
+	if (LONG_MAX + LONG_MIN > 0)
+		assert(snlmul(LONG_MAX, -1, NULL) == LONG_MIN);
+	else if (LONG_MAX + LONG_MIN < 0)
+		assert(snlmul(LONG_MIN, -1, NULL) == LONG_MAX);
 
 	assert(snlmul(LONG_MAX, LONG_MAX, NULL) == LONG_MAX);
 	assert(snlmul(LONG_MAX, LONG_MIN, NULL) == LONG_MIN);
@@ -29,15 +28,15 @@ int main(void)
 	(void)snlmul(LONG_MIN, 2, &err);
 	assert(err == SN_ERROR_UNDERFLOW);
 
-#if LONG_MAX + LONG_MIN > 0
-	err = SN_ERROR_NONE;
-	(void)snlmul(LONG_MAX, -1, &err);
-	assert(err == SN_ERROR_UNDERFLOW);
-#elif LONG_MAX + LONG_MIN < 0
-	err = SN_ERROR_NONE;
-	(void)snlmul(LONG_MIN, -1, &err);
-	assert(err == SN_ERROR_OVERFLOW);
-#endif
+	if (LONG_MAX + LONG_MIN > 0) {
+		err = SN_ERROR_NONE;
+		(void)snlmul(LONG_MAX, -1, &err);
+		assert(err == SN_ERROR_UNDERFLOW);
+	} else if (LONG_MAX + LONG_MIN < 0) {
+		err = SN_ERROR_NONE;
+		(void)snlmul(LONG_MIN, -1, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	}
 
 	err = SN_ERROR_NONE;
 	(void)snlmul(LONG_MAX, LONG_MAX, &err);

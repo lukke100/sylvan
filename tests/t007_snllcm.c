@@ -14,9 +14,8 @@ int main(void)
 
 	assert(snllcm(LONG_MAX, LONG_MAX - 1, NULL) == LONG_MAX);
 
-#if LONG_MAX + LONG_MIN < 0
-	assert(snllcm(LONG_MIN, LONG_MIN, NULL) == LONG_MAX);
-#endif
+	if (LONG_MAX + LONG_MIN < 0)
+		assert(snllcm(LONG_MIN, LONG_MIN, NULL) == LONG_MAX);
 
 	err = SN_ERROR_NONE;
 	(void)snllcm(2, 0, &err);
@@ -30,11 +29,11 @@ int main(void)
 	(void)snllcm(0, 0, &err);
 	assert(err == SN_ERROR_NONE);
 
-#if LONG_MAX + LONG_MIN < 0
-	err = SN_ERROR_NONE;
-	(void)snllcm(LONG_MIN, LONG_MIN, &err);
-	assert(err == SN_ERROR_OVERFLOW);
-#endif
+	if (LONG_MAX + LONG_MIN < 0) {
+		err = SN_ERROR_NONE;
+		(void)snllcm(LONG_MIN, LONG_MIN, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	}
 
 	return 0;
 }

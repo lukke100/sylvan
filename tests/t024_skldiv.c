@@ -47,11 +47,10 @@ int main(void)
 	assert(skldiv(0, 0, -1) == -1);
 	assert(skldiv(0, 0, LONG_MIN) == LONG_MIN);
 
-#if LONG_MAX + LONG_MIN > 0
-	assert(skldiv(LONG_MAX - 1, LONG_MIN, 0) == 0);
-#elif LONG_MAX + LONG_MIN < 0
-	assert(skldiv(LONG_MIN + 1, LONG_MAX, 0) == 0);
-#endif
+	if (LONG_MAX + LONG_MIN > 0)
+		assert(skldiv(LONG_MAX - 1, LONG_MIN, 0) == 0);
+	else if (LONG_MAX + LONG_MIN < 0)
+		assert(skldiv(LONG_MIN + 1, LONG_MAX, 0) == 0);
 
 	return 0;
 }

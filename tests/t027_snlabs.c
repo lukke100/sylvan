@@ -13,11 +13,10 @@ int main(void)
 	assert(snlabs(      -1, NULL) ==        1);
 	assert(snlabs(LONG_MAX, NULL) == LONG_MAX);
 
-#if LONG_MAX + LONG_MIN < 0
-	assert(snlabs(LONG_MIN, NULL) == LONG_MAX);
-#else
-	assert(snlabs(LONG_MIN, NULL) == -LONG_MIN);
-#endif
+	if (LONG_MAX + LONG_MIN < 0)
+		assert(snlabs(LONG_MIN, NULL) == LONG_MAX);
+	else
+		assert(snlabs(LONG_MIN, NULL) == -LONG_MIN);
 
 	err = SN_ERROR_NONE;
 	(void)snlabs(0, &err);
@@ -38,11 +37,10 @@ int main(void)
 	err = SN_ERROR_NONE;
 	(void)snlabs(LONG_MIN, &err);
 
-#if LONG_MAX + LONG_MIN < 0
-	assert(err == SN_ERROR_OVERFLOW);
-#else
-	assert(err == SN_ERROR_NONE);
-#endif
+	if (LONG_MAX + LONG_MIN < 0)
+		assert(err == SN_ERROR_OVERFLOW);
+	else
+		assert(err == SN_ERROR_NONE);
 
 	return 0;
 }

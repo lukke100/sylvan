@@ -5,9 +5,11 @@ AC_DEFUN([CHECK_BUILTIN_OVERFLOW], [
 	m4_pushdef([TEST_PROG], [AC_LANG_PROGRAM([[
 		#include <stddef.h>
 	]], [[
-		$2 result;
-		(void)$1(($2)1, ($2)1, &result);
-		(void)result;
+		$2 res;
+		int err;
+		err = $1(($2)1, ($2)1, &res);
+		(void)err;
+		(void)res;
 	]])])
 
 	m4_pushdef([LINK_PASS], [

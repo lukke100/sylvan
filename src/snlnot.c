@@ -4,19 +4,19 @@
 
 long snlnot(long x, enum sn_error *err)
 {
-#if LONG_MAX + LONG_MIN < -1
-	if (x < -LONG_MAX - 1) {
-		sneset(err, SN_ERROR_OVERFLOW);
-		return LONG_MAX;
+	if (LONG_MAX + LONG_MIN < -1) {
+		if (x < -LONG_MAX - 1) {
+			sneset(err, SN_ERROR_OVERFLOW);
+			return LONG_MAX;
+		}
+	} else if (LONG_MAX + LONG_MIN > -1) {
+		if (x >= -LONG_MIN) {
+			sneset(err, SN_ERROR_UNDERFLOW);
+			return LONG_MIN;
+		}
+	} else {
+		(void)err;
 	}
-#elif LONG_MAX + LONG_MIN > -1
-	if (x >= -LONG_MIN) {
-		sneset(err, SN_ERROR_UNDERFLOW);
-		return LONG_MIN;
-	}
-#else
-	(void)err;
-#endif
 
 	return -1L - x;
 }
