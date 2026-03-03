@@ -12,7 +12,7 @@ int main(void)
 
 	assert(snq2u(ULONG_MAX, NULL) == UINT_MAX);
 
-#if LONG_MAX > INT_MAX
+#if ULONG_MAX > UINT_MAX
 	err = SN_ERROR_NONE;
 	snq2u(ULONG_MAX, &err);
 	assert(err == SN_ERROR_OVERFLOW);
