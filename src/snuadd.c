@@ -3,30 +3,38 @@
 #include "sylvan.h"
 
 #ifdef HAVE___BUILTIN_ADD_OVERFLOW_UNSIGNED
-unsigned snuadd(unsigned x, unsigned y, enum sn_error *err)
-{
-	unsigned result;
-
-	if (!__builtin_add_overflow(x, y, &result))
-		return result;
-
-	sneset(err, SN_ERROR_OVERFLOW);
-	return UINT_MAX;
-}
+#define builtin_add_overflow __builtin_add_overflow
 #else
-unsigned snuadd(unsigned x, unsigned y, enum sn_error *err)
+#define HAVE___BUILTIN_ADD_OVERFLOW_UNSIGNED 0
+
+static inline int builtin_add_overflow(unsigned a, unsigned b, unsigned *res)
 {
-	enum sn_error tmperr;
-	unsigned long tmpval;
-	unsigned result;
-
-	tmperr = SN_ERROR_NONE;
-	tmpval = snqadd(x, y, &tmperr);
-	result = snq2u(tmpval, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE)
-		sneset(err, tmperr);
-
-	return result;
+	(void)a, (void)b, (void)res;
+	return 0;
 }
 #endif
+
+unsigned snuadd(unsigned x, unsigned y, enum sn_error *err)
+{
+	unsigned result;
+
+	if (HAVE___BUILTIN_ADD_OVERFLOW_UNSIGNED) {
+		if (!builtin_add_overflow(x, y, &result))
+			return result;
+
+		sneset(err, SN_ERROR_OVERFLOW);
+		return UINT_MAX;
+	} else {
+		enum sn_error tmperr;
+		unsigned long tmpval;
+
+		tmperr = SN_ERROR_NONE;
+		tmpval = snqadd(x, y, &tmperr);
+		result = snq2u(tmpval, &tmperr);
+
+		if (tmperr != SN_ERROR_NONE)
+			sneset(err, tmperr);
+
+		return result;
+	}
+}
