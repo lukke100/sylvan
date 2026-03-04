@@ -32,12 +32,19 @@ AC_CHECK_HEADERS([limits.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
+AC_C_INLINE
 
 m4_foreach([type], [[long], [int], [size_t], [unsigned long], [unsigned]], [
 	CHECK_BUILTIN_OVERFLOW([__builtin_add_overflow], type)
 	CHECK_BUILTIN_OVERFLOW([__builtin_sub_overflow], type)
 	CHECK_BUILTIN_OVERFLOW([__builtin_mul_overflow], type)
 ])
+
+CHECK_BUILTIN_BITS([__builtin_clrsbl], [long])
+CHECK_BUILTIN_BITS([__builtin_clrsb],  [int])
+CHECK_BUILTIN_BITS([__builtin_clzl],   [unsigned long])
+CHECK_BUILTIN_BITS([__builtin_clz],    [unsigned])
+CHECK_BUILTIN_BITS([__builtin_clzll],  [unsigned long long])
 
 # Checks for library functions.
 AC_CHECK_FUNCS([memcpy])
