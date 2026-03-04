@@ -6,17 +6,15 @@
 
 int main(void)
 {
-#if ULONG_MAX > UINT_MAX
 	enum sn_error err;
-#endif
 
 	assert(snq2u(ULONG_MAX, NULL) == UINT_MAX);
 
-#if ULONG_MAX > UINT_MAX
-	err = SN_ERROR_NONE;
-	snq2u(ULONG_MAX, &err);
-	assert(err == SN_ERROR_OVERFLOW);
-#endif
+	if (ULONG_MAX > UINT_MAX) {
+		err = SN_ERROR_NONE;
+		snq2u(ULONG_MAX, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	}
 
 	return 0;
 }
