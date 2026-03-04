@@ -89,13 +89,14 @@ int main(void)
 	assert(pos == 0);
 	assert(buf[0] == 'a');
 
-#if UCHAR_MAX < 511
-	pos = 0;
-	memset(buf, 'a', sizeof(buf));
-	assert(snunqt(buf, sizeof(buf), &pos, "\"\\777\"", 6, NULL) == 0);
-	assert(pos == 0);
-	assert(buf[0] == 'a');
-#endif
+	if (UCHAR_MAX < 511) {
+		pos = 0;
+		memset(buf, 'a', sizeof(buf));
+		assert(snunqt(buf, sizeof(buf), &pos,
+		              "\"\\777\"", 6, NULL) == 0);
+		assert(pos == 0);
+		assert(buf[0] == 'a');
+	}
 
 	pos = 0;
 	memset(buf, 'a', sizeof(buf));
@@ -135,13 +136,14 @@ int main(void)
 	assert(pos == 20);
 	assert(strncmp(buf, "\12\13\14\15\16\17a", 7) == 0);
 
-#if UCHAR_MAX < 4095
-	pos = 0;
-	memset(buf, 'a', sizeof(buf));
-	assert(snunqt(buf, sizeof(buf), &pos, "\"\\xFFF\"", 7, NULL) == 0);
-	assert(pos == 0);
-	assert(buf[0] == 'a');
-#endif
+	if (UCHAR_MAX < 4095) {
+		pos = 0;
+		memset(buf, 'a', sizeof(buf));
+		assert(snunqt(buf, sizeof(buf), &pos,
+		              "\"\\xFFF\"", 7, NULL) == 0);
+		assert(pos == 0);
+		assert(buf[0] == 'a');
+	}
 
 	err = SN_ERROR_NONE;
 	(void)snunqt(NULL, 0, NULL, NULL, 0, &err);
@@ -238,13 +240,13 @@ int main(void)
 	(void)snunqt(buf, sizeof(buf), &pos, "\"\\9\"", 4, &err);
 	assert(err == SN_ERROR_PARSE);
 
-#if UCHAR_MAX < 511
-	pos = 0;
-	err = SN_ERROR_NONE;
-	memset(buf, 'a', sizeof(buf));
-	(void)snunqt(buf, sizeof(buf), &pos, "\"\\777\"", 6, &err);
-	assert(err == SN_ERROR_OVERFLOW);
-#endif
+	if (UCHAR_MAX < 511) {
+		pos = 0;
+		err = SN_ERROR_NONE;
+		memset(buf, 'a', sizeof(buf));
+		(void)snunqt(buf, sizeof(buf), &pos, "\"\\777\"", 6, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	}
 
 	pos = 0;
 	err = SN_ERROR_NONE;
@@ -296,13 +298,13 @@ int main(void)
 	             "\\xd\\xe\\xf\"", 20, &err);
 	assert(err == SN_ERROR_NONE);
 
-#if UCHAR_MAX < 4095
-	pos = 0;
-	err = SN_ERROR_NONE;
-	memset(buf, 'a', sizeof(buf));
-	(void)snunqt(buf, sizeof(buf), &pos, "\"\\xFFF\"", 7, &err);
-	assert(err == SN_ERROR_OVERFLOW);
-#endif
+	if (UCHAR_MAX < 4095) {
+		pos = 0;
+		err = SN_ERROR_NONE;
+		memset(buf, 'a', sizeof(buf));
+		(void)snunqt(buf, sizeof(buf), &pos, "\"\\xFFF\"", 7, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	}
 
 	return 0;
 }
