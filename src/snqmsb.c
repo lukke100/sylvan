@@ -5,7 +5,7 @@
 
 static const size_t ZMAX = -1;
 
-#ifdef HAVE___BUILTIN_CLZL_UNSIGNED_LONG
+#if HAVE___BUILTIN_CLZL_UNSIGNED_LONG
 #define builtin_clzl __builtin_clzl
 #else
 #define HAVE___BUILTIN_CLZL_UNSIGNED_LONG 0

@@ -5,7 +5,7 @@
 
 static const size_t ZMAX = -1;
 
-#ifdef HAVE___BUILTIN_CLRSB_INT
+#if HAVE___BUILTIN_CLRSB_INT
 #define builtin_clrsb __builtin_clrsb
 #else
 #define HAVE___BUILTIN_CLRSB_INT 0

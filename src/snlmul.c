@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "sylvan.h"
 
-#ifdef HAVE___BUILTIN_MUL_OVERFLOW_LONG
+#if HAVE___BUILTIN_MUL_OVERFLOW_LONG
 #define builtin_mul_overflow __builtin_mul_overflow
 #else
 #define HAVE___BUILTIN_MUL_OVERFLOW_LONG 0

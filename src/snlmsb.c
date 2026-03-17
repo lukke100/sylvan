@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "sylvan.h"
 
-#ifdef HAVE___BUILTIN_CLRSBL_LONG
+#if HAVE___BUILTIN_CLRSBL_LONG
 #define builtin_clrsbl __builtin_clrsbl
 #else
 #define HAVE___BUILTIN_CLRSBL_LONG 0

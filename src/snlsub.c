@@ -2,7 +2,7 @@
 #include <limits.h>
 #include "sylvan.h"
 
-#ifdef HAVE___BUILTIN_SUB_OVERFLOW_LONG
+#if HAVE___BUILTIN_SUB_OVERFLOW_LONG
 #define builtin_sub_overflow __builtin_sub_overflow
 #else
 #define HAVE___BUILTIN_SUB_OVERFLOW_LONG 0

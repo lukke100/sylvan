@@ -4,7 +4,7 @@
 
 static const size_t ZMAX = -1;
 
-#ifdef HAVE___BUILTIN_MUL_OVERFLOW_SIZE_T
+#if HAVE___BUILTIN_MUL_OVERFLOW_SIZE_T
 #define builtin_mul_overflow __builtin_mul_overflow
 #else
 #define HAVE___BUILTIN_MUL_OVERFLOW_SIZE_T 0

@@ -5,7 +5,7 @@
 
 static const size_t ZMAX = -1;
 
-#ifdef HAVE___BUILTIN_CLZ_UNSIGNED
+#if HAVE___BUILTIN_CLZ_UNSIGNED
 #define builtin_clz __builtin_clz
 #else
 #define HAVE___BUILTIN_CLZ_UNSIGNED 0

@@ -5,7 +5,7 @@
 
 static const size_t ZMAX = -1;
 
-#ifdef HAVE___BUILTIN_CLZ_UNSIGNED
+#if HAVE___BUILTIN_CLZ_UNSIGNED
 #define builtin_clz __builtin_clz
 #else
 #define HAVE___BUILTIN_CLZ_UNSIGNED 0
@@ -17,7 +17,7 @@ static inline int builtin_clz(unsigned a)
 }
 #endif
 
-#ifdef HAVE___BUILTIN_CLZL_UNSIGNED_LONG
+#if HAVE___BUILTIN_CLZL_UNSIGNED_LONG
 #define builtin_clzl __builtin_clzl
 #else
 #define HAVE___BUILTIN_CLZL_UNSIGNED_LONG 0
@@ -29,7 +29,7 @@ static inline int builtin_clzl(unsigned long a)
 }
 #endif
 
-#ifdef HAVE___BUILTIN_CLZLL_UNSIGNED_LONG_LONG
+#if HAVE___BUILTIN_CLZLL_UNSIGNED_LONG_LONG
 #define builtin_clzll __builtin_clzll
 #define ULL_TYPE unsigned long long
 #else

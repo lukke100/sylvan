@@ -2,7 +2,7 @@
 #include <limits.h>
 #include "sylvan.h"
 
-#ifdef HAVE___BUILTIN_MUL_OVERFLOW_INT
+#if HAVE___BUILTIN_MUL_OVERFLOW_INT
 #define builtin_mul_overflow __builtin_mul_overflow
 #else
 #define HAVE___BUILTIN_MUL_OVERFLOW_INT 0

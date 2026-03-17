@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include "sylvan.h"
 
-#ifdef HAVE___BUILTIN_SUB_OVERFLOW_UNSIGNED
+#if HAVE___BUILTIN_SUB_OVERFLOW_UNSIGNED
 #define builtin_sub_overflow __builtin_sub_overflow
 #else
 #define HAVE___BUILTIN_SUB_OVERFLOW_UNSIGNED 0
