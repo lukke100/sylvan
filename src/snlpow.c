@@ -1,48 +1,36 @@
 #include "config.h"
 #include <limits.h>
-#include <stdlib.h>
+#include <stddef.h>
 #include "sylvan.h"
 
-long snlpow(long x, int y, enum sn_error *err)
+static inline long safepow(long x, int y,
+                           long negmul(long, long, enum sn_error *),
+                           enum sn_error *err)
 {
 	enum sn_error tmperr;
-	long result, tmpbase;
-	int tmpexp;
+	long tmpbase, result;
+	int domain, tmpexp;
 
-	if ((x > 1 || x < -1) && y < 0) {
-		sneset(err, SN_ERROR_UNDEFINED);
-		return 0;
+	tmperr  = SN_ERROR_NONE;
+	domain  = negmul(1, 1, NULL);
+	tmpbase = domain * snlsgn(x) * x;
+	tmpexp  = y;
+	result  = domain;
+
+	while (1) {
+		if (tmpexp % 2 != 0)
+			result = negmul(result, tmpbase, &tmperr);
+
+		tmpexp >>= 1;
+
+		if (tmpexp == 0)
+			break;
+
+		tmpbase = negmul(tmpbase, tmpbase, &tmperr);
 	}
 
-	tmperr = SN_ERROR_NONE;
-
-	if (LONG_MAX + LONG_MIN >= 0) {
-		tmpbase = labs(x);
-		result  = 1;
-
-		for (tmpexp = y; tmpexp != 0; tmpexp = div(tmpexp, 2).quot) {
-			if (tmpexp % 2 != 0)
-				result = snlmul(result, tmpbase, &tmperr);
-
-			tmpbase = snlmul(tmpbase, tmpbase, NULL);
-		}
-
-		if (x < 0 && y % 2 != 0)
-			result = snlmul(result, -1, &tmperr);
-	} else {
-		tmpbase = -snlsgn(x) * x;
-		result  = -1;
-
-		for (tmpexp = y; tmpexp != 0; tmpexp = div(tmpexp, 2).quot) {
-			if (tmpexp % 2 != 0)
-				result = snlnml(result, tmpbase, &tmperr);
-
-			tmpbase = snlnml(tmpbase, tmpbase, NULL);
-		}
-
-		if (x > 0 || y % 2 == 0)
-			result = snlmul(result, -1, &tmperr);
-	}
+	if ((x < 0 && y % 2 != 0) == (domain > 0))
+		result = snlsub(0, result, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE) {
 		if (result > 0)
@@ -52,4 +40,24 @@ long snlpow(long x, int y, enum sn_error *err)
 	}
 
 	return result;
+}
+
+long snlpow(long x, int y, enum sn_error *err)
+{
+	if (y < 0) {
+		if (x == 0) {
+			sneset(err, SN_ERROR_UNDEFINED);
+			return LONG_MAX;
+		}
+
+		if (x < 0 && y % 2 != 0)
+			return -1;
+
+		return snlabs(x, NULL) == 1;
+	}
+
+	if (LONG_MAX + LONG_MIN < 0)
+		return safepow(x, y, &snlnml, err);
+	else
+		return safepow(x, y, &snlmul, err);
 }

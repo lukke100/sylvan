@@ -3,16 +3,19 @@
 
 unsigned snupow(unsigned x, int y, enum sn_error *err)
 {
-	enum sn_error tmperr;
+	enum sn_error tmperr1, tmperr2;
 	unsigned long tmpval;
 	unsigned result;
 
-	tmperr = SN_ERROR_NONE;
-	tmpval = snqpow(x, y, &tmperr);
-	result = snq2u(tmpval, &tmperr);
+	tmperr1 = SN_ERROR_NONE;
+	tmpval  = snqpow(x, y, &tmperr1);
+	tmperr2 = SN_ERROR_NONE;
+	result  = snq2u(tmpval, &tmperr2);
 
-	if (tmperr != SN_ERROR_NONE)
-		sneset(err, tmperr);
+	if (tmperr1 != SN_ERROR_NONE)
+		sneset(err, tmperr1);
+	else if (tmperr2 != SN_ERROR_NONE)
+		sneset(err, tmperr2);
 
 	return result;
 }

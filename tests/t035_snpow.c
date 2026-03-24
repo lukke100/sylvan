@@ -10,11 +10,11 @@ int main(void)
 
 	assert(snpow(0,      0, NULL) == 1);
 	assert(snpow(0,      1, NULL) == 0);
-	assert(snpow(0,     -1, NULL) == 0);
+	assert(snpow(0,     -1, NULL) == INT_MAX);
 	assert(snpow(0,  32766, NULL) == 0);
-	assert(snpow(0, -32766, NULL) == 0);
+	assert(snpow(0, -32766, NULL) == INT_MAX);
 	assert(snpow(0,  32767, NULL) == 0);
-	assert(snpow(0, -32767, NULL) == 0);
+	assert(snpow(0, -32767, NULL) == INT_MAX);
 
 	assert(snpow(1,      0, NULL) == 1);
 	assert(snpow(1,      1, NULL) == 1);
@@ -40,12 +40,12 @@ int main(void)
 	assert(snpow(INT_MAX,  32767, NULL) == INT_MAX);
 	assert(snpow(INT_MAX, -32767, NULL) == 0);
 
-	assert(snpow(INT_MIN,      0, NULL) == 1);
+	assert(snpow(INT_MIN,      0, NULL) ==  1);
 	assert(snpow(INT_MIN,      1, NULL) == INT_MIN);
-	assert(snpow(INT_MIN,     -1, NULL) == 0);
-	assert(snpow(INT_MIN, -32766, NULL) == 0);
+	assert(snpow(INT_MIN,     -1, NULL) == -1);
+	assert(snpow(INT_MIN, -32766, NULL) ==  0);
 	assert(snpow(INT_MIN,  32767, NULL) == INT_MIN);
-	assert(snpow(INT_MIN, -32767, NULL) == 0);
+	assert(snpow(INT_MIN, -32767, NULL) == -1);
 
 	if (INT_MAX + INT_MIN <= 0)
 		assert(snpow(INT_MIN, 32766, NULL) == INT_MAX);
@@ -73,7 +73,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snpow(0, -1, &err);
-	assert(err == SN_ERROR_NONE);
+	assert(err == SN_ERROR_UNDEFINED);
 
 	err = SN_ERROR_NONE;
 	(void)snpow(0, 32766, &err);
@@ -81,7 +81,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snpow(0, -32766, &err);
-	assert(err == SN_ERROR_NONE);
+	assert(err == SN_ERROR_UNDEFINED);
 
 	err = SN_ERROR_NONE;
 	(void)snpow(0, 32767, &err);
@@ -89,7 +89,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snpow(0, -32767, &err);
-	assert(err == SN_ERROR_NONE);
+	assert(err == SN_ERROR_UNDEFINED);
 
 	err = SN_ERROR_NONE;
 	(void)snpow(1, 0, &err);
@@ -157,7 +157,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MAX, -1, &err);
-	assert(err == SN_ERROR_UNDEFINED);
+	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MAX, 32766, &err);
@@ -165,7 +165,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MAX, -32766, &err);
-	assert(err == SN_ERROR_UNDEFINED);
+	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MAX, 32767, &err);
@@ -173,7 +173,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MAX, -32767, &err);
-	assert(err == SN_ERROR_UNDEFINED);
+	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MIN, 0, &err);
@@ -185,17 +185,11 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MIN, -1, &err);
-	assert(err == SN_ERROR_UNDEFINED);
-
-	if (INT_MAX + INT_MIN <= 0) {
-		err = SN_ERROR_NONE;
-		(void)snpow(INT_MIN, 32766, &err);
-		assert(err == SN_ERROR_OVERFLOW);
-	}
+	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MIN, -32766, &err);
-	assert(err == SN_ERROR_UNDEFINED);
+	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MIN, 32767, &err);
@@ -203,7 +197,13 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snpow(INT_MIN, -32767, &err);
-	assert(err == SN_ERROR_UNDEFINED);
+	assert(err == SN_ERROR_NONE);
+
+	if (INT_MAX + INT_MIN <= 0) {
+		err = SN_ERROR_NONE;
+		(void)snpow(INT_MIN, 32766, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	}
 
 	err = SN_ERROR_NONE;
 	(void)snpow(179, 2, &err);

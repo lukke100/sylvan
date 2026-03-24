@@ -11,11 +11,11 @@ int main(void)
 
 	assert(snzpow(0,      0, NULL) == 1);
 	assert(snzpow(0,      1, NULL) == 0);
-	assert(snzpow(0,     -1, NULL) == 0);
+	assert(snzpow(0,     -1, NULL) == ZMAX);
 	assert(snzpow(0,  32766, NULL) == 0);
-	assert(snzpow(0, -32766, NULL) == 0);
+	assert(snzpow(0, -32766, NULL) == ZMAX);
 	assert(snzpow(0,  32767, NULL) == 0);
-	assert(snzpow(0, -32767, NULL) == 0);
+	assert(snzpow(0, -32767, NULL) == ZMAX);
 
 	assert(snzpow(1,      0, NULL) == 1);
 	assert(snzpow(1,      1, NULL) == 1);
@@ -51,7 +51,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(0, -1, &err);
-	assert(err == SN_ERROR_NONE);
+	assert(err == SN_ERROR_UNDEFINED);
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(0, 32766, &err);
@@ -59,7 +59,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(0, -32766, &err);
-	assert(err == SN_ERROR_NONE);
+	assert(err == SN_ERROR_UNDEFINED);
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(0, 32767, &err);
@@ -67,7 +67,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(0, -32767, &err);
-	assert(err == SN_ERROR_NONE);
+	assert(err == SN_ERROR_UNDEFINED);
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(1, 0, &err);
@@ -107,7 +107,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(ZMAX, -1, &err);
-	assert(err == SN_ERROR_UNDEFINED);
+	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(ZMAX, 32766, &err);
@@ -115,7 +115,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(ZMAX, -32766, &err);
-	assert(err == SN_ERROR_UNDEFINED);
+	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(ZMAX, 32767, &err);
@@ -123,7 +123,7 @@ int main(void)
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(ZMAX, -32767, &err);
-	assert(err == SN_ERROR_UNDEFINED);
+	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
 	(void)snzpow(179, 2, &err);
