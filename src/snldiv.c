@@ -9,13 +9,7 @@ long snldiv(long x, long y, enum sn_error *err)
 
 	if (y == 0) {
 		sneset(err, SN_ERROR_UNDEFINED);
-
-		if (x > 0)
-			return LONG_MAX;
-		else if (x < 0)
-			return LONG_MIN;
-		else
-			return 0;
+		return (x > 0) * LONG_MAX + (x < 0) * LONG_MIN;
 	}
 
 	if (LONG_MAX + LONG_MIN > 0) {

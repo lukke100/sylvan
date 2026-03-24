@@ -6,20 +6,20 @@
 long snlshl(long x, size_t y, enum sn_error *err)
 {
 	enum sn_error tmperr;
+	size_t maxmsb, minmsb;
 
-	if (y > snzmax(snlmsb(LONG_MAX, NULL), snlmsb(LONG_MIN, NULL))) {
-		x = snldiv(x, 0, NULL);
-
-		if (x == LONG_MAX)
-			sneset(err, SN_ERROR_OVERFLOW);
-		else if (x == LONG_MIN)
-			sneset(err, SN_ERROR_UNDERFLOW);
-
-		return x;
-	}
-
+	maxmsb = snlmsb(LONG_MAX, NULL);
+	minmsb = snlmsb(LONG_MIN, NULL);
+	y = snzmin(y, snzmax(maxmsb, minmsb + 1) + 1);
 	tmperr = SN_ERROR_NONE;
-	x = snlmul(x, 1L << y, &tmperr);
+
+	while (y > 0) {
+		size_t stepby;
+
+		stepby = snzmin(y, maxmsb);
+		x  = snlmul(x, (long)(1UL << stepby), &tmperr);
+		y -= stepby;
+	}
 
 	if (tmperr != SN_ERROR_NONE)
 		sneset(err, tmperr);

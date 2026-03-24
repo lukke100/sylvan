@@ -31,36 +31,34 @@ long snlmul(long x, long y, enum sn_error *err)
 			return LONG_MIN;
 		}
 	} else {
-		long max, min;
+		if (x == 0 || y == 0)
+			return 0;
 
-		max = snlmax(x, y);
-		min = snlmin(x, y);
+		if ((x > 0) == (y > 0)) {
+			enum sn_error tmperr;
 
-		if (LONG_MAX + LONG_MIN < 0) {
-			if (max < 0 && ldiv(LONG_MAX, min).quot > max) {
+			tmperr = SN_ERROR_NONE;
+			x = snlabs(x, &tmperr);
+			y = snlabs(y, &tmperr);
+
+			if (tmperr != SN_ERROR_NONE || LONG_MAX / y < x) {
 				sneset(err, SN_ERROR_OVERFLOW);
 				return LONG_MAX;
 			}
 		} else {
-			if (max < 0) {
-				long tmp;
+			ldiv_t tmp;
+			long pos, neg;
 
-				tmp = max;
-				max = labs(min);
-				min = labs(tmp);
+			pos = snlmax(x, y);
+			neg = snlmin(x, y);
+			tmp = ldiv(LONG_MIN, pos);
+
+			if (tmp.quot > neg) {
+				sneset(err, SN_ERROR_UNDERFLOW);
+				return LONG_MIN;
 			}
 		}
 
-		if (min > 0 && LONG_MAX / max < min) {
-			sneset(err, SN_ERROR_OVERFLOW);
-			return LONG_MAX;
-		}
-
-		if (max > 0 && min < 0 && ldiv(LONG_MIN, max).quot > min) {
-			sneset(err, SN_ERROR_UNDERFLOW);
-			return LONG_MIN;
-		}
-
-		return max * min;
+		return x * y;
 	}
 }

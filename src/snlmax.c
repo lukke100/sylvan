@@ -3,8 +3,5 @@
 
 long snlmax(long x, long y)
 {
-	if (y > x)
-		return y;
-	else
-		return x;
+	return x > y ? x : y;
 }

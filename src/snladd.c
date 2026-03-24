@@ -30,21 +30,16 @@ long snladd(long x, long y, enum sn_error *err)
 			return LONG_MIN;
 		}
 	} else {
-		long max, min;
-
-		max = snlmax(x, y);
-		min = snlmin(x, y);
-
-		if (min > 0 && LONG_MAX - min < max) {
+		if (y > 0 && x > LONG_MAX - y) {
 			sneset(err, SN_ERROR_OVERFLOW);
 			return LONG_MAX;
 		}
 
-		if (max < 0 && LONG_MIN - max > min) {
+		if (y < 0 && x < LONG_MIN - y) {
 			sneset(err, SN_ERROR_UNDERFLOW);
 			return LONG_MIN;
 		}
 
-		return max + min;
+		return x + y;
 	}
 }

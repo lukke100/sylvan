@@ -5,11 +5,9 @@
 
 long snlabs(long x, enum sn_error *err)
 {
-	if (LONG_MAX + LONG_MIN < 0) {
-		if (x < -LONG_MAX) {
-			sneset(err, SN_ERROR_OVERFLOW);
-			return LONG_MAX;
-		}
+	if (LONG_MAX + LONG_MIN < 0 && x < -LONG_MAX) {
+		sneset(err, SN_ERROR_OVERFLOW);
+		return LONG_MAX;
 	}
 
 	return labs(x);

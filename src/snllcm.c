@@ -8,32 +8,23 @@ long snllcm(long x, long y, enum sn_error *err)
 	long gcd, result;
 
 	tmperr = SN_ERROR_NONE;
-	gcd = snlgcd(x, y, &tmperr);
+	gcd    = snlgcd(x, y, &tmperr);
 
-	if (tmperr == SN_ERROR_OVERFLOW) {
-		sneset(err, SN_ERROR_OVERFLOW);
+	if (tmperr != SN_ERROR_NONE) {
+		sneset(err, tmperr);
 		return LONG_MAX;
 	}
 
 	if (gcd == 0)
 		return 0;
 
-	x /= gcd;
-	y /= gcd;
-
-	tmperr = SN_ERROR_NONE;
+	x = snlabs(x / gcd, &tmperr);
+	y = snlabs(y / gcd, &tmperr);
 	result = snlmul(x, y, &tmperr);
-
-	if (tmperr == SN_ERROR_OVERFLOW) {
-		sneset(err, SN_ERROR_OVERFLOW);
-		return LONG_MAX;
-	}
-
-	tmperr = SN_ERROR_NONE;
 	result = snlmul(result, gcd, &tmperr);
 
-	if (tmperr == SN_ERROR_OVERFLOW) {
-		sneset(err, SN_ERROR_OVERFLOW);
+	if (tmperr != SN_ERROR_NONE) {
+		sneset(err, tmperr);
 		return LONG_MAX;
 	}
 
