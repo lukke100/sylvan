@@ -10,11 +10,10 @@ int skadd(int x, int y, int bias)
 	max = snmax(x, y);
 	min = snmin(x, y);
 
-	if (max == INT_MAX && min == INT_MIN)
-		return bias;
-	else if (max == INT_MAX)
-		return INT_MAX;
-	else if (min == INT_MIN)
+	if (max == INT_MAX)
+		return min == INT_MIN ? bias : INT_MAX;
+
+	if (min == INT_MIN)
 		return INT_MIN;
 
 	return snadd(max, min, NULL);
