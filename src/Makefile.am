@@ -3,27 +3,27 @@ lib_LTLIBRARIES = libsylvan.la
 libsylvan_la_SOURCES = \
 	snladd.c snlsub.c snlmul.c snldiv.c snlmod.c \
 	snlgcd.c snllcm.c snlmax.c snlmin.c \
-	skladd.c sklsub.c sklmul.c skldiv.c \
+	skladd.c sklsub.c sklmul.c \
 	snlpow.c \
 	snlabs.c snlcmp.c snlsgn.c \
 	snadd.c snsub.c snmul.c sndiv.c snmod.c \
 	sngcd.c snlcm.c snmax.c snmin.c \
-	skadd.c sksub.c skmul.c skdiv.c \
+	skadd.c sksub.c skmul.c \
 	snpow.c \
 	snabs.c sncmp.c snsgn.c \
 	snzadd.c snzsub.c snzmul.c snzdiv.c snzmod.c \
 	snzgcd.c snzlcm.c snzmax.c snzmin.c \
-	skzadd.c skzmul.c skzdiv.c \
+	skzadd.c skzmul.c \
 	snzpow.c \
 	snzcmp.c snzsgn.c \
 	snqadd.c snqsub.c snqmul.c snqdiv.c snqmod.c \
 	snqgcd.c snqlcm.c snqmax.c snqmin.c \
-	skqadd.c skqmul.c skqdiv.c \
+	skqadd.c skqmul.c \
 	snqpow.c \
 	snqcmp.c snqsgn.c \
 	snuadd.c snusub.c snumul.c snudiv.c snumod.c \
 	snugcd.c snulcm.c snumax.c snumin.c \
-	skuadd.c skumul.c skudiv.c \
+	skuadd.c skumul.c \
 	snupow.c \
 	snucmp.c snusgn.c \
 	sntok.c \
