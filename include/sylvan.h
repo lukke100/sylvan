@@ -139,6 +139,7 @@ long snlshl(long x, size_t y, enum sn_error *err);
 long snlshr(long x, size_t y);
 long snlnml(long x, long y, enum sn_error *err);
 long snlnot(long x, enum sn_error *err);
+long snland(long x, long y, enum sn_error *err);
 
 size_t snlmsb(long x, enum sn_error *err);
 
