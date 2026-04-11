@@ -33,7 +33,8 @@ check_PROGRAMS = \
 	t108_snqt t109_snunqt \
 	t111_snl2i t112_snq2u t113_snu2uc \
 	t121_snrev \
-	t131_snlshl t132_snlshr t133_snlnml t134_snlnot t135_snlbop \
+	t131_snlshl t132_snlshr t133_snlnml \
+	t134_snlnot t135_snlbop t136_snland t137_snlor t138_snlxor \
 	t139_snlmsb \
 	t141_snshl t142_snshr t143_snnml t144_snnot t149_snmsb \
 	t151_snzshl t152_snzshr t154_snznot t159_snzmsb \
