@@ -12,8 +12,24 @@ int main(void)
 
 	assert(snmod(INT_MAX,  0, NULL) == 0);
 	assert(snmod(INT_MIN,  0, NULL) == 0);
+	assert(snmod(INT_MAX,  1, NULL) == 0);
+	assert(snmod(INT_MIN,  1, NULL) == 0);
 	assert(snmod(INT_MAX, -1, NULL) == 0);
 	assert(snmod(INT_MIN, -1, NULL) == 0);
+
+	assert(snmod( 0, INT_MAX, NULL) == 0);
+	assert(snmod( 0, INT_MIN, NULL) == 0);
+	assert(snmod( 1, INT_MAX, NULL) == 1);
+	assert(snmod( 1, INT_MIN, NULL) == 1);
+	assert(snmod(-1, INT_MAX, NULL) == INT_MAX - 1);
+
+	assert(snmod(INT_MAX - 1, INT_MAX, NULL) == INT_MAX - 1);
+	assert(snmod(INT_MIN + 1, INT_MIN, NULL) == 1);
+
+	if (INT_MAX + INT_MIN < -1)
+		assert(snmod(-1, INT_MIN, NULL) == INT_MAX);
+	else
+		assert(snmod(-1, INT_MIN, NULL) == -(INT_MIN + 1));
 
 	assert(snmod( 6,  3, NULL) == 0);
 	assert(snmod(-6,  3, NULL) == 0);
@@ -38,12 +54,58 @@ int main(void)
 	assert(err == SN_ERROR_UNDEFINED);
 
 	err = SN_ERROR_NONE;
+	(void)snmod(INT_MAX, 1, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(INT_MIN, 1, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
 	(void)snmod(INT_MAX, -1, &err);
 	assert(err == SN_ERROR_NONE);
 
 	err = SN_ERROR_NONE;
 	(void)snmod(INT_MIN, -1, &err);
 	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(0, INT_MAX, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(0, INT_MIN, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(1, INT_MAX, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(1, INT_MIN, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(-1, INT_MAX, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(INT_MAX - 1, INT_MAX, &err);
+	assert(err == SN_ERROR_NONE);
+
+	err = SN_ERROR_NONE;
+	(void)snmod(INT_MIN + 1, INT_MIN, &err);
+	assert(err == SN_ERROR_NONE);
+
+	if (INT_MAX + INT_MIN < -1) {
+		err = SN_ERROR_NONE;
+		(void)snmod(-1, INT_MIN, &err);
+		assert(err == SN_ERROR_OVERFLOW);
+	} else {
+		err = SN_ERROR_NONE;
+		(void)snmod(-1, INT_MIN, &err);
+		assert(err == SN_ERROR_NONE);
+	}
 
 	err = SN_ERROR_NONE;
 	(void)snmod(6, 3, &err);
