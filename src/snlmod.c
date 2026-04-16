@@ -19,10 +19,10 @@ long snlmod(long x, long y, enum sn_error *err)
 	absmod = snlabs(y, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE) {
-		while (result < 0) {
-			tmperr = SN_ERROR_NONE;
+		tmperr = SN_ERROR_NONE;
+
+		while (result < 0)
 			result = snlsub(result, y, &tmperr);
-		}
 
 		if (tmperr != SN_ERROR_NONE)
 			sneset(err, tmperr);
