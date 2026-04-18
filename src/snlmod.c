@@ -5,6 +5,7 @@
 
 long snlmod(long x, long y, enum sn_error *err)
 {
+	long (*shrink)(long, long, enum sn_error *);
 	enum sn_error tmperr;
 	ldiv_t divtmp;
 	long absmod, result;
@@ -14,15 +15,25 @@ long snlmod(long x, long y, enum sn_error *err)
 		return 0;
 	}
 
-	result = x;
+	shrink = y > 0 ? snladd : snlsub;
 	tmperr = SN_ERROR_NONE;
+	result = x;
+
+	while (LONG_MAX + LONG_MIN < 0 && result < -LONG_MAX)
+		result = shrink(result, y, &tmperr);
+
+	if (tmperr != SN_ERROR_NONE) {
+		sneset(err, tmperr);
+		return result;
+	}
+
 	absmod = snlabs(y, &tmperr);
 
 	if (tmperr != SN_ERROR_NONE) {
 		tmperr = SN_ERROR_NONE;
 
 		while (result < 0)
-			result = snlsub(result, y, &tmperr);
+			result = shrink(result, y, &tmperr);
 
 		if (tmperr != SN_ERROR_NONE)
 			sneset(err, tmperr);
