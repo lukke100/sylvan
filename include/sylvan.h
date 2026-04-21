@@ -66,6 +66,10 @@ int snsgn(int x);
 
 int sngcd(int x, int y, enum sn_error *err);
 int snlcm(int x, int y, enum sn_error *err);
+int snbop(int x, int y, int b, enum sn_error *err);
+int snand(int x, int y, enum sn_error *err);
+int snor( int x, int y, enum sn_error *err);
+int snxor(int x, int y, enum sn_error *err);
 int snnot(int x, enum sn_error *err);
 int snshl(int x, size_t y, enum sn_error *err);
 int snshr(int x, size_t y);

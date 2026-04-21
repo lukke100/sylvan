@@ -12,7 +12,7 @@ libsylvan_la_SOURCES = \
 	skadd.c sksub.c skmul.c snnml.c \
 	snmax.c snmin.c snabs.c sncmp.c snsgn.c \
 	sngcd.c snlcm.c \
-	snnot.c \
+	snbop.c snand.c snor.c  snxor.c snnot.c \
 	snshl.c snshr.c snmsb.c \
 	snpow.c \
 	snzadd.c snzsub.c snzmul.c snzdiv.c snzmod.c \

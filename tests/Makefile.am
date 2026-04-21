@@ -14,7 +14,7 @@ check_PROGRAMS = \
 	t056_skadd t057_sksub t058_skmul t059_snnml \
 	t061_snmax t062_snmin t063_snabs t064_sncmp t065_snsgn \
 	t066_sngcd t067_snlcm \
-	t075_snnot \
+	t071_snbop t072_snand t073_snor  t074_snxor t075_snnot \
 	t076_snshl t077_snshr t078_snmsb \
 	t081_snpow \
 	t091_sna2i \
