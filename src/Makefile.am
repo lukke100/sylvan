@@ -2,30 +2,38 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 lib_LTLIBRARIES = libsylvan.la
 libsylvan_la_SOURCES = \
 	snladd.c snlsub.c snlmul.c snldiv.c snlmod.c \
-	snlgcd.c snllcm.c snlmax.c snlmin.c \
-	skladd.c sklsub.c sklmul.c \
+	skladd.c sklsub.c sklmul.c snlnml.c \
+	snlmax.c snlmin.c snlabs.c snlcmp.c snlsgn.c \
+	snlgcd.c snllcm.c \
+	snlbop.c snland.c snlor.c  snlxor.c snlnot.c \
+	snlshl.c snlshr.c snlmsb.c \
 	snlpow.c \
-	snlabs.c snlcmp.c snlsgn.c \
 	snadd.c snsub.c snmul.c sndiv.c snmod.c \
-	sngcd.c snlcm.c snmax.c snmin.c \
-	skadd.c sksub.c skmul.c \
+	skadd.c sksub.c skmul.c snnml.c \
+	snmax.c snmin.c snabs.c sncmp.c snsgn.c \
+	sngcd.c snlcm.c \
+	snnot.c \
+	snshl.c snshr.c snmsb.c \
 	snpow.c \
-	snabs.c sncmp.c snsgn.c \
 	snzadd.c snzsub.c snzmul.c snzdiv.c snzmod.c \
-	snzgcd.c snzlcm.c snzmax.c snzmin.c \
 	skzadd.c skzmul.c \
+	snzmax.c snzmin.c snzcmp.c snzsgn.c \
+	snzgcd.c snzlcm.c \
+	snznot.c \
+	snzshl.c snzshr.c snzmsb.c \
 	snzpow.c \
-	snzcmp.c snzsgn.c \
 	snqadd.c snqsub.c snqmul.c snqdiv.c snqmod.c \
-	snqgcd.c snqlcm.c snqmax.c snqmin.c \
 	skqadd.c skqmul.c \
+	snqmax.c snqmin.c snqcmp.c snqsgn.c \
+	snqgcd.c snqlcm.c \
+	snqshl.c snqshr.c snqmsb.c \
 	snqpow.c \
-	snqcmp.c snqsgn.c \
 	snuadd.c snusub.c snumul.c snudiv.c snumod.c \
-	snugcd.c snulcm.c snumax.c snumin.c \
 	skuadd.c skumul.c \
+	snumax.c snumin.c snucmp.c snusgn.c \
+	snugcd.c snulcm.c \
+	snushl.c snushr.c snumsb.c \
 	snupow.c \
-	snucmp.c snusgn.c \
 	sntok.c \
 	sna2l.c \
 	sna2i.c \
@@ -35,12 +43,6 @@ libsylvan_la_SOURCES = \
 	snu2uc.c \
 	snqt.c snunqt.c \
 	snrev.c \
-	snlshl.c snlshr.c snlnml.c \
-	snlnot.c snlbop.c snland.c snlor.c snlxor.c snlmsb.c \
-	snshl.c snshr.c snnml.c snnot.c snmsb.c \
-	snzshl.c snzshr.c snznot.c snzmsb.c \
-	snqshl.c snqshr.c snqmsb.c \
-	snushl.c snushr.c snumsb.c \
 	sneset.c \
 	snrbts.c \
 	snget.c

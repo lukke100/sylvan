@@ -3,44 +3,45 @@ LDADD = $(top_builddir)/src/libsylvan.la
 
 check_PROGRAMS = \
 	t001_snladd t002_snlsub t003_snlmul t004_snldiv t005_snlmod \
-	t006_snlgcd t007_snllcm t008_snlmax t009_snlmin \
-	t011_snadd t012_snsub t013_snmul t014_sndiv t015_snmod \
-	t016_sngcd t017_snlcm t018_snmax t019_snmin \
-	t021_skladd t022_sklsub t023_sklmul \
-	t025_snlpow \
-	t027_snlabs t028_snlcmp t029_snlsgn \
-	t031_skadd t032_sksub t033_skmul \
-	t035_snpow \
-	t037_snabs t038_sncmp t039_snsgn \
-	t041_snzadd t042_snzsub t043_snzmul t044_snzdiv t045_snzmod \
-	t046_snzgcd t047_snzlcm t048_snzmax t049_snzmin \
-	t051_skzadd t053_skzmul \
-	t055_snzpow \
-	t058_snzcmp t059_snzsgn \
-	t061_snqadd t062_snqsub t063_snqmul t064_snqdiv t065_snqmod \
-	t066_snqgcd t067_snqlcm t068_snqmax t069_snqmin \
-	t071_skqadd t073_skqmul \
-	t075_snqpow \
-	t078_snqcmp t079_snqsgn \
-	t081_snuadd t082_snusub t083_snumul t084_snudiv t085_snumod \
-	t086_snugcd t087_snulcm t088_snumax t089_snumin \
-	t091_skuadd t093_skumul \
-	t095_snupow \
-	t098_snucmp t099_snusgn \
-	t101_sntok \
-	t102_sna2l t103_sna2i \
-	t104_snuc2c \
-	t108_snqt t109_snunqt \
-	t111_snl2i t112_snq2u t113_snu2uc \
-	t121_snrev \
-	t131_snlshl t132_snlshr t133_snlnml \
-	t134_snlnot t135_snlbop t136_snland t137_snlor t138_snlxor \
-	t139_snlmsb \
-	t141_snshl t142_snshr t143_snnml t144_snnot t149_snmsb \
-	t151_snzshl t152_snzshr t154_snznot t159_snzmsb \
-	t161_snqshl t162_snqshr t169_snqmsb \
-	t171_snushl t172_snushr t179_snumsb \
-	t191_sneset t199_snrbts \
-	t201_snget
+	t006_skladd t007_sklsub t008_sklmul t009_snlnml \
+	t011_snlmax t012_snlmin t013_snlabs t014_snlcmp t015_snlsgn \
+	t016_snlgcd t017_snllcm \
+	t021_snlbop t022_snland t023_snlor t024_snlxor t025_snlnot \
+	t026_snlshl t027_snlshr t028_snlmsb \
+	t031_snlpow \
+	t041_sna2l t042_snl2i \
+	t051_snadd t052_snsub t053_snmul t054_sndiv t055_snmod \
+	t056_skadd t057_sksub t058_skmul t059_snnml \
+	t061_snmax t062_snmin t063_snabs t064_sncmp t065_snsgn \
+	t066_sngcd t067_snlcm \
+	t075_snnot \
+	t076_snshl t077_snshr t078_snmsb \
+	t081_snpow \
+	t091_sna2i \
+	t101_snzadd t102_snzsub t103_snzmul t104_snzdiv t105_snzmod \
+	t106_skzadd t108_skzmul \
+	t111_snzmax t112_snzmin t114_snzcmp t115_snzsgn \
+	t116_snzgcd t117_snzlcm \
+	t125_snznot \
+	t126_snzshl t127_snzshr t128_snzmsb \
+	t131_snzpow \
+	t151_snqadd t152_snqsub t153_snqmul t154_snqdiv t155_snqmod \
+	t156_skqadd t158_skqmul \
+	t161_snqmax t162_snqmin t164_snqcmp t165_snqsgn \
+	t166_snqgcd t167_snqlcm \
+	t176_snqshl t177_snqshr t178_snqmsb \
+	t181_snqpow \
+	t192_snq2u \
+	t201_snuadd t202_snusub t203_snumul t204_snudiv t205_snumod \
+	t206_skuadd t208_skumul \
+	t211_snumax t212_snumin t214_snucmp t215_snusgn \
+	t216_snugcd t217_snulcm \
+	t226_snushl t227_snushr t228_snumsb \
+	t231_snupow \
+	t242_snu2uc \
+	t301_sntok t302_snrev t303_snuc2c t304_snqt t305_snunqt \
+	t401_snrbts \
+	t501_snget \
+	t901_sneset
 
 TESTS = $(check_PROGRAMS)
