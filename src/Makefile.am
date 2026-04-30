@@ -19,7 +19,7 @@ libsylvan_la_SOURCES = \
 	skzadd.c skzmul.c \
 	snzmax.c snzmin.c snzcmp.c snzsgn.c \
 	snzgcd.c snzlcm.c \
-	snznot.c \
+	snzbop.c snzand.c snzor.c  snzxor.c snznot.c \
 	snzshl.c snzshr.c snzmsb.c \
 	snzpow.c \
 	snqadd.c snqsub.c snqmul.c snqdiv.c snqmod.c \

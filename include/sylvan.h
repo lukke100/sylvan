@@ -94,6 +94,10 @@ int snzsgn(size_t x);
 
 size_t snzgcd(size_t x, size_t y);
 size_t snzlcm(size_t x, size_t y, enum sn_error *err);
+size_t snzbop(size_t x, size_t y, int b, enum sn_error *err);
+size_t snzand(size_t x, size_t y, enum sn_error *err);
+size_t snzor( size_t x, size_t y, enum sn_error *err);
+size_t snzxor(size_t x, size_t y, enum sn_error *err);
 size_t snznot(size_t x);
 size_t snzshl(size_t x, size_t y, enum sn_error *err);
 size_t snzshr(size_t x, size_t y);

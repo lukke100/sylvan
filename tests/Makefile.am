@@ -22,7 +22,7 @@ check_PROGRAMS = \
 	t106_skzadd t108_skzmul \
 	t111_snzmax t112_snzmin t114_snzcmp t115_snzsgn \
 	t116_snzgcd t117_snzlcm \
-	t125_snznot \
+	t121_snzbop t122_snzand t123_snzor t124_snzxor t125_snznot \
 	t126_snzshl t127_snzshr t128_snzmsb \
 	t131_snzpow \
 	t151_snqadd t152_snqsub t153_snqmul t154_snqdiv t155_snqmod \
