@@ -1,4 +1,5 @@
 #include "config.h"
+#include <stddef.h>
 #include "sylvan.h"
 
 size_t snzor(size_t x, size_t y, enum sn_error *err)
