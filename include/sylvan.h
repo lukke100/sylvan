@@ -121,6 +121,12 @@ int snqsgn(unsigned long x);
 
 unsigned long snqgcd(unsigned long x, unsigned long y);
 unsigned long snqlcm(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqbop(unsigned long x, unsigned long y,
+                     int b, enum sn_error *err);
+
+unsigned long snqand(unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqor( unsigned long x, unsigned long y, enum sn_error *err);
+unsigned long snqxor(unsigned long x, unsigned long y, enum sn_error *err);
 unsigned long snqshl(unsigned long x, size_t y, enum sn_error *err);
 unsigned long snqshr(unsigned long x, size_t y);
 

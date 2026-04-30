@@ -29,6 +29,7 @@ check_PROGRAMS = \
 	t156_skqadd t158_skqmul \
 	t161_snqmax t162_snqmin t164_snqcmp t165_snqsgn \
 	t166_snqgcd t167_snqlcm \
+	t171_snqbop t172_snqand t173_snqor t174_snqxor \
 	t176_snqshl t177_snqshr t178_snqmsb \
 	t181_snqpow \
 	t192_snq2u \
