@@ -7,7 +7,8 @@
 int main(void)
 {
 	enum sn_error err;
-	size_t maxmsb, tmpor, tmpxor;
+	unsigned long tmpor, tmpxor;
+	size_t maxmsb;
 
 	maxmsb = snqmsb(ULONG_MAX, NULL);
 	tmpor  = snqshl(1, maxmsb, NULL) - 1;
