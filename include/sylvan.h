@@ -151,6 +151,10 @@ int snusgn(unsigned x);
 
 unsigned snugcd(unsigned x, unsigned y);
 unsigned snulcm(unsigned x, unsigned y, enum sn_error *err);
+unsigned snubop(unsigned x, unsigned y, int b, enum sn_error *err);
+unsigned snuand(unsigned x, unsigned y, enum sn_error *err);
+unsigned snuor( unsigned x, unsigned y, enum sn_error *err);
+unsigned snuxor(unsigned x, unsigned y, enum sn_error *err);
 unsigned snushl(unsigned x, size_t y, enum sn_error *err);
 unsigned snushr(unsigned x, size_t y);
 

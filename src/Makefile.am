@@ -33,6 +33,7 @@ libsylvan_la_SOURCES = \
 	skuadd.c skumul.c \
 	snumax.c snumin.c snucmp.c snusgn.c \
 	snugcd.c snulcm.c \
+	snubop.c snuand.c snuor.c  snuxor.c \
 	snushl.c snushr.c snumsb.c \
 	snupow.c \
 	sntok.c \

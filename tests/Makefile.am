@@ -37,6 +37,7 @@ check_PROGRAMS = \
 	t206_skuadd t208_skumul \
 	t211_snumax t212_snumin t214_snucmp t215_snusgn \
 	t216_snugcd t217_snulcm \
+	t221_snubop t222_snuand t223_snuor t224_snuxor \
 	t226_snushl t227_snushr t228_snumsb \
 	t231_snupow \
 	t242_snu2uc \
