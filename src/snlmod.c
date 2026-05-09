@@ -1,51 +1,56 @@
 #include "config.h"
-#include <limits.h>
-#include <stdlib.h>
+#include <stddef.h>
 #include "sylvan.h"
 
 long snlmod(long x, long y, enum sn_error *err)
 {
-	long (*shrink)(long, long, enum sn_error *);
 	enum sn_error tmperr;
-	ldiv_t divtmp;
-	long absmod, result;
+	long result, tmpmod;
+	size_t xbits, ybits;
 
 	if (y == 0) {
 		sneset(err, SN_ERROR_UNDEFINED);
 		return 0;
 	}
 
-	shrink = y > 0 ? snladd : snlsub;
 	tmperr = SN_ERROR_NONE;
-	result = x;
+	result = snlabs(x, &tmperr);
+	tmpmod = snlabs(y, &tmperr);
 
-	while (LONG_MAX + LONG_MIN < 0 && result < -LONG_MAX)
-		result = shrink(result, y, &tmperr);
+	if (tmperr == SN_ERROR_NONE) {
+		result %= tmpmod;
 
-	if (tmperr != SN_ERROR_NONE) {
-		sneset(err, tmperr);
-		return result;
-	}
-
-	absmod = snlabs(y, &tmperr);
-
-	if (tmperr != SN_ERROR_NONE) {
-		tmperr = SN_ERROR_NONE;
-
-		while (result < 0)
-			result = shrink(result, y, &tmperr);
-
-		if (tmperr != SN_ERROR_NONE)
-			sneset(err, tmperr);
+		if (x < 0 && result != 0)
+			result = tmpmod - result;
 
 		return result;
 	}
 
-	divtmp = ldiv(result, absmod);
-	result = divtmp.rem;
+	result = -snlsgn(x) * x;
+	tmpmod = -snlsgn(y) * y;
+	xbits  = snlmsb(result, NULL) + 1;
+	ybits  = snlmsb(tmpmod, NULL) + 1;
 
-	if (result < 0)
-		result += absmod;
+	if (xbits >= ybits) {
+		size_t shlmax, shlidx;
 
-	return result;
+		shlmax = xbits - ybits;
+
+		for (shlidx = 0; shlidx <= shlmax; ++shlidx) {
+			long tmpval;
+
+			tmperr = SN_ERROR_NONE;
+			tmpval = snlshl(tmpmod, shlmax - shlidx, &tmperr);
+
+			if (tmperr != SN_ERROR_NONE || tmpval < result)
+				continue;
+
+			result -= tmpval;
+		}
+	}
+
+	if (x > 0 || result == 0)
+		return snlsub(0, result, err);
+
+	return snlsub(result, tmpmod, err);
 }
