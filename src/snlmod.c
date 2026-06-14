@@ -5,52 +5,54 @@
 long snlmod(long x, long y, enum sn_error *err)
 {
 	enum sn_error tmperr;
-	long result, tmpmod;
-	size_t xbits, ybits;
+	long result1, tmpmod1;
 
 	if (y == 0) {
 		sneset(err, SN_ERROR_UNDEFINED);
 		return 0;
 	}
 
-	tmperr = SN_ERROR_NONE;
-	result = snlabs(x, &tmperr);
-	tmpmod = snlabs(y, &tmperr);
+	tmperr  = SN_ERROR_NONE;
+	tmpmod1 = snlabs(y, &tmperr);
 
-	if (tmperr == SN_ERROR_NONE) {
-		result %= tmpmod;
+	if (tmperr != SN_ERROR_NONE) {
+		tmpmod1 = y;
 
-		if (x < 0 && result != 0)
-			result = tmpmod - result;
-
-		return result;
+		if (x >= 0)
+			return x;
 	}
 
-	result = -snlsgn(x) * x;
-	tmpmod = -snlsgn(y) * y;
-	xbits  = snlmsb(result, NULL) + 1;
-	ybits  = snlmsb(tmpmod, NULL) + 1;
+	result1 = x;
 
-	if (xbits >= ybits) {
-		size_t shlmax, shlidx;
+	while (1) {
+		long result2, tmpmod2, tmpmod3;
+		size_t msbdiff;
 
-		shlmax = xbits - ybits;
+		tmperr  = SN_ERROR_NONE;
+		result2 = snlabs(result1, &tmperr);
 
-		for (shlidx = 0; shlidx <= shlmax; ++shlidx) {
-			long tmpval;
+		if (tmperr == SN_ERROR_NONE && tmpmod1 > 0) {
+			result2 %= tmpmod1;
 
-			tmperr = SN_ERROR_NONE;
-			tmpval = snlshl(tmpmod, shlmax - shlidx, &tmperr);
+			if (x < 0 && result2 != 0)
+				result2 = tmpmod1 - result2;
 
-			if (tmperr != SN_ERROR_NONE || tmpval < result)
-				continue;
-
-			result -= tmpval;
+			return result2;
 		}
+
+		result2 = -snlsgn(result1) * result1;
+		tmpmod2 = -snlsgn(tmpmod1) * tmpmod1;
+
+		if (tmpmod2 <= result2)
+			return snlsub(result2, tmpmod2, err);
+
+		msbdiff = snlmsb(result2, NULL) - snlmsb(tmpmod2, NULL);
+		tmperr  = SN_ERROR_NONE;
+		tmpmod3 = snlshl(tmpmod2, msbdiff, &tmperr);
+
+		if (tmperr != SN_ERROR_NONE || tmpmod3 < result2)
+			tmpmod3 = snlshl(tmpmod2, msbdiff - 1, NULL);
+
+		result1 = result2 - tmpmod3;
 	}
-
-	if (x > 0 || result == 0)
-		return snlsub(0, result, err);
-
-	return snlsub(result, tmpmod, err);
 }
