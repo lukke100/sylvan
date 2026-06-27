@@ -26,8 +26,14 @@ long snldiv(long x, long y, enum sn_error *err)
 
 	tmp = ldiv(x, y);
 
-	if (tmp.rem < 0)
-		tmp.quot -= snlsgn(y);
+	if (tmp.rem != 0 && snlsgn(x) * snlsgn(y) < 0) {
+		if (tmp.quot == LONG_MIN) {
+			sneset(err, SN_ERROR_UNDERFLOW);
+			return LONG_MIN;
+		}
+
+		--tmp.quot;
+	}
 
 	return tmp.quot;
 }

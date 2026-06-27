@@ -26,8 +26,8 @@ int main(void)
 
 	assert(sndiv( 7,  3, NULL) ==  2);
 	assert(sndiv(-7,  3, NULL) == -3);
-	assert(sndiv( 7, -3, NULL) == -2);
-	assert(sndiv(-7, -3, NULL) ==  3);
+	assert(sndiv( 7, -3, NULL) == -3);
+	assert(sndiv(-7, -3, NULL) ==  2);
 
 	err = SN_ERROR_NONE;
 	sndiv(0, 0, &err);

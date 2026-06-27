@@ -26,8 +26,8 @@ int main(void)
 
 	assert(snldiv( 7,  3, NULL) ==  2);
 	assert(snldiv(-7,  3, NULL) == -3);
-	assert(snldiv( 7, -3, NULL) == -2);
-	assert(snldiv(-7, -3, NULL) ==  3);
+	assert(snldiv( 7, -3, NULL) == -3);
+	assert(snldiv(-7, -3, NULL) ==  2);
 
 	err = SN_ERROR_NONE;
 	(void)snldiv(0, 0, &err);
@@ -40,7 +40,6 @@ int main(void)
 	err = SN_ERROR_NONE;
 	(void)snldiv(-1, 0, &err);
 	assert(err == SN_ERROR_UNDEFINED);
-
 
 	if (LONG_MAX + LONG_MIN > 0) {
 		err = SN_ERROR_NONE;
