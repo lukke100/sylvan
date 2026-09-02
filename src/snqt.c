@@ -10,7 +10,7 @@ enum {
 	QUOTE_NUMERIC = 3
 };
 
-static size_t hexdigits()
+static size_t hexdigits(void)
 {
 	size_t digits, limit;
 

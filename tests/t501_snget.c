@@ -197,4 +197,6 @@ int main(void)
 	assert(feof(tmpf));
 	ioresult = fclose(tmpf);
 	assert(ioresult == 0);
+
+	return 0;
 }

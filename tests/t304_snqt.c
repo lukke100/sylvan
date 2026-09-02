@@ -104,4 +104,6 @@ int main(void)
 		(void)snqt(buf, sizeof(buf), "\000a", 2, &err);
 		assert(err == SN_ERROR_NONE);
 	}
+
+	return 0;
 }

@@ -63,4 +63,6 @@ int main(void)
 	err = SN_ERROR_NONE;
 	sna2i(buf, sizeof(buf), &err);
 	assert(err == SN_ERROR_UNDERFLOW);
+
+	return 0;
 }
