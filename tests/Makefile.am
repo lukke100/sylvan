@@ -8,6 +8,7 @@ check_PROGRAMS = \
 	t016_snlgcd t017_snllcm \
 	t021_snlbop t022_snland t023_snlor t024_snlxor t025_snlnot \
 	t026_snlshl t027_snlshr t028_snlmsb \
+	t031_snlmsk \
 	t036_snlpow \
 	t041_sna2l t042_snl2i \
 	t051_snadd t052_snsub t053_snmul t054_sndiv t055_snmod \

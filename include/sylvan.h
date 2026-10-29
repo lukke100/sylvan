@@ -43,6 +43,7 @@ long snlshr(long x, size_t y);
 size_t snlmsb(long x, enum sn_error *err);
 
 long snlpow(long x, int y, enum sn_error *err);
+long snlmsk(long x, enum sn_error *err);
 
 long sna2l(const char src[], size_t srcsz, enum sn_error *err);
 
