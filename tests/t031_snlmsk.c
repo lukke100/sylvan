@@ -77,7 +77,7 @@ int main(void)
 
 	tmp = snlshl(1, snlmsb(LONG_MAX, NULL), NULL) - 1;
 
-	if (LONG_MAX % 2 == 0 && snlshr(LONG_MAX, 1) != tmp) {
+	if (LONG_MAX % 2 == 0 || snlshr(LONG_MAX, 1) != tmp) {
 		err = SN_ERROR_NONE;
 		snlmsk(LONG_MAX, &err);
 		assert(err == SN_ERROR_OVERFLOW);
@@ -89,7 +89,7 @@ int main(void)
 
 	tmp = snlshl(-1, snlmsb(LONG_MIN, NULL), NULL);
 
-	if (LONG_MIN % 2 != 0 && snlshr(LONG_MIN, 1) != tmp) {
+	if (LONG_MIN % 2 != 0 || snlshr(LONG_MIN, 1) != tmp) {
 		err = SN_ERROR_NONE;
 		snlmsk(LONG_MIN, &err);
 		assert(err == SN_ERROR_UNDERFLOW);

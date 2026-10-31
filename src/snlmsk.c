@@ -1,4 +1,5 @@
 #include "config.h"
+#include <stddef.h>
 #include "sylvan.h"
 
 long snlmsk(long x, enum sn_error *err)
