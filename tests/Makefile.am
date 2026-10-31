@@ -17,6 +17,7 @@ check_PROGRAMS = \
 	t066_sngcd t067_snlcm \
 	t071_snbop t072_snand t073_snor  t074_snxor t075_snnot \
 	t076_snshl t077_snshr t078_snmsb \
+	t081_snmsk \
 	t086_snpow \
 	t091_sna2i \
 	t101_snzadd t102_snzsub t103_snzmul t104_snzdiv t105_snzmod \
@@ -25,6 +26,7 @@ check_PROGRAMS = \
 	t116_snzgcd t117_snzlcm \
 	t121_snzbop t122_snzand t123_snzor t124_snzxor t125_snznot \
 	t126_snzshl t127_snzshr t128_snzmsb \
+	t131_snzmsk \
 	t136_snzpow \
 	t151_snqadd t152_snqsub t153_snqmul t154_snqdiv t155_snqmod \
 	t156_skqadd t158_skqmul \
@@ -32,6 +34,7 @@ check_PROGRAMS = \
 	t166_snqgcd t167_snqlcm \
 	t171_snqbop t172_snqand t173_snqor t174_snqxor \
 	t176_snqshl t177_snqshr t178_snqmsb \
+	t181_snqmsk \
 	t186_snqpow \
 	t192_snq2u \
 	t201_snuadd t202_snusub t203_snumul t204_snudiv t205_snumod \
@@ -40,6 +43,7 @@ check_PROGRAMS = \
 	t216_snugcd t217_snulcm \
 	t221_snubop t222_snuand t223_snuor t224_snuxor \
 	t226_snushl t227_snushr t228_snumsb \
+	t231_snumsk \
 	t236_snupow \
 	t242_snu2uc \
 	t301_sntok t302_snrev t303_snuc2c t304_snqt t305_snunqt \

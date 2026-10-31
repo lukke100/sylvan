@@ -42,8 +42,8 @@ long snlshr(long x, size_t y);
 
 size_t snlmsb(long x, enum sn_error *err);
 
-long snlpow(long x, int y, enum sn_error *err);
 long snlmsk(long x, enum sn_error *err);
+long snlpow(long x, int y, enum sn_error *err);
 
 long sna2l(const char src[], size_t srcsz, enum sn_error *err);
 
@@ -77,7 +77,9 @@ int snshr(int x, size_t y);
 
 size_t snmsb(int x, enum sn_error *err);
 
+int snmsk(int x, enum sn_error *err);
 int snpow(int x, int y, enum sn_error *err);
+
 int sna2i(const char src[], size_t srcsz, enum sn_error *err);
 
 size_t snzadd(size_t x, size_t y, enum sn_error *err);
@@ -105,6 +107,7 @@ size_t snzshr(size_t x, size_t y);
 
 size_t snzmsb(size_t x, enum sn_error *err);
 
+size_t snzmsk(size_t x, enum sn_error *err);
 size_t snzpow(size_t x, int y, enum sn_error *err);
 
 unsigned long snqadd(unsigned long x, unsigned long y, enum sn_error *err);
@@ -133,6 +136,7 @@ unsigned long snqshr(unsigned long x, size_t y);
 
 size_t snqmsb(unsigned long x, enum sn_error *err);
 
+unsigned long snqmsk(unsigned long x, enum sn_error *err);
 unsigned long snqpow(unsigned long x, int y, enum sn_error *err);
 
 unsigned snq2u(unsigned long x, enum sn_error *err);
@@ -161,6 +165,7 @@ unsigned snushr(unsigned x, size_t y);
 
 size_t snumsb(unsigned x, enum sn_error *err);
 
+unsigned snumsk(unsigned x, enum sn_error *err);
 unsigned snupow(unsigned x, int y, enum sn_error *err);
 
 unsigned char snu2uc(unsigned x, enum sn_error *err);

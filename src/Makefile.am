@@ -15,6 +15,7 @@ libsylvan_la_SOURCES = \
 	sngcd.c snlcm.c \
 	snbop.c snand.c snor.c  snxor.c snnot.c \
 	snshl.c snshr.c snmsb.c \
+	snmsk.c \
 	snpow.c \
 	snzadd.c snzsub.c snzmul.c snzdiv.c snzmod.c \
 	skzadd.c skzmul.c \
@@ -22,6 +23,7 @@ libsylvan_la_SOURCES = \
 	snzgcd.c snzlcm.c \
 	snzbop.c snzand.c snzor.c  snzxor.c snznot.c \
 	snzshl.c snzshr.c snzmsb.c \
+	snzmsk.c \
 	snzpow.c \
 	snqadd.c snqsub.c snqmul.c snqdiv.c snqmod.c \
 	skqadd.c skqmul.c \
@@ -29,6 +31,7 @@ libsylvan_la_SOURCES = \
 	snqgcd.c snqlcm.c \
 	snqbop.c snqand.c snqor.c  snqxor.c \
 	snqshl.c snqshr.c snqmsb.c \
+	snqmsk.c \
 	snqpow.c \
 	snuadd.c snusub.c snumul.c snudiv.c snumod.c \
 	skuadd.c skumul.c \
@@ -36,6 +39,7 @@ libsylvan_la_SOURCES = \
 	snugcd.c snulcm.c \
 	snubop.c snuand.c snuor.c  snuxor.c \
 	snushl.c snushr.c snumsb.c \
+	snumsk.c \
 	snupow.c \
 	sntok.c \
 	sna2l.c \
