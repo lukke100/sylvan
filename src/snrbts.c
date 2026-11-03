@@ -5,28 +5,17 @@
 static int mersennetrunc(size_t *bits, int x)
 {
 	enum sn_error tmperr;
-	int result, tmpval;
-	size_t tmpbts;
+	int result;
 
 	tmperr = SN_ERROR_NONE;
-	tmpbts = snmsb(x, &tmperr);
+	result = snmsk(x, &tmperr);
 
-	if (tmperr != SN_ERROR_NONE) {
-		*bits = 0;
-		return -(x < 0);
+	if (result != x || tmperr != SN_ERROR_NONE)
+	{
+		result = snmsk(snshr(x, 1), NULL);
 	}
 
-	result  = snshl(snsgn(x), tmpbts, NULL);
-	result -= x >= 0;
-	tmpval  = snshl(result, 1, &tmperr);
-	tmpval  = snadd(tmpval, x >= 0, &tmperr);
-
-	if (tmpval == x && tmperr == SN_ERROR_NONE) {
-		++tmpbts;
-		result = tmpval;
-	}
-
-	*bits = tmpbts;
+	*bits = snmsb(result, NULL) + 1;
 	return result;
 }
 
