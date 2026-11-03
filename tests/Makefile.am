@@ -47,7 +47,6 @@ check_PROGRAMS = \
 	t236_snupow \
 	t242_snu2uc \
 	t301_sntok t302_snrev t303_snuc2c t304_snqt t305_snunqt \
-	t401_snrbts \
 	t501_snget \
 	t901_sneset
 

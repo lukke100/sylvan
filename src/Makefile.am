@@ -51,7 +51,6 @@ libsylvan_la_SOURCES = \
 	snqt.c snunqt.c \
 	snrev.c \
 	sneset.c \
-	snrbts.c \
 	snget.c
 
 .PHONY: bench-local

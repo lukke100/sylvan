@@ -184,8 +184,6 @@ size_t snqt(char dest[], size_t destsz, const char src[],
 size_t snunqt(char dest[], size_t destsz, size_t *pos,
               const char src[], size_t srcsz, enum sn_error *err);
 
-int snrbts(size_t *bits, int r(void), int rmax, enum sn_error *err);
-
 size_t snget(char buf[], size_t bufsz, size_t *pos,
              size_t req, FILE *stream, enum sn_error *err);
 
