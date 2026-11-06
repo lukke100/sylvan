@@ -110,6 +110,7 @@ size_t snzshr(size_t x, size_t y);
 size_t snzmsb(size_t x, enum sn_error *err);
 
 size_t snzmsk(size_t x, enum sn_error *err);
+size_t snzcut(size_t *len, size_t x, size_t lim, enum sn_error *err);
 size_t snzpow(size_t x, int y, enum sn_error *err);
 
 unsigned long snqadd(unsigned long x, unsigned long y, enum sn_error *err);
