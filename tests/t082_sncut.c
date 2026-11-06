@@ -128,43 +128,53 @@ int main(void)
 	assert(err == SN_ERROR_NONE);
 
 	len = 999;
-	sncut(&len, 16382, 16382, NULL);
+	err = SN_ERROR_NONE;
+	sncut(&len, 16382, 16382, &err);
 	assert(err == SN_ERROR_NONE);
 
 	len = 999;
-	sncut(&len, 16383, 16383, NULL);
+	err = SN_ERROR_NONE;
+	sncut(&len, 16383, 16383, &err);
 	assert(err == SN_ERROR_NONE);
 
 	len = 999;
-	sncut(&len, 16384, 16384, NULL);
+	err = SN_ERROR_NONE;
+	sncut(&len, 16384, 16384, &err);
 	assert(err == SN_ERROR_NONE);
 
 	len = 999;
-	sncut(&len, -16383, -16383, NULL);
+	err = SN_ERROR_NONE;
+	sncut(&len, -16383, -16383, &err);
 	assert(err == SN_ERROR_NONE);
 
 	len = 999;
-	sncut(&len, -16384, -16384, NULL);
+	err = SN_ERROR_NONE;
+	sncut(&len, -16384, -16384, &err);
 	assert(err == SN_ERROR_NONE);
 
 	len = 999;
-	sncut(&len, -16385, -16385, NULL);
+	err = SN_ERROR_NONE;
+	sncut(&len, -16385, -16385, &err);
 	assert(err == SN_ERROR_NONE);
 
 	len = 999;
-	sncut(&len, 32766, 32766, NULL);
+	err = SN_ERROR_NONE;
+	sncut(&len, 32766, 32766, &err);
 	assert(err == SN_ERROR_NONE);
 
 	len = 999;
-	sncut(&len, -32767, -32767, NULL);
+	err = SN_ERROR_NONE;
+	sncut(&len, -32767, -32767, &err);
 	assert(err == SN_ERROR_NONE);
 
 	len = 999;
-	sncut(&len, 32735, 32766, NULL);
+	err = SN_ERROR_NONE;
+	sncut(&len, 32735, 32766, &err);
 	assert(err == SN_ERROR_NONE);
 
 	len = 999;
-	sncut(&len, -32736, -32767, NULL);
+	err = SN_ERROR_NONE;
+	sncut(&len, -32736, -32767, &err);
 	assert(err == SN_ERROR_NONE);
 
 	return 0;
