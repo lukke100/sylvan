@@ -79,6 +79,7 @@ int snshr(int x, size_t y);
 size_t snmsb(int x, enum sn_error *err);
 
 int snmsk(int x, enum sn_error *err);
+int sncut(size_t *len, int x, int lim, enum sn_error *err);
 int snpow(int x, int y, enum sn_error *err);
 
 int sna2i(const char src[], size_t srcsz, enum sn_error *err);

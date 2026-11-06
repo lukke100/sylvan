@@ -15,7 +15,7 @@ libsylvan_la_SOURCES = \
 	sngcd.c snlcm.c \
 	snbop.c snand.c snor.c  snxor.c snnot.c \
 	snshl.c snshr.c snmsb.c \
-	snmsk.c \
+	snmsk.c sncut.c \
 	snpow.c \
 	snzadd.c snzsub.c snzmul.c snzdiv.c snzmod.c \
 	skzadd.c skzmul.c \
