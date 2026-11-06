@@ -16,6 +16,14 @@ int main(void)
 	assert(snlcut(NULL,  5,  6, NULL) ==  1);
 	assert(snlcut(NULL, -6, -7, NULL) == -2);
 
+	assert(snlcut(NULL, 1073741822, 1073741822, NULL) ==          0);
+	assert(snlcut(NULL, 1073741823, 1073741823, NULL) == 1073741823);
+	assert(snlcut(NULL, 1073741824, 1073741824, NULL) ==          0);
+
+	assert(snlcut(NULL, -1073741823, -1073741823, NULL) ==          -1);
+	assert(snlcut(NULL, -1073741824, -1073741824, NULL) == -1073741824);
+	assert(snlcut(NULL, -1073741825, -1073741825, NULL) ==          -1);
+
 	assert(snlcut(NULL,  2147483646,  2147483646, NULL) ==   0);
 	assert(snlcut(NULL, -2147483647, -2147483647, NULL) ==  -1);
 	assert(snlcut(NULL,  2147483615,  2147483646, NULL) ==  31);
@@ -58,6 +66,18 @@ int main(void)
 	assert(len == 0);
 
 	len = 999;
+	snlcut(&len, -1073741823, -1073741823, NULL);
+	assert(len == 0);
+
+	len = 999;
+	snlcut(&len, -1073741824, -1073741824, NULL);
+	assert(len == 30);
+
+	len = 999;
+	snlcut(&len, -1073741825, -1073741825, NULL);
+	assert(len == 0);
+
+	len = 999;
 	snlcut(&len, 2147483646, 2147483646, NULL);
 	assert(len == 0);
 
@@ -97,14 +117,54 @@ int main(void)
 	snlcut(NULL, -6, -7, &err);
 	assert(err == SN_ERROR_NULL);
 
-	len = 0;
+	len = 999;
 	err = SN_ERROR_NONE;
 	snlcut(&len, 5, 6, &err);
 	assert(err == SN_ERROR_NONE);
 
-	len = 0;
+	len = 999;
 	err = SN_ERROR_NONE;
 	snlcut(&len, -6, -7, &err);
+	assert(err == SN_ERROR_NONE);
+
+	len = 999;
+	snlcut(&len, 1073741822, 1073741822, NULL);
+	assert(err == SN_ERROR_NONE);
+
+	len = 999;
+	snlcut(&len, 1073741823, 1073741823, NULL);
+	assert(err == SN_ERROR_NONE);
+
+	len = 999;
+	snlcut(&len, 1073741824, 1073741824, NULL);
+	assert(err == SN_ERROR_NONE);
+
+	len = 999;
+	snlcut(&len, -1073741823, -1073741823, NULL);
+	assert(err == SN_ERROR_NONE);
+
+	len = 999;
+	snlcut(&len, -1073741824, -1073741824, NULL);
+	assert(err == SN_ERROR_NONE);
+
+	len = 999;
+	snlcut(&len, -1073741825, -1073741825, NULL);
+	assert(err == SN_ERROR_NONE);
+
+	len = 999;
+	snlcut(&len, 2147483646, 2147483646, NULL);
+	assert(err == SN_ERROR_NONE);
+
+	len = 999;
+	snlcut(&len, -2147483647, -2147483647, NULL);
+	assert(err == SN_ERROR_NONE);
+
+	len = 999;
+	snlcut(&len, 2147483615, 2147483646, NULL);
+	assert(err == SN_ERROR_NONE);
+
+	len = 999;
+	snlcut(&len, -2147483616, -2147483647, NULL);
 	assert(err == SN_ERROR_NONE);
 
 	return 0;
