@@ -172,6 +172,7 @@ unsigned snushr(unsigned x, size_t y);
 size_t snumsb(unsigned x, enum sn_error *err);
 
 unsigned snumsk(unsigned x, enum sn_error *err);
+unsigned snucut(size_t *len, unsigned x, unsigned lim, enum sn_error *err);
 unsigned snupow(unsigned x, int y, enum sn_error *err);
 
 unsigned char snu2uc(unsigned x, enum sn_error *err);

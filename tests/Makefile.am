@@ -43,7 +43,7 @@ check_PROGRAMS = \
 	t216_snugcd t217_snulcm \
 	t221_snubop t222_snuand t223_snuor t224_snuxor \
 	t226_snushl t227_snushr t228_snumsb \
-	t231_snumsk \
+	t231_snumsk t232_snucut \
 	t236_snupow \
 	t242_snu2uc \
 	t301_sntok t302_snrev t303_snuc2c t304_snqt t305_snunqt \

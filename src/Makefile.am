@@ -39,7 +39,7 @@ libsylvan_la_SOURCES = \
 	snugcd.c snulcm.c \
 	snubop.c snuand.c snuor.c  snuxor.c \
 	snushl.c snushr.c snumsb.c \
-	snumsk.c \
+	snumsk.c snucut.c \
 	snupow.c \
 	sntok.c \
 	sna2l.c \
