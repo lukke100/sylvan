@@ -31,7 +31,7 @@ libsylvan_la_SOURCES = \
 	snqgcd.c snqlcm.c \
 	snqbop.c snqand.c snqor.c  snqxor.c \
 	snqshl.c snqshr.c snqmsb.c \
-	snqmsk.c \
+	snqmsk.c snqcut.c \
 	snqpow.c \
 	snuadd.c snusub.c snumul.c snudiv.c snumod.c \
 	skuadd.c skumul.c \

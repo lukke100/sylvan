@@ -140,6 +140,9 @@ unsigned long snqshr(unsigned long x, size_t y);
 size_t snqmsb(unsigned long x, enum sn_error *err);
 
 unsigned long snqmsk(unsigned long x, enum sn_error *err);
+unsigned long snqcut(size_t *len, unsigned long x,
+                     unsigned long lim, enum sn_error *err);
+
 unsigned long snqpow(unsigned long x, int y, enum sn_error *err);
 
 unsigned snq2u(unsigned long x, enum sn_error *err);

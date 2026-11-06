@@ -34,7 +34,7 @@ check_PROGRAMS = \
 	t166_snqgcd t167_snqlcm \
 	t171_snqbop t172_snqand t173_snqor t174_snqxor \
 	t176_snqshl t177_snqshr t178_snqmsb \
-	t181_snqmsk \
+	t181_snqmsk t182_snqcut \
 	t186_snqpow \
 	t192_snq2u \
 	t201_snuadd t202_snusub t203_snumul t204_snudiv t205_snumod \
